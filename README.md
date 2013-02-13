@@ -1,6 +1,6 @@
 go-tour-ca
 ==========
-Tour de Go en català (go-tour-ca.appspot.com)
+Tour de Go en català (http://go-tour-ca.appspot.com)
 
 This is Go Tour (translated to Catalan), an introduction to the Go programming language.
 The original (in English) can be found in https://code.google.com/p/go-tour/
