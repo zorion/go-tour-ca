@@ -1222,7 +1222,7 @@ func main() {
 	L'elecció de l'imatge és tota teva.
 	Algunes funcions interessants poden ser <code>x^y</code>, <code>(x+y)/2</code> o <code>x*y</code>.
 	<p>
-	(Necessites fes servir un bucle per reservar espai per a cada slide <code>[]uint8</code> dins
+	(Necessites fer servir un bucle per reservar espai per a cada slide <code>[]uint8</code> dins
 	la slide <code>[][]uint8</code>.)
 	<p>
 	(Fes servir <code>uint8(valorEnter)</code> per convertir els tipus.)
@@ -1464,10 +1464,10 @@ func (v *Vertex) Abs() float64 {
 	<p>
 	<i>No hi ha una declaració explícita.</i>
 	<p>
-	Aquest fet desacobla la implementació dels paquets dels paquets que defineixen
+	Aquest fet desacobla la implementació dels paquets que defineixen
 	les interfícies: no depenen l'un de l'altre.
 	<p>
-	A més, això encoratja la definició precisa de interfícies, perquè
+	A més, això encoratja la definició precisa d'interfícies, perquè
 	no cal que trobis cada implementació i l'etiquetis amb el nou nom de
 	la <code>interface</code>.
 	<p>
@@ -1646,7 +1646,7 @@ func main() {
 	<code>Error</code> farà que el programa entri a un bucle infinit.
 	Ho pots evitar fent primer la conversió de <code>e</code> a decimal:
 	<code>fmt.Sprint(float64(e))</code>. Saps per què? 
-	<!--TODO: Sprint o Print?-->
+	<!-- TODO: Sprint o Print? -->
 	<p>
 	Canvia la teva funció <code>Sqrt</code> per tornar un valor
 	<code>ErrNegativeSqrt</code> quan rebi un nombre negatiu.
@@ -1892,15 +1892,15 @@ func main() {
 	<h2>Range i Close</h2>
 	<p>
 	L'emissor pot tancar un canal (<code>close</code>) per indicar que no s'enviaran 
-	més dades. Els receptors poden comprovar si un canal és tancat
+	més dades. Els receptors poden comprovar si un canal està tancat
 	assignant un segon paràmetre a la instrucció de recepció:
 	<pre>v, ok := &lt;-ch</pre>
 	<p>
 	<code>ok</code> és <code>false</code> si no hi ha més valors per rebre
-	i el canal és tancat.
+	i el canal està tancat.
 	<p>
 	El bucle <code>for i := range c</code> rep valors del canal <code>c</code> de manera
-	reiterada fins que <code>c</code> és tancat (amb <code>close</code>).
+	reiterada fins que <code>c</code> està tancat (amb <code>close</code>).
 	<p>
 	<b>Nota:</b> Només l'emissor hauria de tancar el canal, mai el receptor.
 	Enviar dades a un canal tancat causa un error <i>panic</i>.
@@ -1985,13 +1985,15 @@ case i := &lt;-c:
 default:
 	// rebre de c bloquejaria
 }</pre>
+<!-- Crec que aquest comentari no és vàlid
 	<p>
 	<span class="appengineMode">
 	<b>Nota:</b> Aquest exemple no funciona a la versió web del tour
 	ja que l'entorn de prova (sandbox) no té el concepte de temps. Podries
 	<a target="_blank" href="http://golang.org/doc/install/">instal·lar Go</a>
 	per veure aquest exemple funcionant.
-	</span>
+	</span> 
+-->
 <pre class="source">package main
 
 import (
@@ -2018,15 +2020,15 @@ func main() {
 </div>
 
 <div class="slide nocode">
-	<h2>Exercici: Arbres binaris equivalents</h2>
+	<h2>Exercici: ABC equivalents</h2>
 	<p>
-	Hi ha molts arbres binaris diferents que contenen la mateixa seqüència
+	Hi ha molts arbres binaris de cerca (ABC) diferents que contenen la mateixa seqüència
 	de valors emmagatzemats a les seves fulles.
-	Per exemple, aquí pots veure dos arbres binaris que contenen la seqüència
+	Per exemple, aquí pots veure dos arbres binaris de cerca que contenen la seqüència
 	1, 1, 2, 3, 5, 8, 13.
 	<img src="static/fig4.png" alt="binary trees">
 	<p>
-	Una funció per comprovar si dos arbres binaris contenen la mateixa seqüència
+	Una funció per comprovar si dos arbres binaris de cerca contenen la mateixa seqüència
 	és complex en molts llenguatges. Farem servir la concurrència i els canals de Go 
 	per escriure una solució molt simple.
 	<p>
@@ -2039,7 +2041,7 @@ func main() {
 </div>
 
 <div class="slide">
-	<h2>Exercici: Arbres binaris equivalents</h2>
+	<h2>Exercici: ABC  equivalents</h2>
 	<p>
 	<b>1.</b> Implementa la funció <code>Walk</code>.
 	<p>
@@ -2067,7 +2069,7 @@ func main() {
 
 import "<span class="appengineMode">tour</span><span class="localMode">code.google.com/p/go-tour</span>/tree"
 
-// Walk repassa l'arbre t enviant tots els valors
+// Walk repassa (en inordre) l'arbre t enviant tots els valors
 // de l'arbre al canal ch.
 func Walk(t *tree.Tree, ch chan int)
 
