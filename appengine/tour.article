@@ -853,9 +853,9 @@ Modifica la funció `Crawl` per obtenir en paral·lel les URLs sense obtenir due
 #appengine: Un cop tinguis Go al teu ordinador, la
 La
 [[http://golang.org/doc/][documentació de Go]] és un gran lloc per
-#appenginee: continuar
-començar
-. Conté referències, tutorials, vídeos, i més.
+#appenginee: continuar.
+començar.
+Conté referències, tutorials, vídeos, i més.
 
 Per aprendre com organitzar i treballar amb codi Go, mira [[http://www.youtube.com/watch?v=XCsL89YtqCs][aquest screencast]] o llegeix [[http://golang.org/doc/code.html][Com escriure codi Go]].
 
