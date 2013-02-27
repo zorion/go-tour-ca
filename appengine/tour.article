@@ -21,7 +21,9 @@ http://golang.org
 
 Benvingut/da al tour del [[http://golang.org/][llenguatge de programació Go]].
 
-El tour està dividit en tres seccions. Al final de cada secció hi ha una sèrie d'exercicis que pots completar.
+El tour està dividit en tres seccions: Conceptes bàsics, mètodes i interfícies, i concurrència.
+
+Al llarg del tour hi ha una sèrie d'exercicis que pots completar.
 
 El tour és interactiu. Fes click al botó Executar (o tecleja Shift-Enter) per compilar i executar el programa a
 #appengine: un servidor remot.
