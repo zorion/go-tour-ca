@@ -17,7 +17,6 @@ func main() {
 	a = f  // a és MyFloat, implementa Abser
 	a = &v // a és *Vertex, implementa Abser
 	a = v  // a és Vertex, NO implementa Abser
-	// implement Abser
 
 	fmt.Println(a.Abs())
 }
