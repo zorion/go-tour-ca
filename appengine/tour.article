@@ -384,7 +384,7 @@ El valor inicial d'una slice és `nil`.
 
 Una slice nil té longitud i capacitat 0.
 
-(Per aprendre més sobre slices, llegeix l'article en anglès "[[http://golang.org/doc/articles/slices_usage_and_internals.html][Slices: usage and internals]]".)
+(Per aprendre més sobre slices, llegeix l'article en anglès " [[http://golang.org/doc/articles/slices_usage_and_internals.html][Slices: usage and internals]] ".)
 
 .play prog/nil-slices.go
 
