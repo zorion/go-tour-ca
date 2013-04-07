@@ -64,9 +64,10 @@ El tour independent és més ràpid ja que compila i executa els exemples de cod
 
 Per executar el tour localment primer [[http://golang.org/doc/install/][instal·la Go]], després [[http://golang.org/cmd/go/][executa "go get"]] per instal·lar [[http://code.google.com/p/go-tour/][gotour]]:
 
-	go get code.google.com/p/go-tour/gotour
+	go get code.google.com/p/go-tour/gotour (en anglès)
+	go get github.com/zorion/go-tour-ca/appengine/gotourca (en català)
 
-i executa l'executable de `gotour` resultant.
+i executa l'executable de `gotour` (o gotourca) resultant.
 
 Si no, clicka el botó "Següent" o pressiona PageDown per continuar.
 
