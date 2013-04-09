@@ -62,12 +62,15 @@ Aquest tour també està disponible com a programa independent que pots usar sen
 
 El tour independent és més ràpid ja que compila i executa els exemples de codi al teu propi ordinador. També inclou exercicis addicionals que no es troben en aquesta versió (en un sandbox). Però només està en anglès.
 
-Per executar el tour localment primer [[http://golang.org/doc/install/][instal·la Go]], després [[http://golang.org/cmd/go/][executa "go get"]] per instal·lar [[http://code.google.com/p/go-tour/][gotour]]:
+Per executar el tour localment primer [[http://golang.org/doc/install/][instal·la Go]], després [[http://golang.org/cmd/go/][executa "go get"]] per instal·lar [[http://code.google.com/p/go-tour/][gotour]] (en anglès):
 
-	go get code.google.com/p/go-tour/gotour (en anglès)
-	go get github.com/zorion/go-tour-ca/appengine/gotourca (en català)
+	go get code.google.com/p/go-tour/gotour
 
-i executa l'executable de `gotour` (o gotourca) resultant.
+o si ho prefereixes, en català:
+
+	go get github.com/zorion/go-tour-ca/appengine/gotourca
+
+i executa l'executable resultant: `gotour` (o `gotourca` en català).
 
 Si no, clicka el botó "Següent" o pressiona PageDown per continuar.
 

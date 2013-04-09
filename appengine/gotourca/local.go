@@ -30,7 +30,6 @@ import (
 )
 
 const (
-	//basePkg    = "code.google.com/p/go-tour/"
 	basePkg	= "github.com/zorion/go-tour-ca/appengine/"
 	socketPath = "/socket"
 )
@@ -154,6 +153,10 @@ WARNING!  WARNING!  WARNING!
 type response struct {
 	Output string `json:"output"`
 	Errors string `json:"compile_errors"`
+}
+
+func init() {
+	socket.Environ = environ
 }
 
 // environ returns an execution environment containing only GO* variables
