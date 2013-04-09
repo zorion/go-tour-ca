@@ -30,7 +30,7 @@ import (
 )
 
 const (
-	basePkg	= "github.com/zorion/go-tour-ca/appengine/"
+	basePkg	= "github.com/zorion/go-tour-ca/"
 	socketPath = "/socket"
 )
 
