@@ -68,7 +68,7 @@ Per executar el tour localment primer [[http://golang.org/doc/install/][instal·
 
 o si ho prefereixes, en català:
 
-	go get github.com/zorion/go-tour-ca/appengine/gotourca
+	go get github.com/zorion/go-tour-ca/gotourca
 
 i executa l'executable resultant: `gotour` (o `gotourca` en català).
 
