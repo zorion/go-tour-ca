@@ -6,5 +6,5 @@ import (
 )
 
 func main() {
-	fmt.Println("Feliç", math.Pi, "Dia")
+	fmt.Println("Feliç dia", math.Pi)
 }

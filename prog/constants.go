@@ -7,7 +7,7 @@ const Pi = 3.14
 func main() {
 	const World = "世界"
 	fmt.Println("Hola", World)
-	fmt.Println("Feliç", Pi, "Dia")
+	fmt.Println("Feliç dia", Pi)
 
 	const Truth = true
 	fmt.Println("Go mola?", Truth)
