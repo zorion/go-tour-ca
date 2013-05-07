@@ -314,7 +314,7 @@ Un literal d'estructura denota una nova instància d'una estructura creada llist
 
 Pots llistar només els valors d'un subconjunt de camps utilitzant la sintaxis `Nom:` (l'ordre dels camps és irrellevant).
 
-El prefix especial `&` construeix punter a un literal d'estructura.
+El prefix especial `&` crea un punter a l'espai reservat per la nova estructura.
 
 _(NdT:_ _Un_literal_és_un_valor_fixat_al_codi_font_d'un_programa)_
 
