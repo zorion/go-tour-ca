@@ -56,25 +56,25 @@ El tour està disponible en altres llengües:
 Prem el botó "Següent" o la tecla PageDown per tal de continuar.
 
 #Deleted-slide from the tour.golang.org [EN]
-* Go sense connexió
+#appengine: * Go sense connexió
 
-Aquest tour també està disponible com a programa independent que pots usar sense accés a internet.
+#appengine: Aquest tour també està disponible com a programa independent que pots usar sense accés a internet.
 
-El tour independent és més ràpid ja que compila i executa els exemples de codi al teu propi ordinador. També inclou exercicis addicionals que no es troben en aquesta versió (en un sandbox). Però només està en anglès.
+#appengine: El tour independent és més ràpid ja que compila i executa els exemples de codi al teu propi ordinador. També inclou exercicis addicionals que no es troben en aquesta versió (en un sandbox). Però només està en anglès.
 
-Per executar el tour localment primer [[http://golang.org/doc/install/][instal·la Go]], després [[http://golang.org/cmd/go/][executa "go get"]] per instal·lar [[http://code.google.com/p/go-tour/][gotour]] (en anglès):
+#appengine: Per executar el tour localment primer [[http://golang.org/doc/install/][instal·la Go]], després [[http://golang.org/cmd/go/][executa "go get"]] per instal·lar [[http://code.google.com/p/go-tour/][gotour]] (en anglès):
 
-	go get code.google.com/p/go-tour/gotour
+#appengine: 	go get code.google.com/p/go-tour/gotour
 
-o si ho prefereixes, en català:
+#appengine: o si ho prefereixes, en català:
 
-	go get github.com/zorion/go-tour-ca/gotourca
+#appengine: 	go get github.com/zorion/go-tour-ca/gotourca
 
-i executa l'executable resultant: `gotour` (o `gotourca` en català).
+#appengine: i executa l'executable resultant: `gotour` (o `gotourca` en català).
 
-Si no, clicka el botó "Següent" o pressiona PageDown per continuar.
+#appengine: Si no, clicka el botó "Següent" o pressiona PageDown per continuar.
 
-_(Pots_tornar_a_aquestes_instruccions_sempre_que_vulguis_prement_el_botó_"Taula_de_continguts".)_
+#appengine: _(Pots_tornar_a_aquestes_instruccions_sempre_que_vulguis_prement_el_botó_"Taula_de_continguts".)_
 
 * Paquets
 
