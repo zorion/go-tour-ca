@@ -2,8 +2,9 @@ go-tour-ca
 ==========
 Tour de Go en català (http://go-tour-ca.appspot.com)
 Fitxers dependents d'idioma (la resta es poden copiar de la versió  anglesa):
+/README.md (aquest arxiu)
 /tour.article
-/gotourca/local.go
+/gotourca/local.go ("basepackage" to this folder within this repository)
 /js/lang.js
 /prog/*
 

@@ -14,14 +14,14 @@ import (
 
 	"appengine"
 
-	_ "code.google.com/p/go.talks/pkg/playground"
+	_ "code.google.com/p/go.tools/godoc/playground"
 )
 
 const runUrl = "http://golang.org/compile"
 
 func init() {
 	http.HandleFunc("/", rootHandler)
-	err := serveScripts("js", "playground.js")
+	err := serveScripts("js", "HTTPTransport")
 	if err != nil {
 		panic(err)
 	}
