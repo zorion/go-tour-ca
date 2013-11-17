@@ -6,6 +6,7 @@ package main
 
 import (
 	"bytes"
+	"flag"
 	"fmt"
 	"html/template"
 	"io"
@@ -15,10 +16,14 @@ import (
 	"path/filepath"
 	"time"
 
-	"code.google.com/p/go.talks/pkg/present"
+	"code.google.com/p/go.tools/godoc/static"
+	"code.google.com/p/go.tools/present"
 )
 
-var tourContent []byte
+var (
+	article     = flag.String("article", "tour.article", "article to load for the tour")
+	tourContent []byte
+)
 
 // initTour loads tour.article and the relevant HTML templates from the given
 // tour root, and renders the template to the tourContent global variable.
@@ -27,10 +32,15 @@ func initTour(root string) error {
 	present.PlayEnabled = true
 
 	// Open and parse source file.
-	source := filepath.Join(root, "tour.article")
+	source := *article
 	f, err := os.Open(source)
 	if err != nil {
-		return err
+		// See if it exists in the content directory in the root.
+		source = filepath.Join(root, "content", source)
+		f, err = os.Open(source)
+		if err != nil {
+			return err
+		}
 	}
 	defer f.Close()
 	doc, err := present.Parse(prepContent(f), source, 0)
@@ -92,12 +102,16 @@ func serveScripts(root, transport string) error {
 	modTime := time.Now()
 	var buf bytes.Buffer
 	for _, p := range scripts {
+		fmt.Fprintf(&buf, "\n\n// **** %s ****\n\n", p)
+		if s, ok := static.Files[p]; ok {
+			buf.WriteString(s)
+			continue
+		}
 		fn := filepath.Join(root, p)
 		b, err := ioutil.ReadFile(fn)
 		if err != nil {
 			return err
 		}
-		fmt.Fprintf(&buf, "\n\n// **** %s ****\n\n", filepath.Base(fn))
 		buf.Write(b)
 	}
 	fmt.Fprintf(&buf, "\ninitTour(new %v());\n", transport)
