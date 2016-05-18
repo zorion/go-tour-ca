@@ -16,8 +16,8 @@ import (
 	"path/filepath"
 	"time"
 
-	"code.google.com/p/go.tools/godoc/static"
-	"code.google.com/p/go.tools/present"
+	"golang.org/x/tools/godoc/static"
+	"golang.org/x/tools/present"
 )
 
 var (
