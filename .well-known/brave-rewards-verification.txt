@@ -1,0 +1,4 @@
+This is a Brave Rewards publisher verification file.
+
+Domain: go-tour-ca.appspot.com
+Token: 4ba5a108c91d9d051fe1b440c8638e05f58d49a11dcc1c4fcc4ff1d01e64ccd1
