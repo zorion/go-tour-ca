@@ -200,16 +200,16 @@ ul {
     background: #fff;
 }
 .menu-button[imports-checkbox]:after {
-    content: ' off';
+    content: ':no';
 }
 .menu-button[imports-checkbox].active:after {
-    content: ' on';
+    content: ':sí';
 }
 .menu-button[syntax-checkbox]:after {
-    content: ' off';
+    content: ':no';
 }
 .menu-button[syntax-checkbox].active:after {
-    content: ' on';
+    content: ':sí';
 }
 #file-menu .menu-button {
     float: right;
