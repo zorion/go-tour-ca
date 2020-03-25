@@ -35,8 +35,8 @@ const (
 )
 
 var (
-	httpListen  = flag.String("http", "127.0.0.1:3999", "host:port to listen on")
-	openBrowser = flag.Bool("openbrowser", true, "open browser automatically")
+	httpListen  = flag.String("http", "127.0.0.1:3999", "host:port que obrirem")
+	openBrowser = flag.Bool("openbrowser", true, "obrir navegador automàticament")
 )
 
 var (
@@ -69,14 +69,14 @@ func findRoot() (string, error) {
 		gopath = tourRoot
 		return tourRoot, nil
 	}
-	return "", fmt.Errorf("could not find go-tour content; check $GOROOT and $GOPATH")
+	return "", fmt.Errorf("No s'ha trobat contingut de go-tour-ca; mireu $GOROOT i $GOPATH")
 }
 
 func main() {
 	flag.Parse()
 
 	if os.Getenv("GAE_ENV") == "standard" {
-		log.Println("running in App Engine Standard mode")
+		log.Println("corrent a App Engine Standard")
 		gaeMain()
 		return
 	}
@@ -84,10 +84,10 @@ func main() {
 	// find and serve the go tour files
 	root, err := findRoot()
 	if err != nil {
-		log.Fatalf("Couldn't find tour files: %v", err)
+		log.Fatalf("No s'ha trobat el contingut del tour: %v", err)
 	}
 
-	log.Println("Serving content from", root)
+	log.Println("Servint contingut des de", root)
 
 	host, port, err := net.SplitHostPort(*httpListen)
 	if err != nil {
@@ -116,9 +116,9 @@ func main() {
 	go func() {
 		url := "http://" + httpAddr
 		if waitServer(url) && *openBrowser && startBrowser(url) {
-			log.Printf("A browser window should open. If not, please visit %s", url)
+			log.Printf("S'hauria d'haver obert una finestra de navegador. Si no és així, si us plau, visiteu %s", url)
 		} else {
-			log.Printf("Please open your web browser and visit %s", url)
+			log.Printf("Si us plau, obriu el navegador i visiteu %s", url)
 		}
 	}()
 	log.Fatal(http.ListenAndServe(httpAddr, nil))
@@ -154,16 +154,17 @@ func lessonHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 const localhostWarning = `
-WARNING!  WARNING!  WARNING!
+PERILL!  PERILL!  PERILL!
 
-The tour server appears to be listening on an address that is
-not localhost and is configured to run code snippets locally.
-Anyone with access to this address and port will have access
-to this machine as the user running gotour.
+El servidor del tour sembla estar servint el contingut des
+d'una adreça que no és localhost i està configurat per
+executar localment els fragments de codi.
+Qualsevol amb accès a aquesta adreça i port podria guanyar
+accès a aquest màquina com a l'usuari que executa go-tour-ca.
 
-If you don't understand this message, hit Control-C to terminate this process.
+Si no enteneu aquest missatge, premeu Contro-C per abortar el procès.
 
-WARNING!  WARNING!  WARNING!
+PERILL!  PERILL!  PERILL!
 `
 
 type response struct {

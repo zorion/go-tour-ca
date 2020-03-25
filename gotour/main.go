@@ -10,6 +10,6 @@ import (
 )
 
 func main() {
-	io.WriteString(os.Stderr, "golang.org/x/tour/gotour has moved to golang.org/x/tour\n")
+	io.WriteString(os.Stderr, "S'ha mogut golang.org/x/tour/gotour a golang.org/x/tour\n")
 	os.Exit(1)
 }
