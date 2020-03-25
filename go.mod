@@ -1,4 +1,4 @@
-module golang.org/x/tour
+module github.com/zorion/go-tour-ca
 
 go 1.11
 

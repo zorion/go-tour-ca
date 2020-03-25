@@ -30,7 +30,7 @@ import (
 )
 
 const (
-	basePkg    = "golang.org/x/tour"
+	basePkg    = "github.com/zorion/go-tour-ca"
 	socketPath = "/socket"
 )
 
