@@ -1,88 +1,87 @@
-Welcome!
-Learn how to use this tour: including how to navigate the different lessons and how to run code.
+Benvingut/da!
+Aprèn com fer servir el tour: com navegar per les diferents lliçons i com executar codi.
 
 The Go Authors
 https://golang.org
 
-* Hello, 世界
+* Hola, 世界
 
-Welcome to a tour of the [[https://golang.org/][Go programming language]].
+Benvingut/da al tour del [[https://golang.org/][llenguatge de programació Go]].
 
-The tour is divided into a list of modules that you can
-access by clicking on
-[[javascript:highlight(".logo")][A Tour of Go]] on the top left of the page.
+El tour està dividit en una llista de mòduls que pots accedir clicant a
+[[javascript:highlight(".logo")][Un Tour per Go]]
+a la cantonada superior a l'esquerra de la pàgina.
 
-You can also view the table of contents at any time by clicking on the [[javascript:highlightAndClick(".nav")][menu]] on the top right of the page.
+També pots veure la taula de continguts en qualsevol moment clicant al [[javascript:highlightAndClick(".nav")][menú]] a la cantonada superior a la dreta de la pàgina.
 
-Throughout the tour you will find a series of slides and exercises for you
-to complete.
+Al llarg del tour hi ha una sèrie d'exercicis que pots completar.
 
-You can navigate through them using
+Hi pots anar directament fent servir
 
-- [[javascript:highlight(".prev-page")]["previous"]] or `PageUp` to go to the previous page,
+- [[javascript:highlight(".prev-page")]["anterior"]] o `PageUp` per anar a la secció anterior,
 
-- [[javascript:highlight(".next-page")]["next"]] or `PageDown` to go to the next page.
+- [[javascript:highlight(".next-page")]["següent"]] o `PageDown` per anar a la següent.
 
-The tour is interactive. Click the
-[[javascript:highlightAndClick("#run")][Run]] button now
-(or press `Shift` + `Enter`) to compile and run the program on
-#appengine: a remote server.
-your computer.
-The result is displayed below the code.
+El tour és interactiu. Clica el botó
+[[javascript:highlightAndClick("#run")][Exec]] ara
+(o tecleja `Shift` + `Enter`) per compilar i executar el programa
+#appengine: a un servidor remot.
+al teu ordinador.
+El resultat es mostrarà sota el codi.
 
-These example programs demonstrate different aspects of Go. The programs in the tour are meant to be starting points for your own experimentation.
+Els programes d'exemple mostren diferents aspectes de Go. Els programes del tour estan pensats per ser un punt de partida cap a la teva pròpia experimentació.
 
-Edit the program and run it again.
+Edita el programa i executa'l de nou.
 
-When you click on [[javascript:highlightAndClick("#format")][Format]]
-(shortcut: `Ctrl` + `Enter`), the text in the editor is formatted using the
-[[https://golang.org/cmd/gofmt/][gofmt]] tool. You can switch syntax highlighting on and off
-by clicking on the [[javascript:highlightAndClick(".syntax-checkbox")][syntax]] button.
+Quan cliques a [[javascript:highlightAndClick("#format")][Donar format]]
+(drecera: `Ctrl` + `Enter`), el text de l'editor prendrà format fent servir l'eina
+[[https://golang.org/cmd/gofmt/][gofmt]]. Decideix si ressaltar o no la sintaxi
+clicant el botó [[javascript:highlightAndClick(".syntax-checkbox")][sintaxi]].
 
-When you're ready to move on, click the [[javascript:highlightAndClick(".next-page")][right arrow]] below or type the `PageDown` key.
+Quan estiguis preparat/da per continuar clica [[javascript:highlightAndClick(".next-page")][la fletxa dreta]] o prem la tecla `PageDown` (avançar pàgina).
 
 .play welcome/hello.go
 
 * Go local
 
-The tour is available in other languages:
+El tour està disponible en altres llengües:
 
-- [[https://go-tour-ar.appspot.com/][Arabic — العربية]]
-- [[https://go-tour-br.appspot.com/][Brazilian Portuguese — Português do Brasil]]
-- [[https://go-tour-ca.appspot.com/][Catalan — Català]]
-- [[https://tour.go-zh.org/][Simplified Chinese — 中文（简体）]]
-- [[https://go-tour-zh-tw.appspot.com/][Traditional Chinese — 中文（繁體）]]
-- [[https://go-tour-cz.appspot.com/][Czech — Česky]]
-- [[https://go-tour-fr.appspot.com/][French — Français]]
-- [[https://go-tour-de.appspot.com/][German — Deutsch]]
-- [[https://go-tour-he.appspot.com/][Hebrew — עִבְרִית]]
-- [[https://go-tour-id2.appspot.com/][Indonesian — Bahasa Indonesia]]
-- [[https://go-tour-ita.appspot.com/][Italian — Italiano]]
-- [[https://go-tour-jp.appspot.com/][Japanese — 日本語]]
-- [[https://go-tour-kr.appspot.com/][Korean — 한국어]]
-- [[https://go-tour-ro.appspot.com/][Romanian — Română]]
-- [[https://go-tour-ru-ru.appspot.com/][Russian - Русский]]
-- [[https://gotour-es.appspot.com/][Spanish — Español]]
-- [[https://go-tour-th.appspot.com/][Thai - ภาษาไทย]]
-- [[https://go-tour-turkish.appspot.com/][Turkish - Türkçe]]
-- [[https://go-tour-ua.appspot.com/][Ukrainian — Українська]]
+- [[https://tour.golang.org/][Anglès — English]] (versió original)
+- [[https://go-tour-ar.appspot.com/][Àrab — العربية]]
+- [[https://go-tour-br.appspot.com/][Portuguès del Brasil — Português do Brasil]]
+- [[https://tour.go-zh.org/][Xinès Simplificat — 中文（简体）]]
+- [[https://go-tour-zh-tw.appspot.com/][Xinès Tradicional — 中文（繁體）]]
+- [[https://go-tour-cz.appspot.com/][Txec — Česky]]
+- [[https://go-tour-fr.appspot.com/][Francès — Français]]
+- [[https://go-tour-de.appspot.com/][Alemany — Deutsch]]
+- [[https://go-tour-he.appspot.com/][Hebreu — עִבְרִית]]
+- [[https://go-tour-id2.appspot.com/][Indonesi — Bahasa Indonesia]]
+- [[https://go-tour-ita.appspot.com/][Italià — Italiano]]
+- [[https://go-tour-jp.appspot.com/][Japonès — 日本語]]
+- [[https://go-tour-kr.appspot.com/][Coreà — 한국어]]
+- [[https://go-tour-ro.appspot.com/][Romanès — Română]]
+- [[https://go-tour-ru-ru.appspot.com/][Rus — Русский]]
+- [[https://gotour-es.appspot.com/][Espanyol — Español]]
+- [[https://go-tour-th.appspot.com/][Tailandès — ภาษาไทย]]
+- [[https://go-tour-turkish.appspot.com/][Turc — Türkçe]]
+- [[https://go-tour-ua.appspot.com/][Ucrainès — Українська]]
 - [[https://go-tour-uz.appspot.com/][Uzbek — Ўзбекча]]
 
-Click the [[javascript:highlightAndClick(".next-page")]["next"]] button or type `PageDown` to continue.
+Quan estiguis preparat/da per continuar clica [[javascript:highlightAndClick(".next-page")][la fletxa dreta]] o prem la tecla `PageDown` (avançar pàgina) per continuar.
 
-#appengine: * Go offline (optional)
+#appengine: * Go sense connexió (optional)
 #appengine:
-#appengine: This tour is also available as a stand-alone program that you can use
-#appengine: without access to the internet. It builds and runs the code samples on
-#appengine: your own machine.
+#appengine: Aquest tour també està disponible com a programa independent que pots
+#appengine: usar sense accés a internet. Compila i executa els exemples de codi al
+#appengine: teu propi ordinador.
 #appengine:
-#appengine: To run the tour locally, you'll need to first
-#appengine: [[https://golang.org/doc/install][install Go]] and then run:
+#appengine: Per tal d'executar el tour localment, primer hauràs
+#appengine: d'[[https://golang.org/doc/install][instal·lar Go]] i aleshores executar 
 #appengine:
-#appengine:   go get golang.org/x/tour
+#appengine:   go get github.com/zorion/go-tour-ca
 #appengine:
-#appengine: This will place a `tour` binary in your
-#appengine: [[https://golang.org/doc/code.html#Workspaces][workspace]]'s `bin` directory.
+#appengine: Amb això afegirem un `tour` executable al directori `bin' del teu
+#appengine: [[https://golang.org/doc/code.html#Workspaces][workspace]].
 #appengine: When you run the tour program, it will open a web browser displaying
 #appengine: your local version of the tour.
 #appengine:
@@ -108,9 +107,9 @@ Click the [[javascript:highlightAndClick(".next-page")]["next"]] button or type 
 #appengine:
 #appengine: .play welcome/sandbox.go
 
-* Congratulations
+* Enhorabona
 
-You've finished the first module of the tour!
+Has acabat el primer mòdul del tour!
 
-Now click on [[javascript:highlightAndClick(".logo")][A Tour of Go]] to find out what else
-you can learn about Go, or go directly to the [[javascript:click('.next-page')][next lesson]].
+Ara clica a [[javascript:highlightAndClick(".logo")][Un Tour per Go]] per veure que més
+pots aprendre sobre Go, o ves directament a [[javascript:click('.next-page')][la següent lliçó]].
