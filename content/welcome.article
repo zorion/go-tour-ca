@@ -76,34 +76,34 @@ Quan estiguis preparat/da per continuar clica [[javascript:highlightAndClick(".n
 #appengine: teu propi ordinador.
 #appengine:
 #appengine: Per tal d'executar el tour localment, primer hauràs
-#appengine: d'[[https://golang.org/doc/install][instal·lar Go]] i aleshores executar 
+#appengine: d'[[https://golang.org/doc/install][instal·lar Go (en anglès)]] i aleshores executar 
 #appengine:
 #appengine:   go get github.com/zorion/go-tour-ca
 #appengine:
-#appengine: Amb això afegirem un `tour` executable al directori `bin' del teu
-#appengine: [[https://golang.org/doc/code.html#Workspaces][workspace]].
-#appengine: When you run the tour program, it will open a web browser displaying
-#appengine: your local version of the tour.
+#appengine: Amb això afegirem un programa `go-tour-ca` executable al directori `bin' del teu
+#appengine: [[https://golang.org/doc/code.html#Workspaces][entorn (en anglès)]].
+#appengine: Quan executis localment el tour, obrirà un navegador mostrant
+#appengine: la teva versió local del tour.
 #appengine:
-#appengine: Of course, you can continue to take the tour through this web site.
+#appengine: Per descomptat, pots continuar fent el tour des d'aquest lloc web.
 
-#appengine: * The Go Playground
+#appengine: * Go Playground
 #appengine:
-#appengine: This tour is built atop the [[https://play.golang.org/][Go Playground]], a
-#appengine: web service that runs on [[https://golang.org/][golang.org]]'s servers.
+#appengine: El tour de Go fa servir [[https://play.golang.org/][Go Playground]], 
+#appengine: un servei web que funciona als servidors de  [[https://golang.org/][golang.org (en anglès)]].
 #appengine:
-#appengine: The service receives a Go program, compiles, links, and runs the program inside
-#appengine: a sandbox, then returns the output.
+#appengine: El servei reb un programa Go, el compila, el linka i executa el programa
+#appengine: a una sandbox, finalment retorna el resultat.
 #appengine:
-#appengine: There are limitations to the programs that can be run in the playground:
+#appengine: Hi ha algunes limitacions als programas que s'executen al playground:
 #appengine:
-#appengine: - In the playground the time begins at 2009-11-10 23:00:00 UTC (determining the significance of this date is an exercise for the reader). This makes it easier to cache programs by giving them deterministic output.
+#appengine: - L'hora del playground comença el dimarts 10-11-2009 23:00:00 UTC (un valor amb significat es deixa com a exercici per al lector). Això fa més fàcil que es puguin guardar execucions de programa en cache amb un resultat determinista.
 #appengine:
-#appengine: - There are also limits on execution time and on CPU and memory usage, and the program cannot access external network hosts.
+#appengine: - També hi ha límits a l'execució en temps i en l'ús de la CPU i memòria, i un programa no pot accedir a llocs remots de la xarxa.
 #appengine:
-#appengine: The playground uses the latest stable release of Go.
+#appengine: Playground utilitza l'última versió estable de Go.
 #appengine:
-#appengine: Read "[[https://blog.golang.org/playground][Inside the Go Playground]]" to learn more.
+#appengine: Llegiu "[[https://blog.golang.org/playground][Inside the Go Playground (en anglès)]]" per saber-ne més.
 #appengine:
 #appengine: .play welcome/sandbox.go
 
@@ -112,4 +112,4 @@ Quan estiguis preparat/da per continuar clica [[javascript:highlightAndClick(".n
 Has acabat el primer mòdul del tour!
 
 Ara clica a [[javascript:highlightAndClick(".logo")][Un Tour per Go]] per veure que més
-pots aprendre sobre Go, o ves directament a [[javascript:click('.next-page')][la següent lliçó]].
+pots aprendre sobre Go, o ves directament a [[javascript:highlightAndClick('.next-page')][la següent lliçó]].
