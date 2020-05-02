@@ -15,17 +15,17 @@ value('tableOfContents', [{
 }, {
     'id': 'basics',
     'title': 'Basics',
-    'description': '<p>The starting point, learn all the basics of the language.</p><p>Declaring variables, calling functions, and all the things you need to know before moving to the next lessons.</p>',
+    'description': '<p>El punt d\'inici, aprèn all the basics of the language.</p><p>Declarar variables, cridar funcions, i tot allò que has de saber abans d\'avançar vers altres lliçons.</p>',
     'lessons': ['basics', 'flowcontrol', 'moretypes']
 }, {
     'id': 'methods',
-    'title': 'Methods and interfaces',
-    'description': '<p>Learn how to define methods on types, how to declare interfaces, and how to put everything together.</p>',
+    'title': 'Mètodes i interfícies',
+    'description': '<p>Aprèn a definir mètodes per als tipus, com declarar interfícies i com fer-ho servit tot plegat.</p>',
     'lessons': ['methods']
 }, {
     'id': 'concurrency',
-    'title': 'Concurrency',
-    'description': '<p>Go provides concurrency features as part of the core language.</p><p>This module goes over goroutines and channels, and how they are used to implement different concurrency patterns.</p>',
+    'title': 'Concurrència',
+    'description': '<p>El nucli del llenguatge Go ja ofereix característiques de concurrència.</p><p>Aquest mòdul tracta de goroutines i canals, i com es poden implementar en diversos patrons de concurrència.</p>',
     'lessons': ['concurrency']
 }]).
 
