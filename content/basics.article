@@ -26,75 +26,77 @@ Per convenció, el nom del paquet és el mateix que l'últim element de la ruta 
 
 * Important paquets
 
-This code groups the imports into a parenthesized, "factored" import statement.
+Aquest codi agrupa la importació de paquets en una instrucció entre parèntesis, "factoritzada".
 
-You can also write multiple import statements, like:
+També pots escriure múltiples instruccions important paquets, com:
 
 	import "fmt"
 	import "math"
 
-But it is good style to use the factored import statement.
+Però fer servir la versió factoritzada de la instrucció `import` és un estil bo.
 
 .play basics/imports.go
 
-* Exported names
+* Noms exportats
 
-In Go, a name is exported if it begins with a capital letter.
-For example, `Pizza` is an exported name, as is `Pi`, which is exported from
-the `math` package.
+A Go, un nom s'exporta si comença per majúscula.
+Per exemple, `Pizza` és un nom exportat, com ho és `Pi`, que es pot exportar
+del paquet `math`.
 
-`pizza` and `pi` do not start with a capital letter, so they are not exported.
+`pizza` i `pi` no comencen per majúscula, així que no s'exporten.
 
-When importing a package, you can refer only to its exported names.
-Any "unexported" names are not accessible from outside the package.
 
-Run the code. Notice the error message.
+Quan has importat un paquet pots referir-te als noms que aquest exporta.
+Qualsevol nom que no s'exporti no són accessibles des de fora del paquet.
 
-To fix the error, rename `math.pi` to `math.Pi` and try it again.
+Executa el codi. Fixa't en el missatge d'error.
+
+Per arreglar l'error, canvia el nom `math.pi` per `math.Pi` i torna a provar-ho.
 
 .play basics/exported-names.go
 
-* Functions
+* Funcions
 
-A function can take zero or more arguments.
+Una funció pot prendre zero o més arguments.
 
-In this example, `add` takes two parameters of type `int`.
+En aquest exemple, `add` pren dos paràmetres del tipus `int`.
 
-Notice that the type comes _after_ the variable name.
+Nota que el tipus s'escriu _després_ del nom de la variable.
 
-(For more about why types look the way they do, see the [[https://blog.golang.org/gos-declaration-syntax][article on Go's declaration syntax]].)
+(Per saber més sobre el motiu de pel qual els tipus es fan servir com ho fan, llegiu l'article [[https://blog.golang.org/gos-declaration-syntax]["Go's declaration syntax"]].)	
+
 
 .play basics/functions.go
 
-* Functions continued
+* Funcions (continuació)
 
-When two or more consecutive named function parameters share a type, you can omit the type from all but the last.
+Quan dos o més paràmetres amb nom consecutius d'una funció comparteixen el tipus pots ometre'l per tots ells excepte l'últim.
 
-In this example, we shortened
+En aquest exemple hem escurçat
 
 	x int, y int
 
-to
+deixant-ho
 
 	x, y int
 
 .play basics/functions-continued.go
 
-* Multiple results
+* Múltiples resultats
 
-A function can return any number of results.
+Una funció por tornar més d'un resultat.
 
-The `swap` function returns two strings.
+La funció `swap` torna dues `string` (cadenes de caràcters).
 
 .play basics/multiple-results.go
 
-* Named return values
+* Resultats amb nom
 
-Go's return values may be named. If so, they are treated as variables defined at the top of the function.
+Els valor retornats per una funció de Go poden tenir nom. Si en tenen, els noms es tracten com a variables definides al principi de la funció.
 
-These names should be used to document the meaning of the return values.
+Aquests noms s'haurien d'utilitzar per documentar el significat dels valors retornats.
 
-A `return` statement without arguments returns the named return values. This is known as a "naked" return.
+La instrucció `return` sense arguments retorna els valors continguts a les variables dels noms específicats.statement without arguments returns the named return values. This is known as a "naked" return.
 
 Naked return statements should be used only in short functions, as with the example shown here. They can harm readability in longer functions.
 
