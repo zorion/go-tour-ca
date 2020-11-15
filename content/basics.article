@@ -96,39 +96,39 @@ Els valor retornats per una funció de Go poden tenir nom. Si en tenen, els noms
 
 Aquests noms s'haurien d'utilitzar per documentar el significat dels valors retornats.
 
-La instrucció `return` sense arguments retorna els valors continguts a les variables dels noms específicats.statement without arguments returns the named return values. This is known as a "naked" return.
+La instrucció `return` sense arguments retorna els valors continguts a les variables dels noms específicats. Això es coneix en anglès com a "naked" return.
 
-Naked return statements should be used only in short functions, as with the example shown here. They can harm readability in longer functions.
+Les instruccions naked return s'haurien de fer servir només en funcions que siguin prou curtes, com a l'exemple següent. Fer-los servir en funcions més llargues pot dificultat la seva llegibilitat.
 
 .play basics/named-results.go
 
 * Variables
 
-The `var` statement declares a list of variables; as in function argument lists, the type is last.
+La instrucció `var` declara una llista de variables. Com a la llista d'arguments d'una funció, el tipus va al final.
 
-A `var` statement can be at package or function level. We see both in this example.
+Una instrucció `var` pot estar a nivell de funció o de paquet. Veurem les dues opcions a l'exemple.
 
 .play basics/variables.go
 
-* Variables with initializers
+* Variables amb valor inicial
 
-A var declaration can include initializers, one per variable.
+Una declaració `var` pot incloure valors inicials, un per cada variable.
 
-If an initializer is present, the type can be omitted; the variable will take the type of the initializer.
+Si un valor inicial és present el tipus es pot ometre, la variable prendrà el tipus del valor inicial.
 
 .play basics/variables-with-initializers.go
 
-* Short variable declarations
+* Declaració curta de variables
 
-Inside a function, the `:=` short assignment statement can be used in place of a `var` declaration with implicit type.
+En una funció, l'operand `:=` (instrucció d'assignació curta) es pot fer servir enlloc de la declaració `var`. El tipus de la variable va implícit.
 
-Outside a function, every statement begins with a keyword (`var`, `func`, and so on) and so the `:=` construct is not available.
+Fora d'una funció cada instrucció comença amb una paraula clau i l'operand `:=` no està disponible.
 
 .play basics/short-variable-declarations.go
 
-* Basic types
+* Tipus bàsics
 
-Go's basic types are
+Els tipus bàsics de Go són
 
 	bool
 
@@ -137,21 +137,21 @@ Go's basic types are
 	int  int8  int16  int32  int64
 	uint uint8 uint16 uint32 uint64 uintptr
 
-	byte // alias for uint8
+	byte // àlies per uint8
 
-	rune // alias for int32
-	     // represents a Unicode code point
+	rune // àlies per int32
+	     // representa un punt de codi Unicode
 
 	float32 float64
 
 	complex64 complex128
 
-The example shows variables of several types,
-and also that variable declarations may be "factored" into blocks,
-as with import statements.
+L'exemple mostra variables de diversos tipus
+i també que la declaració de variables que es pot "factoritzar" en blocs,
+com amb les instruccions d'importar paquets.
 
-The `int`, `uint`, and `uintptr` types are usually 32 bits wide on 32-bit systems and 64 bits wide on 64-bit systems.
-When you need an integer value you should use `int` unless you have a specific reason to use a sized or unsigned integer type.
+Els tipus `int`, `uint` i `uintptr` normalment són de 32 bits als sistemes de 32-bit i de 64 bits  als sistemes de 64-bit.
+Quan necessitis un valor enter hauries de fer servir `int` a no ser que tinguis un motiu específic per a fer servir un tipus d'enter amb tipus o mida.
 
 .play basics/basic-types.go
 
@@ -211,28 +211,28 @@ Try changing the initial value of `v` in the example code and observe how its ty
 
 * Constants
 
-Constants are declared like variables, but with the `const` keyword.
+Les constants es declaren com les variables però amb la paraula clau `const`.
 
-Constants can be character, string, boolean, or numeric values.
+Una constant pot ser un caràcter, una string, un booleà o un valor numèric.
 
-Constants cannot be declared using the `:=` syntax.
+No es poden declarar les contstant fent servir expressions `:=`.
 
 .play basics/constants.go
 
-* Numeric Constants
+* Constants Numèriques
 
-Numeric constants are high-precision _values_.
+Les constants numèriques són _valors_ d'alta precissió.
 
-An untyped constant takes the type needed by its context.
+Una constant sense tipus definit pren el tipus del seu context.
 
-Try printing `needInt(Big)` too.
+Prova d'imprimir `needInt(Big)` també.
 
-(An `int` can store at maximum a 64-bit integer, and sometimes less.)
+(Un `int` pot emmagatzemar com a màxim un enter de 64-bits, en ocasions menys.)
 
 .play basics/numeric-constants.go
 
-* Congratulations!
+* Enhorabona!
 
-You finished this lesson!
+Has acabat aquesta lliçò!
 
-You can go back to the list of [[/list][modules]] to find what to learn next, or continue with the [[javascript:click('.next-page')][next lesson]].
+Pots tornar al llistat de [[/list][mòduls]] per veure què més aprendre, o continuar amb la [[javascript:click('.next-page')][següent lliçò]].
