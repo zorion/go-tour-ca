@@ -4,7 +4,7 @@ runtime: go112
 env_variables:
   GOLANGORG_CHECK_COUNTRY: true
   TOUR_ANALYTICS: |
-    <!-- analytics not configured -->
+    <!-- analytics no configurat per evitar lios amb cookies -->
 
 default_expiration: "7d"
 
