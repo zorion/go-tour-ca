@@ -1,13 +1,13 @@
-More types: structs, slices, and maps.
-Learn how to define types based on existing ones: this lesson covers structs, arrays, slices, and maps.
+Més tipus: estructures, slices i maps.
+Aprèn com definir tipus basats en altres que ja existeixen: aquesta lliçò explica structs, arrays, slices i maps.
 
 The Go Authors
 https://golang.org
 
-* Pointers
+* Punters
 
-Go has pointers.
-A pointer holds the memory address of a value.
+Go té punters (o apuntadors).
+Un punter holds the memory address of a value.
 
 The type `*T` is a pointer to a `T` value. Its zero value is `nil`.
 
@@ -25,43 +25,44 @@ The `*` operator denotes the pointer's underlying value.
 
 This is known as "dereferencing" or "indirecting".
 
-Unlike C, Go has no pointer arithmetic.
+A diferència de C, Go no permet l'aritmètica de punters.
 
 .play moretypes/pointers.go
 
-* Structs
+* Estructures
 
-A `struct` is a collection of fields.
+Una `struct` és una estructura d'un conjunt de camps de dades.
 
 .play moretypes/structs.go
 
-* Struct Fields
+* Camps d'una estructura
 
-Struct fields are accessed using a dot.
+Els camps d'una `struct` s'accedeixen mitjançant un punt.
 
 .play moretypes/struct-fields.go
 
-* Pointers to structs
+* Punters a estructures
 
-Struct fields can be accessed through a struct pointer.
+Es pot accedir als camps d'una `struct` mitjançant un punter.
 
-To access the field `X` of a struct when we have the struct pointer `p` we could
-write `(*p).X`.
-However, that notation is cumbersome, so the language permits us instead to
-write just `p.X`, without the explicit dereference.
+Per accedir al camp `X` d'una estructura tenint el punter a l'estructura `p`
+podríem escriure `(*p).X`.
+De tota manera aquesta notació és feixuga de manera que el llenguatge ens permet
+escriure simplement `p.X`, sense cap indirecció explícita.
 
 .play moretypes/struct-pointers.go
 
-* Struct Literals
+* Literals d'estructures
 
-A struct literal denotes a newly allocated struct value by listing the values of its fields.
+Un literal d'estructura denota una nova instància d'una estructura creada llistant els valors dels seus camps.
 
-You can list just a subset of fields by using the `Name:` syntax. (And the order of named fields is irrelevant.)
+Pots llistar només els valors d'un subconjunt de camps utilitzant la sintaxis `Nom:` (l'ordre dels camps és irrellevant).
 
-The special prefix `&` returns a pointer to the struct value.
+El prefix especial `&` crea un punter a l'espai reservat per la nova estructura.
+
+_(NdT:_ _Un_literal_és_un_valor_fixat_al_codi_font_d'un_programa)_
 
 .play moretypes/struct-literals.go
-
 
 * Arrays
 
