@@ -1,14 +1,14 @@
-Flow control statements: for, if, else, switch and defer
-Learn how to control the flow of your code with conditionals, loops, switches and defers.
+Instruccions d'estructura de control: for, if, else, switch i defer.
+Aprèn com controlar el flux d'execució del teu codi amb condicionals, iteracions, seleccions i endarreriments.
 
 The Go Authors
 https://golang.org
 
 * For
 
-Go has only one looping construct, the `for` loop.
+Go només té una instrucció per iterar, el bucle `for`.
 
-The basic `for` loop has three components separated by semicolons:
+El `for` bàsic té tres components separades per punt i coma:
 
 - the init statement: executed before the first iteration
 - the condition expression: evaluated before every iteration
@@ -20,34 +20,34 @@ statement.
 
 The loop will stop iterating once the boolean condition evaluates to `false`.
 
-*Note:* Unlike other languages like C, Java, or JavaScript there are no parentheses
-surrounding the three components of the `for` statement and the braces `{`}` are
-always required.
+*Nota:* A diferència d'altres llenguatges com C, Java o JavaScript no hi ha parèntesis
+envoltant les tres components del `for` statement i els `{`}` són
+obligatoris.
 
 .play flowcontrol/for.go
 
-* For continued
+* For (continuació)
 
-The init and post statements are optional.
+Pots deixar les instruccions inicial i d'increment buides (són opcionals).
 
 .play flowcontrol/for-continued.go
 
-* For is Go's "while"
+* For és el "while" de Go
 
-At that point you can drop the semicolons: C's `while` is spelled `for` in Go.
+Fent-ho així pots eliminar els punt i coma: El `while` de C s'escriu `for` a Go.
 
 .play flowcontrol/for-is-gos-while.go
 
-* Forever
+* Etern
 
-If you omit the loop condition it loops forever, so an infinite loop is compactly expressed.
+Si no inclous la condició de bucle esdevé un bucle infinit de manera que un bucle infinit s'escriu de manera compacta.
 
 .play flowcontrol/forever.go
 
 * If
 
-Go's `if` statements are like its `for` loops; the expression need not be
-surrounded by parentheses `(`)` but the braces `{`}` are required.
+La instrucció `if` de Go és similar al seu a `for`,
+els `(`)` desapareixen i els `{`}` són obligatoris.
 
 .play flowcontrol/if.go
 
