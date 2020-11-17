@@ -51,27 +51,46 @@ els `(`)` desapareixen i els `{`}` són obligatoris.
 
 .play flowcontrol/if.go
 
-* If with a short statement
+* If amb instrucció inicial
 
-Like `for`, the `if` statement can start with a short statement to execute before the condition.
+Com el `for` la instrucció `if` pot començar amb una instrucció inicial abans de la condició.
 
-Variables declared by the statement are only in scope until the end of the `if`.
+Les variables declarades en aquesta instrucció només són visibles a l'àmbit de la instrucció `if`.
 
-(Try using `v` in the last `return` statement.)
+(Intenta usar `v` a la última instrucció `return`.)
 
 .play flowcontrol/if-with-a-short-statement.go
 
-* If and else
+* If i else
 
-Variables declared inside an `if` short statement are also available inside any
-of the `else` blocks.
+Les variables declarades dins d'una instrucció inicial d'un `if`
+també són visibles a qualsevol dels seus blocs `else`.
 
-(Both calls to `pow` return their results before the call to `fmt.Println`
-in `main` begins.)
+(Les dues crides a `pow` acaben i retornen abans de que comenci la crida a `fmt.Prinln``
+que hi ha al `main`)
 
 .play flowcontrol/if-and-else.go
 
-* Exercise: Loops and Functions
+* Exercici: Bucles i Funcions
+
+Una manera simple de practicar amb les funcions i els bucles és implementar l'arrel quadrada fent servir el mètode de Newton-Raphson.
+
+En aquest cas, el mètode de Newton és aproximar `Sqrt(x)` escollint un punt inicial _z_ i iterant:
+
+	z -= (z*z - x) / (2*z)
+
+Per començar, repeteix el càlcul 10 vegades i mira com t'aproximes a la solució per a diferents valors (1, 2, 3, ...).
+
+Després, pots canviar la condició de bucle per que s'aturi quan el càlcul no canvia més (o canvia un "delta" molt petit). Mira si són més o menys iteracions. Quant t'has aproximat al resultat de [[http://golang.org/pkg/math/#Sqrt][math.Sqrt]]?
+
+Pista: per declarar i inicialitzar un valor decimal flotant, dóna-li un valor decimal o fes servir una conversió:
+
+	z := float64(1)
+	z := 1.0
+
+*Nota:* guarda la teva funció que la farem servir més endavant.
+
+*Aquesta era traducció antiga, la nova versió en anglès a continuació*
 
 As a way to play with functions and loops, let's implement a square root function: given a number x, we want to find the number z for which z² is most nearly x.
 
@@ -171,8 +190,8 @@ To learn more about defer statements read this
 
 .play flowcontrol/defer-multi.go
 
-* Congratulations!
+* Enhorabona!
 
-You finished this lesson!
+Has acabat aquesta lliçò!
 
-You can go back to the list of [[/list][modules]] to find what to learn next, or continue with the [[javascript:click('.next-page')][next lesson]].
+Pots tornar al llistat de [[/list][mòduls]] per veure què més aprendre, o continuar amb la [[javascript:click('.next-page')][següent lliçò]].
