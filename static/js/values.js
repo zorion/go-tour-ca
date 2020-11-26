@@ -14,7 +14,7 @@ value('tableOfContents', [{
     'lessons': ['welcome']
 }, {
     'id': 'basics',
-    'title': 'Basics',
+    'title': 'Bàsics',
     'description': '<p>El punt d\'inici, aprèn all the basics of the language.</p><p>Declarar variables, cridar funcions, i tot allò que has de saber abans d\'avançar vers altres lliçons.</p>',
     'lessons': ['basics', 'flowcontrol', 'moretypes']
 }, {
