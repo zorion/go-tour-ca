@@ -39,20 +39,20 @@ Prefix your issue with "x/tour:" in the subject line, so it is easy to find.
 Issues with the tour's content itself should be reported in the issue tracker 
 at https://github.com/golang/tour/issues.
 
-## Deploying
+## Deploying to go-tour-ca
 
-1.	To deploy tour.golang.org, run:
+1.	To deploy go-tour-ca.appspot.com, run:
 
 	```
-	GO111MODULE=on gcloud --project=golang-org app deploy --no-promote app.yaml
+	GO111MODULE=on gcloud --project=go-tour-ca app deploy --no-promote app.yaml
 	```
 
 	This will create a new version, which can be viewed within the
-	[golang-org GCP project](https://console.cloud.google.com/appengine/versions?project=golang-org&serviceId=tour).
+	[golang-org GCP project](https://console.cloud.google.com/appengine/versions?project=go-tour-ca).
 
 2.	Check that the deployed version looks OK (click the version link in GCP).
 
-3.	If all is well, click "Migrate Traffic" to move 100% of the tour.golang.org
+3.	If all is well, click "Migrate Traffic" to move 100% of the go-tour-ca.appspot.com
 	traffic to the new version.
 
 4.	You're done.
