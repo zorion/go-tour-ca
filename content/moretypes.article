@@ -105,44 +105,47 @@ elements 1 a 3 d' `a`:
 
 * Les slices són com referències a arrays
 
-A slice does not store any data,
-it just describes a section of an underlying array.
+Les llesques no emmagatzemen dades,
+només descriuen una secció d'un array subjacent.
 
-Changing the elements of a slice modifies the
-corresponding elements of its underlying array.
+El canvi dels elements d'una slice modifica els
+elements corresponents del seu array subjacent.
 
-Other slices that share the same underlying array will see those changes.
+Altres slices que comparteixen el mateix array
+subjacent veuran aquests canvis.
 
 .play moretypes/slices-pointers.go
 
 
-* Slice literals
+* Literals de Slice
 
-A slice literal is like an array literal without the length.
+Els literals de slices són com els literals d'arrays, però sense la longitud.
 
-This is an array literal:
+Per especificar una capacitat, passi un tercer argument a make.
+
+Això és un literal d'array:
 
 	[3]bool{true, true, false}
 
-And this creates the same array as above,
-then builds a slice that references it:
+I això crea el mateix array que abans,
+i després construeix una "slice" que el referència:
 
 	[]bool{true, true, false}
 
 .play moretypes/slice-literals.go
 
 
-* Slice defaults
+* Valors per defecte en Slices
 
-When slicing, you may omit the high or low bounds to use their defaults instead.
+Quan es talla una "slice", es poden ometre els límits alt o baix per utilitzar els seus valors per defecte
 
-The default is zero for the low bound and the length of the slice for the high bound.
+El valor per defecte és zero per al límit inferior i la longitud de la "slice" per al límit superior.
 
-For the array
+Per a l'array
 
 	var a [10]int
 
-these slice expressions are equivalent:
+aquestes slices són equivalents:
 
 	a[0:10]
 	a[:10]
@@ -152,32 +155,33 @@ these slice expressions are equivalent:
 .play moretypes/slice-bounds.go
 
 
-* Slice length and capacity
+* Longitud i capacitat d'una Slice
 
-A slice has both a _length_ and a _capacity_.
+Una slice té tant una _longitud_ com una _capacitat_.
 
-The length of a slice is the number of elements it contains.
+La longitud és el nombre d'elements que conté.
 
-The capacity of a slice is the number of elements in the underlying array,
-counting from the first element in the slice.
+La capacitat és el nombre d'elements de l'array subjacent,
+comptant des del primer element de la "slice".
 
-The length and capacity of a slice `s` can be obtained using the expressions
+
+La longitud i la capacitat d'una slice `s` s'obtenen utilitzant les expressions
 `len(s)` and `cap(s)`.
 
-You can extend a slice's length by re-slicing it,
-provided it has sufficient capacity.
-Try changing one of the slice operations in the example program to extend it
-beyond its capacity and see what happens.
+Pots augmentar la longitud d'una slice (llesca) tornant-la a tallar,
+sempre que tingui capacitat suficient.
+Prova de canviar una de les operacions de tall de l'exemple del programa
+per allargar-lo més enllà de la seva capacitat i mira què passa.
 
 .play moretypes/slice-len-cap.go
 
 
-* Nil slices
+* Slices nil (llesques nul·les)
 
-The zero value of a slice is `nil`.
+El valor zero d'una llesca és `nil`.
 
-A nil slice has a length and capacity of 0
-and has no underlying array.
+Una llesca nul·la té una longitud i capacitat de 0
+i no té cap array subjacent.
 
 .play moretypes/nil-slices.go
 
