@@ -81,13 +81,13 @@ Go proporciona una manera convenient de treballar amb arrays.
 .play moretypes/array.go
 
 
-* Talls (slices)
+* Slices (llesques)
 
 Un array té una mida fixa.
-Un tall (slice), en canvi, és una vista dinàmicament dimensionada i flexible dels elements d'un array.
+Una slice (llesques), en canvi, és una vista dinàmicament dimensionada i flexible dels elements d'un array.
 En la pràctica, els talls són molt més comuns que els arrays.
 
-El tipus `[]T` és un tall amb elements del tipus `T`.
+El tipus `[]T` és una slice amb elements del tipus `T`.
 
 Un tall es forma especificant dos índexs, una límit inferior i una límit superior, separats per dos punts:
 
@@ -95,7 +95,7 @@ Un tall es forma especificant dos índexs, una límit inferior i una límit supe
 
 Això selecciona un rang semi-obert que inclou el primer element, però n'exclou l'últim.
 
-L'expressió següent crea un tall que inclou els
+L'expressió següent crea una slice que inclou els
 elements 1 a 3 d' `a`:
 
 	a[1:4]
@@ -103,7 +103,7 @@ elements 1 a 3 d' `a`:
 .play moretypes/slices.go
 
 
-* Slices are like references to arrays
+* Les slices són com referències a arrays
 
 A slice does not store any data,
 it just describes a section of an underlying array.
