@@ -7,23 +7,23 @@ https://golang.org
 * Punters
 
 Go té punters (o apuntadors).
-Un punter holds the memory address of a value.
+Un punter conté l'adreça de memòria d'un valor.
 
-The type `*T` is a pointer to a `T` value. Its zero value is `nil`.
+El tipus `*T` és un punter a un valor `T`. El seu valor zero és `nil`.
 
 	var p *int
 
-The `&` operator generates a pointer to its operand.
+L'operador `&` genera un punter al seu operand.
 
 	i := 42
 	p = &i
 
-The `*` operator denotes the pointer's underlying value.
+L'operador `*` denota el valor contingut del punter.
 
-	fmt.Println(*p) // read i through the pointer p
-	*p = 21         // set i through the pointer p
+	fmt.Println(*p) // llegeix i a través del punter p
+	*p = 21         // estableix i a través del punter p
 
-This is known as "dereferencing" or "indirecting".
+Això es coneix com a "dereferenciació" o "indirecció".
 
 A diferència de C, Go no permet l'aritmètica de punters.
 
@@ -66,40 +66,37 @@ _(NdT:_ _Un_literal_és_un_valor_fixat_al_codi_font_d'un_programa)_
 
 * Arrays
 
-The type `[n]T` is an array of `n` values of type `T`.
+El tipus `[n]T` és un array de `n` valors del tipus `T`.
 
-The expression
+L'expressió
 
 	var a [10]int
 
-declares a variable `a` as an array of ten integers.
+declara una variable `a` com un array de deu enters.
 
-An array's length is part of its type, so arrays cannot be resized.
-This seems limiting, but don't worry;
-Go provides a convenient way of working with arrays.
+La longitud d'un array és part del seu tipus, de manera que els arrays no es poden redimensionar.
+Això sembla limitant, però no us preocupeu;
+Go proporciona una manera convenient de treballar amb arrays.
 
 .play moretypes/array.go
 
 
-* Slices
+* Talls (slices)
 
-An array has a fixed size.
-A slice, on the other hand, is a dynamically-sized,
-flexible view into the elements of an array.
-In practice, slices are much more common than arrays.
+Un array té una mida fixa.
+Un tall (slice), en canvi, és una vista dinàmicament dimensionada i flexible dels elements d'un array.
+En la pràctica, els talls són molt més comuns que els arrays.
 
-The type `[]T` is a slice with elements of type `T`.
+El tipus `[]T` és un tall amb elements del tipus `T`.
 
-A slice is formed by specifying two indices, a low and
-high bound, separated by a colon:
+Un tall es forma especificant dos índexs, una límit inferior i una límit superior, separats per dos punts:
 
 	a[low : high]
 
-This selects a half-open range which includes the first
-element, but excludes the last one.
+Això selecciona un rang semi-obert que inclou el primer element, però n'exclou l'últim.
 
-The following expression creates a slice which includes
-elements 1 through 3 of `a`:
+L'expressió següent crea un tall que inclou els
+elements 1 a 3 d' `a`:
 
 	a[1:4]
 
