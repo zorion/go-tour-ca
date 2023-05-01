@@ -155,57 +155,59 @@ Quan necessitis un valor enter hauries de fer servir `int` a no ser que tinguis 
 
 .play basics/basic-types.go
 
-* Zero values
+* Valors zero
 
-Variables declared without an explicit initial value are given their
-_zero_value_.
+Les variables declarades sense un valor inicial explícit reben
+el seu _valor_zero_.
 
-The zero value is:
+El valor zero és:
 
-- `0` for numeric types,
-- `false` for the boolean type, and
-- `""` (the empty string) for strings.
+- `0` per als tipus numèrics,
+- `false` per al tipus booleà, i
+- `""` (la cadena buida) per a les strings (cadenes de text).
 
 .play basics/zero.go
 
-* Type conversions
+* Conversions de tipus
 
-The expression `T(v)` converts the value `v` to the type `T`.
+L'expressió `T(v)` converteix el valor `v` al tipus `T`.
 
-Some numeric conversions:
+Algunes conversions numèriques:
 
 	var i int = 42
 	var f float64 = float64(i)
 	var u uint = uint(f)
 
-Or, put more simply:
+O, de manera més senzilla:
 
 	i := 42
 	f := float64(i)
 	u := uint(f)
 
-Unlike in C, in Go assignment between items of different type requires an
-explicit conversion.
-Try removing the `float64` or `uint` conversions in the example and see what happens.
+A diferència de C, en Go l'assignació entre elements de diferents tipus requereix
+conversió explícita.
+Prova de treure les conversions `float64` o `uint` de l'exemple i mira què passa.
 
 .play basics/type-conversions.go
 
-* Type inference
+* Inferència de tipus
 
-When declaring a variable without specifying an explicit type (either by using the `:=` syntax or `var`=` expression syntax), the variable's type is inferred from the value on the right hand side.
+En declarar una variable sense especificar un tipus explícit (ja sigui utilitzant la sintaxi `:=` o la sintaxi d'expressió `var`=`),
+el tipus de la variable s'infereix del valor del costat dret.
 
-When the right hand side of the declaration is typed, the new variable is of that same type:
+Quan el costat dret de la declaració té un tipus, la nova variable té el mateix tipus:
 
 	var i int
-	j := i // j is an int
+	j := i // j és un int
 
-But when the right hand side contains an untyped numeric constant, the new variable may be an `int`, `float64`, or `complex128` depending on the precision of the constant:
+Però quan el costat dret conté una constant numèrica no tipada, la nova variable pot ser `int`,
+`float64`, o `complex128` depenent de la precisió de la constant:
 
 	i := 42           // int
 	f := 3.142        // float64
 	g := 0.867 + 0.5i // complex128
 
-Try changing the initial value of `v` in the example code and observe how its type is affected.
+Prova de canviar el valor inicial de `v` en el codi d'exemple i observa com afecta el seu tipus.
 
 .play basics/type-inference.go
 
