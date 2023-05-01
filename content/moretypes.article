@@ -186,17 +186,17 @@ i no té cap array subjacent.
 .play moretypes/nil-slices.go
 
 
-* Creating a slice with make
+* Creant slices amb make
 
-Slices can be created with the built-in `make` function;
-this is how you create dynamically-sized arrays.
+Les slices es poden crear amb la funció integrada `make`,
+així és com es creen arrays de mida dinàmica.
 
-The `make` function allocates a zeroed array
-and returns a slice that refers to that array:
+La funció `make` reserva un array amb valors inicials a zero
+i retorna un slice que fa referència a aquest array:
 
 	a := make([]int, 5)  // len(a)=5
 
-To specify a capacity, pass a third argument to `make`:
+Per especificar una capacitat, passa un tercer argument a `make`:
 
 	b := make([]int, 0, 5) // len(b)=0, cap(b)=5
 
@@ -206,32 +206,33 @@ To specify a capacity, pass a third argument to `make`:
 .play moretypes/making-slices.go
 
 
-* Slices of slices
+* Slices de slices
 
-Slices can contain any type, including other slices.
+Les slices poden contenir qualsevol tipus de dades, incloent altres slices.
 
 .play moretypes/slices-of-slice.go
 
 
-* Appending to a slice
+* Afegir elements a una slice
 
-It is common to append new elements to a slice, and so Go provides a built-in
-`append` function. The [[https://golang.org/pkg/builtin/#append][documentation]]
-of the built-in package describes `append`.
+És habitual afegir nous elements a una slice, per la qual cosa Go proporciona
+una funció integrada `append`. La [[https://golang.org/pkg/builtin/#append][documentació]] 
+del paquet integrat descriu `append`.
 
 	func append(s []T, vs ...T) []T
 
-The first parameter `s` of `append` is a slice of type `T`, and the rest are
-`T` values to append to the slice.
+El primer paràmetre `s` d' `append` és una slice del tipus `T`, i la resta són valors
+tipus `T` que s'han d'afegir a la slice.
 
-The resulting value of `append` is a slice containing all the elements of the
-original slice plus the provided values.
+El valor resultant d' `append` és una slice que conté tots els elements
+de la slice original més els valors proporcionats.
 
-If the backing array of `s` is too small to fit all the given values a bigger
-array will be allocated. The returned slice will point to the newly allocated
-array.
+Si l'array de suport de `s` és massa petit per contenir tots els valors donats,
+es reservarà un array més gran.
+La slice retornada farà referència al nou array reservat.
 
-(To learn more about slices, read the [[https://blog.golang.org/go-slices-usage-and-internals][Slices: usage and internals]] article.)
+(Per aprendre més sobre les slices, llegeix l'article
+[[https://blog.golang.org/go-slices-usage-and-internals][Slices: usage and internals]].)
 
 .play moretypes/append.go
 
