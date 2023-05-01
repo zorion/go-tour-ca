@@ -1,0 +1,895 @@
+Un tour per Go en català
+
+The Go Authors
+http://golang.org
+
+# Throughout this file are a series of lines that begin with
+# the string "#appengine: ". These lines are included in
+# the tour content when deployed as an App Engine app.
+# Furthermore, a single non-blank line that immediately follows
+# a run of "#appengine: " lines will be hidden. This is so that
+# App Engine-specific content may replace existing content.
+# For example, this paragraph
+# 	We are running
+# 	#appengine: on App Engine.
+# 	locally.
+# 	Yay!
+# reads as "We are running on App Engine. Yay!" on App Engine,
+# and "We are running locally. Yay!" otherwise.
+
+* Hola, 世界
+
+Benvingut/da al tour del [[http://golang.org/][llenguatge de programació Go]].
+
+El tour està dividit en tres seccions: Conceptes bàsics, mètodes i interfícies, i concurrència.
+
+Al llarg del tour hi ha una sèrie d'exercicis que pots completar.
+
+El tour és interactiu. Fes click al botó Executar (o tecleja Shift-Enter) per compilar i executar el programa a
+#appengine: un servidor remot.
+el teu ordinador.
+El resultat es mostrarà sota el teu codi.
+
+Els programes d'exemple mostren diferents aspectes de Go. Els programes del tour estan pensats per ser un punt de partida cap a la teva pròpia experimentació.
+
+Edita el programa i executa'l de nou.
+
+Sempre que estiguis preparat/da per continuar pressiona la fletxa dreta o la tecla PageDown (avançar pàgina).
+També pots navegar fent servir el menú que es troba sota el botó "Go" a la part de dalt de la pàgina.
+
+.play prog/tour/hello.go
+
+* Go local
+
+El tour està disponible en altres llengües:
+
+- [[http://go-tour-br.appspot.com/][Portuguès de Brasil — Português do Brasil]]
+- [[http://go-tour-es.appspot.com][Espanyol — Español]]
+- [[http://tour.golang.org/][Anglès — English]]
+- [[http://go-tour-fr.appspot.com/][Francès — Français]]
+- [[http://go-tour-he.appspot.com/][Hebreu — עִבְרִית]]
+- [[http://go-tour-jp.appspot.com/][Japonès — 日本語]]
+- [[http://go-tour-ro.appspot.com/][Romanès — Română]]
+- [[http://tur.golang.org.tr/][Turc - Türkçe]]
+- [[http://go-tour-zh.appspot.com/][Xinès — 普通话]]
+
+#Deleted-comment from the tour.golang.org [EN]
+(Si desitges traduir el tour a un altre idioma, descarrega el codi de `https://code.google.com/p/go-tour`, tradueix `tour.article` i penja'l a l'App Engine.)
+
+Prem el botó amb la fletxa dreta o la tecla PageDown per tal de continuar.
+
+#Deleted-slide from the tour.golang.org [EN]
+#appengine: * Go sense connexió
+
+#appengine: Aquest tour també està disponible com a programa independent que pots usar sense accés a internet.
+
+#appengine: El tour independent és més ràpid ja que compila i executa els exemples de codi al teu propi ordinador. També inclou exercicis addicionals que no es troben en aquesta versió (en un sandbox). Però només està en anglès.
+
+#appengine: Per executar el tour localment primer [[http://golang.org/doc/install/][instal·la Go]], després [[http://golang.org/cmd/go/][executa "go get"]] per instal·lar [[http://code.google.com/p/go-tour/][gotour]] (en anglès):
+
+#appengine: 	go get code.google.com/p/go-tour/gotour
+
+#appengine: o si ho prefereixes, en català:
+
+#appengine: 	go get github.com/zorion/go-tour-ca/gotourca
+
+#appengine: i executa l'executable resultant: `gotour` (o `gotourca` en català).
+
+#appengine: Si no, clicka el botó "Següent" o pressiona PageDown per continuar.
+
+#appengine: _(Pots_tornar_a_aquestes_instruccions_sempre_que_vulguis_prement_el_botó_"Taula_de_continguts".)_
+
+#appengine: * Go Playground
+#appengine: 
+#appengine: El tour de Go fa servir [[http://play.golang.org/][Go Playground]], un
+#appengine: servei web que funciona als servidors de [[http://golang.org/][golang.org]].
+#appengine: 
+#appengine: El servei reb un programa Go, el compila, el linka i executa el programa
+#appengine: a una sandbox, finalment retorna el resultat.
+#appengine: 
+#appengine: Hi ha algunes limitacions als programas que s'executen al playground:
+#appengine: 
+#appengine: - Playground pot fer servir la majoria de la biblioteca estàndar, amb algunes excepcions; algunes absències notables són la xarxa i el sistema de fitxers. És a dir, la única comunicació que té el playground amb la resta del mòn és escriure per els andomenats standard output i standard error.
+#appengine: - L'hora del playground és el dimarts 10-11-2009 a les 23:00:00 UTC (un valor amb significat es deixa com a exercici per al lector). Això fa més fàcil que es puguin guardar execucions de programa en cache amb un resultat determinista.
+#appengine: - També hi ha límits a l'execució en temps i en l'ús de la CPU i memòria, i un programa està restringit a utilitzar només un fil d'execució (però pot utilitzar diverses goroutines).
+#appengine:
+#appengine: Playground utilitza la última versió estable de Go.
+#appengine: 
+#appengine: .play prog/tour/sandbox.go
+
+* Paquets
+
+Tot programa de Go està format per paquets.
+
+Els programes comencen executant el paquet `main`.
+
+Aquest programa utilitza els paquets amb ruta d'importació `"fmt"` i `"math"`.
+
+Per convenció, el nom del paquet és el mateix que l'últim element de la ruta d'importació.
+
+.play prog/tour/packages.go
+
+* Important paquets
+
+Aquest codi agrupa la importació de paquets en una instrucció entre parèntesis, "factoritzada". També pots escriure múltiples instruccions important paquets, com:
+
+	import "fmt"
+	import "math"
+
+.play prog/tour/imports.go
+
+* Noms exportats
+
+Quan has importat un paquet pots referir-te als noms que aquest exporta.
+
+A Go, un nom s'exporta si comença per majúscula.
+
+`Foo` és un nom exportat, com també ho és `FOO`. El nom `foo` no s'exporta.
+
+Executa el codi. Aleshores canvia `math.pi` per `math.Pi` i prova-ho de nou.
+
+.play prog/tour/exported-names.go
+
+* Funcions
+
+Una funció pot prendre zero o més arguments.
+
+En aquest exemple, `add` pren dos paràmetres del tipus `int`.
+
+Nota que el tipus s'escriu _després_ del nom de la variable.
+
+(Per saber més sobre el motiu de pel qual els tipus es fan servir com ho fan, llegiu [[http://golang.org/doc/articles/gos_declaration_syntax.html][l'article "Go's declaration syntax"]].)
+
+.play prog/tour/functions.go
+
+* Funcions (continuació)
+
+Quan dos o més paràmetres amb nom consecutius d'una funció comparteixen el tipus pots ometre'l per tots ells excepte l'últim.
+
+En aquest exemple hem escurçat
+
+	x int, y int
+
+deixant-ho
+
+	x, y int
+
+.play prog/tour/functions-continued.go
+
+* Múltiples resultats
+
+Una funció por tornar més d'un resultat.
+
+Aquesta funció torna dues `string` (cadenes de caràcters).
+
+.play prog/tour/multiple-results.go
+
+* Resultats amb nom
+
+Les funcions prenen paràmetres. A Go, les funcions poden tornar més d'un "paràmetres resultat", no només un. Aquests poden tenir nom i actuar com variables.
+
+Si els paràmetres resultat tenen nom, la instrucció `return` sense argument torna el valor actual de les variables que els representen.
+
+.play prog/tour/named-results.go
+
+* Variables
+
+La instrucció `var` declara una llista de variables. Com a la llista d'arguments d'una funció, el tipus va al final.
+
+.play prog/tour/variables.go
+
+* Variables amb valor inicial
+
+Una declaració `var` pot incloure valors inicials, un per cada variable.
+
+Si un valor inicial és present el tipus es pot ometre, la variable prendrà el tipus del valor inicial.
+
+.play prog/tour/variables-with-initializers.go
+
+* Declaració de variables implícita
+
+En una funció, l'operand `:=` es pot fer servir enlloc de la declaració `var`. El tipus de la variable va implícit.
+
+(Fora d'una funció cada instrucció comença amb una paraula clau i l'operand `:=` no està disponible.)
+
+.play prog/tour/short-variable-declarations.go
+
+* Tipus bàsics
+
+Els tipus bàsics de Go són
+
+	bool
+
+	string
+
+	int  int8  int16  int32  int64
+	uint uint8 uint16 uint32 uint64 uintptr
+
+	byte // àlies per uint8
+
+	rune // àlies per int32
+	     // representa un punt de codi Unicode
+
+	float32 float64
+
+	complex64 complex128
+
+.play prog/tour/basic-types.go
+
+* Constants
+
+Les constants es declaren com les variables però amb la paraula clau `const`.
+
+Una constant pot ser un caràcter, una string, un booleà o un valor numèric.
+
+.play prog/tour/constants.go
+
+* Constants Numèriques
+
+Les constants numèriques són _valors_ d'alta precissió.
+
+Una constant sense tipus definit pren el tipus del seu context.
+
+Prova d'imprimir `needInt(Big)` també.
+
+.play prog/tour/numeric-constants.go
+
+* For
+
+Go només té una instrucció per iterar, el bucle `for`.
+
+El `for` bàsic és com a C o Java, excepte que els `(`)` desapareixen (no són ni opcionals) i els `{`}` són obligatoris.
+
+.play prog/tour/for.go
+
+* For (continuació)
+
+Com a C o Java, pots deixar les instruccions inicial i d'increment buides.
+
+.play prog/tour/for-continued.go
+
+* For és el "while" de Go
+#punts i comes?
+Fent-ho així pots eliminar els punt i coma:
+El `while` de C s'escriu `for` a Go.
+
+.play prog/tour/for-is-gos-while.go
+
+* Etern
+
+Si no inclous la condició de bucle esdevé un bucle infinit de manera que un bucle infinit s'escriu de manera compacta.
+
+.play prog/tour/forever.go
+
+* If
+
+La instrucció `if` és similar a la de C o Java, excepte que els `(`)` desapareixen (no són ni opcionals) i els `{`}` són obligatoris.
+
+(Et recorda quelcom?)
+
+.play prog/tour/if.go
+
+* If amb instrucció inicial
+
+Com el `for` la instrucció `if` pot començar amb una instrucció inicial abans de la condició.
+
+Les variables declarades en aquesta instrucció només són visibles a l'àmbit de la instrucció `if`.
+
+(Intenta usar `v` a la última instrucció `return`.)
+
+.play prog/tour/if-with-a-short-statement.go
+
+* If i else
+
+Les variables declarades dins d'una instrucció inicial d'un `if` també són visibles a qualsevol dels seus blocs `else`.
+
+.play prog/tour/if-and-else.go
+
+* Exercici: Bucles i Funcions
+
+Una manera simple de practicar amb les funcions i els bucles és implementar l'arrel quadrada fent servir el mètode de Newton-Raphson.
+
+En aquest cas, el mètode de Newton és aproximar `Sqrt(x)` escollint un punt inicial _z_ i iterant:
+
+.image static/newton.png
+
+Per començar, repeteix el càlcul 10 vegades i mira com t'aproximes a la solució per a diferents valors (1, 2, 3, ...).
+
+Després, pots canviar la condició de bucle per que s'aturi quan el càlcul no canvia més (o canvia un "delta" molt petit). Mira si són més o menys iteracions. Quant t'has aproximat al resultat de [[http://golang.org/pkg/math/#Sqrt][math.Sqrt]]?
+
+Pista: per declarar i inicialitzar un valor decimal flotant, dóna-li un valor decimal o fes servir una conversió:
+
+	z := float64(1)
+	z := 1.0
+
+*Nota:* guarda la teva funció que la farem servir més endavant.
+
+.play prog/tour/exercise-loops-and-functions.go
+
+* Estructures i tipus
+
+Una `struct` és una estructura d'un conjunt de camps de dades.
+
+(Una declaració `type` defineix un tipus per dades.)
+
+.play prog/tour/structs.go
+
+* Camps d'una estructura
+
+Els camps d'una `struct` s'accedeixen mitjançant un punt.
+
+.play prog/tour/struct-fields.go
+
+* Punters
+
+Go té punters (o apuntadors) però no permet aritmètica de punters.
+
+Es pot accedir als camps d'una `struct` mitjançant un punter.
+L'accés al contingut a través del punter és transparent.
+
+.play prog/tour/pointers.go
+
+* Literals d'estructures
+
+Un literal d'estructura denota una nova instància d'una estructura creada llistant els valors dels seus camps.
+
+Pots llistar només els valors d'un subconjunt de camps utilitzant la sintaxis `Nom:` (l'ordre dels camps és irrellevant).
+
+El prefix especial `&` crea un punter a l'espai reservat per la nova estructura.
+
+_(NdT:_ _Un_literal_és_un_valor_fixat_al_codi_font_d'un_programa)_
+
+.play prog/tour/struct-literals.go
+
+* Funció new
+
+L'expressió `new(T)` reserva espai per un valor del tipus `T` inicialitzat i torna un punter a aquesta reserva.
+
+	var t *T = new(T)
+
+o
+
+	t := new(T)
+
+.play prog/tour/the-new-function.go
+
+# TODO(campoy): Arrays section
+
+* Slices
+
+Una slice apunta a un vector de valors i inclou una grandària.
+
+`[]T` és una slice amb elements del tipus `T`.
+
+.play prog/tour/slices.go
+
+* Tallant llesques (Slicing slices)
+
+Les slices es poden reassignar creant una nova slice que apunta al mateix vector.
+
+L'expressió
+
+	s[lo:hi]
+
+s'avalua com una slice amb els elements de `lo` fins `hi-1`, inclosos. Per tant
+
+	s[lo:lo]
+
+és buit i
+
+	s[lo:lo+1]
+
+té un element.
+
+
+.play prog/tour/slicing-slices.go
+
+* Creant slices
+
+Les slices es creen amb la funció `make`.  Funciona reservant un vector de valors inicials (zeros) i tornant una slice que hi apunta:
+
+	a := make([]int, 5)  // len(a)=5
+
+Les slices tenen longitud i capacitat. La capacitat d'una slice és la longitud màxima que una slice pot créixer al vector subjacent.
+
+Per especificar una capacitat pots passar un tercer argument a la funció `make`:
+
+	b := make([]int, 0, 5) // len(b)=0, cap(b)=5
+
+Les slices es poden reassignar (respectant la seva capacitat):
+
+	b = b[:cap(b)] // len(b)=5, cap(b)=5
+	b = b[1:]      // len(b)=4, cap(b)=4
+
+.play prog/tour/making-slices.go
+
+* Slices nil
+
+El valor inicial d'una slice és `nil`.
+
+Una slice nil té longitud i capacitat 0.
+
+(Per aprendre més sobre slices, llegeix l'article en anglès " [[http://golang.org/doc/articles/slices_usage_and_internals.html][Slices: usage and internals]] ".)
+
+.play prog/tour/nil-slices.go
+
+# TODO(campoy): Appending to slices section
+
+* Range
+
+L'operand `range` dels bucles `for` itera sobre els elements d'una slice o un map.
+
+.play prog/tour/range.go
+
+* Range (continuació)
+
+Pots descartar l'índex o el valor assignant-lo a `_`.
+
+Si només vols l'índex, descarta el `,`valor` completament.
+
+.play prog/tour/range-continued.go
+
+* Exercici: Slices
+
+Implementa `Pic`. Hauria de tornar una slice de longitud `dy`, cada element del qual és una slice de `dx` enters sense signe de 8-bit (i.e. `[]uint8`). Quan executis el programa mostrarà el teu dibuix, interpretant els enters com valors d'una escala de grisos (de fet, de blaus).
+
+L'elecció de l'imatge és tota teva. Algunes funcions interessants poden ser `x^y`, `(x+y)/2` o `x*y`.
+
+(Necessites fer servir un bucle per reservar espai per a cada slice `[]uint8` dins la slice `[][]uint8`.)
+
+(Fes servir `uint8(valorEnter)` per convertir els tipus.)
+
+.play prog/tour/exercise-slices.go
+
+* Map
+
+El tipus `map` relaciona claus amb valors.
+
+Cal construir un `map` mitjançant `make` (i no `new`) abans de ser utilitzat. El valor inicial (`nil`) d'un `map` és buit i no pot ser assignat.
+
+.play prog/tour/maps.go
+
+* Literals de map 
+
+Els literals de `map` són com els literals d'estructures però les claus són obligatòries.
+
+.play prog/tour/map-literals.go
+
+* Literals de map (continuació)
+
+Si els elements del map tenen el mateix tipus amb nom pots ometre'l de cada element del literal.
+
+.play prog/tour/map-literals-continued.go
+
+* Operacions amb map
+
+Inserir o actualitzar un element d'un map `m`:
+
+	m[clau] = elem
+
+Recuperar un element:
+
+	elem = m[clau]
+
+Esborrar un element:
+
+	delete(m, clau)
+
+Comprovar si una clau està present amb una doble assignació:
+
+	elem, ok = m[clau]
+
+Si `clau` existeix a `m`, `ok` és `true`. Altrament `ok` és `false` i `elem` té el valor inicial (el "zero") del tipus dels elements del map.
+
+De manera semblant, quan llegim d'un map, si la clau no hi és el resultat és el valor inicial del tipus dels elements del map.
+
+.play prog/tour/mutating-maps.go
+
+# TODO(campoy): Range on maps section
+
+* Exercici: Maps
+
+Implementa `WordCount`.  Hauria de tornar un map que compti quantes vegades apareix cada “paraula“ de la string `s`. La funció `wc.Test` executa un conjunt de tests fent servir la funció que implementis imprimint si ha anat bé (PASS) o malament (FAIL).
+
+Pots trobar útil el mètode [[http://golang.org/pkg/strings/#Fields][strings.Fields]].
+
+.play prog/tour/exercise-maps.go
+
+* Funcions són valors
+
+Les funcions també són valors (poden assignar-se).
+
+.play prog/tour/function-values.go
+
+* Funcions són clausures
+
+I les funcions són clausures completes.
+
+La funció `adder` torna una clausura. Cada clausura està vinculada a la seva pròpia variable `sum`.
+
+.play prog/tour/function-closures.go
+
+* Exercici: Clausura de Fibonacci
+
+Juguem una mica amb les funcions.
+
+Implementa una funció `fibonacci` que torni una funció (clausura) que torni nombres de fibonacci successius.
+
+.play prog/tour/exercise-fibonacci-closure.go
+
+* Switch
+
+Probablement ja sabies quina pinta tindria la instrucció `switch`.
+
+El bloc d'un `case` surt automàticament del `switch` a no ser que acabi amb una instrucció `fallthrough`.
+
+.play prog/tour/switch.go
+
+* Ordre d'avaluació switch
+
+Els diferents `case` d'un `switch` s'avaluen de dalt a baix, aturant-se al primer cas satisfactori.
+
+(Per exemple,
+
+	switch i {
+	case 0:
+	case f():
+	}
+
+no crida `f` si `i==0`.)
+
+.play prog/tour/switch-evaluation-order.go
+
+* Switch sense condició
+
+Un `switch` sense condició és el mateix que `switch`true`.
+
+Aquesta construcció pot ser una manera clara d'escriure cadenes llargues `if-then-else`.
+
+.play prog/tour/switch-with-no-condition.go
+
+* Exercici avançat: Arrels cúbiques complexes
+
+Investiguem el suport de Go per a nombres complexos mitjançant els tipus `complex64` i `complex128`. Per a arrels cúbiques, el mètode de Newton Raphson es basa en repetir:
+
+.image static/newton3.png
+
+Troba l'arrel cúbica de 2 per assegurar-te que l'algoritme funciona. Hi ha una funció [[http://golang.org/pkg/math/cmplx/#Pow][Pow]] al paquet `math/cmplx`.
+
+.play prog/tour/advanced-exercise-complex-cube-roots.go
+
+* Mètodes i interfícies
+
+* Mètodes
+
+Go no té classes. No obstant pots definir mètodes als tipus d'estructura.
+
+El _receptor_del_mètode_ apareix a la seva pròpia llista d'arguments entre la paraula clau `func` i el nom del mètode.
+
+.play prog/tour/methods.go
+
+* Mètodes (continuació)
+
+De fet, pots definir un mètode sobre _qualsevol_ tipus que defineixis al teu paquet, no només estructures.
+
+No pots definir mètodes sobre tipus d'altres paquets, o sobre un tipus bàsic.
+
+.play prog/tour/methods-continued.go
+
+* Mètodes amb punters als receptors
+
+Els mètodes es poden associar amb un tipus amb nom o a un punter a un tipus amb nom.
+
+Acabem de veure dos mètodes `Abs`. Un associat als punters del tipus `*Vertex` i l'altre associat al tipus `MyFloat`.
+
+Hi ha dos motius per usar un punter com a receptor. Primer, per evitar copiar el valor a cada crida al mètode (més eficient si el valor té com a tipus una estructura gran). Segon, per tal que el mètode modifiqui el valor al qual apunta el receptor.
+
+Prova de canviar les declaracions dels mètodes `Abs` i `Scale` per fer servir `Vertex` com a receptor enlloc de `*Vertex`.
+
+El mètode `Scale` no té efecte quan `v` és un `Vertex`. `Scale` canvia `v`. Si `v` és un tipus valor (no punter) el mètode veu una còpia del `Vertex` i no pot modificar el valor original.
+
+`Abs` funciona de qualsevol manera. Només llegeix `v`. No importa si llegeix el valor original (mitjançant un punter) o una còpia d'aquell valor.
+
+.play prog/tour/methods-with-pointer-receivers.go
+
+* Interfícies
+
+Un tipus `interface` (interfície) es defineix declarant un conjunt de mètodes.
+
+Una variable d'una `interface` pot contenir qualsevol variable amb un tipus que implementi els seus mètodes.
+
+.play prog/tour/interfaces.go
+
+* Les interfícies s'implementen implícitament
+
+Un tipus implementa una `interface` implementant els seus mètodes.
+
+_No_hi_ha_una_declaració_explícita._
+
+Aquest fet desacobla la implementació dels paquets que defineixen les interfícies: no depenen l'un de l'altre.
+
+A més, això encoratja la definició precisa d'interfícies, perquè no cal que trobis cada implementació i l'etiquetis amb el nou nom de la `interface`.
+
+[[http://golang.org/pkg/io/][El paquet io]] defineix `Reader` i `Writer`. Tu no ho has de fer.
+
+.play prog/tour/interfaces-are-satisfied-implicitly.go
+
+* Errors
+
+Un error és qualsevol cosa que es pugui descriure amb una `string` d'error. La idea és implementar el mètode `Error`, l'únic mètode que té la `interface` predefinida `error`. Aquest mètode torna una `string`:
+
+	type error interface {
+		Error() string
+	}
+
+Les diferents rutines per imprimir del paquet `fmt` automàticament saben
+com cridar el mètode quan se li demana imprimir un `error`.
+
+.play prog/tour/errors.go
+
+* Exercici: Errors
+
+Copia la teva funció `Sqrt` dels exercicis anteriors i modifica-la per que torni un valor del tipus `error` (et vam avisar).
+
+`Sqrt` hauria de tornar un error diferent de `nil` quan se li passa un nombre negatiu ja que no suporta nombres complexos.
+
+Crea el nou tipus
+
+	type ErrNegativeSqrt float64
+
+i fes que sigui del tipus `error` implementant el mètode
+
+	func (e ErrNegativeSqrt) Error() string
+
+de manera que `ErrNegativeSqrt(-2).Error()` torni `"No`es`pot`passar`un`negatiu`a`Sqrt:`-2"`.
+
+*Nota:* cridar a `fmt.Sprint(e)` dins del mètode `Error` farà que el programa entri a un bucle infinit. Ho pots evitar fent primer la conversió de `e` a decimal: `fmt.Sprint(float64(e))`. Saps per què? 
+
+Canvia la teva funció `Sqrt` per tornar un valor `ErrNegativeSqrt` quan rebi un nombre negatiu.
+
+.play prog/tour/exercise-errors.go
+
+* Web servers
+
+[[http://golang.org/pkg/net/http/][El paquet http]] atén peticions HTTP usant qualsevol valor que implementi `http.Handler`:
+
+	package http
+	
+	type Handler interface {
+		ServeHTTP(w ResponseWriter, r *Request)
+	}
+
+En aquest exemple el tipus `Hello` implementa `http.Handler`.
+
+Visita [[http://localhost:4000/][http://localhost:4000/]] per veure la salutació.
+
+#appengine: *Nota:* Aquest exemple no funcionarà a la versió web del tour. Pots provar d'executar 
+#appengine: web servers [[http://golang.org/doc/install/][instal·lant Go]].
+
+.play prog/tour/web-servers.go
+
+* Exercici: HTTP Handlers
+
+Implementa els següents tipus i defineix-hi els mètodes ServeHTTP. Registra'ls per tractar unes direccions específiques del web server.
+
+	type String string
+	
+	type Struct struct {
+		Greeting string
+		Punct    string
+		Who      string
+	}
+
+Per exemple, hauries de ser capaç de registrar manegadors (handlers) així:
+
+	http.Handle("/string", String("Sóc un nus esfilagarsat."))
+	http.Handle("/struct", &Struct{"Hola", ":", "Gosquirols!"})
+
+.play prog/tour/exercise-http-handlers.go
+
+* Imatges
+
+[[http://golang.org/pkg/image/#Image][El Paquet image]] defineix la `interface` (interfície) `Image`
+
+	package image
+	
+	type Image interface {
+		ColorModel() color.Model
+		Bounds() Rectangle
+		At(x, y int) color.Color
+	}
+
+(Visita [[http://golang.org/pkg/image/#Image][la documentació]] per tenir més detalls.)
+
+A més, `color.Color` i `color.Model` també són interfícies però les ignorarem utilitzant les implementacions predefinides `color.RGBA` i `color.RGBAModel`.
+
+.play prog/tour/images.go
+
+* Exercici: Imatges
+
+Recordes el generador d'imatges que ja has programat? Anem a escriure'n un altre, però aquest cop tornarà una implementació de `image.Image` enlloc d'una slice.
+
+Defineix el teu propi tipus `Image`, implementa [[http://golang.org/pkg/image/#Image][els mètodes necessaris]], i crida el mètode `pic.ShowImage`.
+
+`Bounds` hauria de tornar un `image.Rectangle`, per exemple `image.Rect(0,`0,`ample,`alt)`.
+
+`ColorModel` hauria de tornar `color.RGBAModel`.
+
+`At` ha de tornar un color. El valor `v` a l'anterior generador d'imatges (escala de blaus) correspon a `color.RGBA{v,`v,`255,`255}` en aquest exercici.
+
+.play prog/tour/exercise-images.go
+
+* Exercici: Rot13 Reader
+
+Un patró força comú és una implementació d' [[http://golang.org/pkg/io/#Reader][io.Reader]] que encapsula un altre `io.Reader`, modificant el flux de dades d'alguna manera.
+
+Per exemple, la funció [[http://golang.org/pkg/compress/gzip/#NewReader][gzip.NewReader]] pren un `io.Reader` (un flux de dades comprimit amb `gzip`) i torna un `*gzip.Reader` que implementa `io.Reader` (el flux de dades descomprimit).
+
+Implementa el tipus `rot13Reader` que implementi `io.Reader` i llegeixi de `io.Reader`, aplicant al flux de dades l'algoritme de xifrat  [[http://en.wikipedia.org/wiki/ROT13][ROT13]] a tots els caràcters alfabètics.
+
+Et donem el tipus `rot13Reader`. Fes-lo un `io.Reader` implementant el seu mètode `Read`.
+
+.play prog/tour/exercise-rot-reader.go
+
+* Concurrència
+
+* Gorutines
+
+Una _gorutina_ és un fil d'execució lleuger que Go gestiona dinàmicament.
+
+	go f(x, y, z)
+
+crida una nova gorutina que comença a executar el mètode
+
+	f(x, y, z)
+
+L'avaluació de `f`, `x`, `y` i `z` succeeix a la rutina que fa la crida i l'execució de `f` succeeix a la nova gorutina.
+
+Les gorutines corren al mateix espai d'adreces de manera que la memòria compartida ha de ser sincronitzada. El paquet [[http://golang.org/pkg/sync/][`sync`]] proporciona primitives útils tot i que no les necessitaràs massa ja que go ja té unes altres. (Veure la següent diapositiva.)
+
+.play prog/tour/goroutines.go
+
+* Canals
+
+Els canals són un tipus de dades a través dels quals pots enviar i rebre valors amb l'operador `<-`.
+
+	ch <- v    // Envia v al canal ch.
+	v := <-ch  // Rep del canal ch, i
+	           // assigna el valor a v.
+
+(El flux de dades va en el sentit de la fletxa.)
+
+
+Com els `map` i `slice`, els canals han de ser creats abans de ser utilitzats:
+
+	ch := make(chan int)
+
+
+Per defecte, fins que tant qui rep com qui envia estan llestos les operacions d'enviar i rebre queden bloquejades. Això permet a les goroutines que es sincronitzin sense bloqueigs explícits o variables de condició.
+
+.play prog/tour/channels.go
+
+* Canals amb buffer
+
+Els canals poden tenir un _buffer_. Pots passar la mida del _buffer_ com segon argument a `make` per inicialitzar un canal amb _buffer_:
+
+	ch := make(chan int, 100)
+
+
+Només es bloqueja al enviar dades a un canal quan el _buffer_ està ple. Al rebre es bloqueja quan el _buffer_ és buit
+
+
+Modifica l'exemple per saturar el _buffer_ i observa el que passa.
+
+.play prog/tour/buffered-channels.go
+
+* Range i Close
+
+L'emissor pot tancar un canal (`close`) per indicar que no s'enviaran més dades. Els receptors poden comprovar si un canal està tancat assignant un segon paràmetre a la instrucció de recepció:
+
+	v, ok := <-ch
+
+`ok` és `false` si no hi ha més valors per rebre i el canal està tancat.
+
+El bucle `for`i`:=`range`c` rep valors del canal `c` de manera reiterada fins que `c` està tancat (amb `close`).
+
+*Nota:* Només l'emissor hauria de tancar el canal, mai el receptor. Enviar dades a un canal tancat causa un error _panic_.
+
+*Nota2:* Els canals no són com fitxers, generalment no cal tancar-los. Tancar un canal només és necessari quan cal avisar al receptor de que no hi haurà més valors, per exemple, per finalitzar un bucle `range`.
+
+.play prog/tour/range-and-close.go
+
+* Select
+
+La instrucció `select` permet a una gorutina esperar més d'una operació de comunicació (via canals).
+
+El `select` es bloqueja fins que un dels seus casos (`case`) pot continuar l'execució, aleshores executa aquell cas. En el cas que hi hagi més d'un cas disponible en tria un aleatòriament.
+
+.play prog/tour/select.go
+
+* Select per defecte
+
+El cas `default` a un `select` s'executa si no hi ha cap altre cas disponible.
+
+Es pot fer servir el cas `default` per intentar enviar o rebre dades sense bloquejar la rutina:
+
+	select {
+	case i := <-c:
+		// fa servir i
+	default:
+		// rebre de c bloquejaria
+	}
+
+.play prog/tour/default-selection.go
+
+* Exercici: ABC equivalents
+
+Hi ha molts arbres binaris de cerca (ABC) diferents que contenen la mateixa seqüència de valors emmagatzemats a les seves fulles. Per exemple, aquí pots veure dos arbres binaris de cerca que contenen la seqüència 1, 1, 2, 3, 5, 8, 13.
+
+.image static/tree.png
+
+Una funció per comprovar si dos arbres binaris de cerca contenen la mateixa seqüència és complex en molts llenguatges. Farem servir la concurrència i els canals de Go per escriure una solució molt simple.
+
+Aquest exemple fa servir el paquet `tree`, que defineix el tipus:
+
+	type Tree struct {
+		Left  *Tree
+		Value int
+		Right *Tree
+	}
+
+
+* Exercici: ABC  equivalents
+
+*1.* Implementa la funció `Walk`.
+
+*2.* Prova la funció `Walk`.
+
+La funció `tree.New(k)` construeix un arbre binari amb una estructura aleatòria contenint els valors `k`, `2k`, `3k`, ..., `10k`.
+
+Crea un nou canal `ch` i engega el _walker_:
+
+	go Walk(tree.New(1), ch)
+
+Aleshores llegeix i escriu 10 valors del canal. Haurien de ser els nombres 1, 2, 3, ..., 10.
+
+*3.* Implementa la funció `Same` fent servir `Walk` per determinar si `t1` i `t2` emmagatzemen els mateixos valors.
+
+*4.* Prova la funció `Same`.
+
+`Same(tree.New(1), tree.New(1))` hauria de tornar `true` i `Same(tree.New(1), tree.New(2))` hauria de tornar `false`.
+
+.play prog/tour/exercise-equivalent-binary-trees.go
+
+* Exercici: Web Crawler
+
+En aquest exercici faràs servir les característiques de concurrència de Go per paral·lelitzar un `Web`Crawler`.
+
+Modifica la funció `Crawl` per obtenir en paral·lel les URLs sense obtenir dues vegades la mateixa URL.
+
+.play prog/tour/exercise-web-crawler.go
+
+* I ara? (Where to Go from here...)
+
+#appengine: Pots començar [[http://golang.org/doc/install/][instal·lant Go]] o descarregant el
+#appengine: [[http://code.google.com/appengine/downloads.html#Google_App_Engine_SDK_for_Go][Go App Engine SDK]].
+
+#appengine: Un cop tinguis Go al teu ordinador, la
+La
+[[http://golang.org/doc/][documentació de Go]] és un gran lloc per
+#appengine: continuar.
+començar.
+Conté referències, tutorials, vídeos, i més.
+
+Per aprendre com organitzar i treballar amb codi Go, mira [[http://www.youtube.com/watch?v=XCsL89YtqCs][aquest screencast]] o llegeix [[http://golang.org/doc/code.html][Com escriure codi Go]].
+
+Si necessites ajuda amb les llibreries estàndard mira la  [[http://golang.org/pkg/][referència de paquets]]. Per ajuda amb el llenguatge mateix, et sorprendrà que l' [[http://golang.org/ref/spec][especificació del Llenguatge]] no és complicada de llegir.
+
+Per obtenir més detalls del model de concurrència de Go, mira la revisió de codi [[http://golang.org/doc/codewalk/sharemem/][Comunicar per compartir memòria]].
+
+La revisió de codi [[http://golang.org/doc/codewalk/functions/][Funcions de primera classe a Go]] dóna una interessant perspectiva sobre els tipus que tenen les funcions a Go.
+
+El [[http://blog.golang.org/][Bloc de Go]] té un gran arxiu d'articles informatius sobre Go.
+
+Visita [[http://golang.org][golang.org]] per més informació.
+
