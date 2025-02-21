@@ -1,106 +1,106 @@
-Concurrency
-Go provides concurrency constructions as part of the core language. This lesson presents them and gives some examples on how they can be used.
+Concurrència
+Go proporciona construccions de concurrència com a part del llenguatge base. Aquesta lliçó les presenta i dona alguns exemples de com es poden utilitzar.
 
-The Go Authors
+Els Autors de Go
 https://golang.org
 
 * Goroutines
 
-A _goroutine_ is a lightweight thread managed by the Go runtime.
+Una _goroutine_ és un fil lleuger gestionat pel runtime de Go.
 
 	go f(x, y, z)
 
-starts a new goroutine running
+inicia una nova goroutine executant
 
 	f(x, y, z)
 
-The evaluation of `f`, `x`, `y`, and `z` happens in the current goroutine and the execution of `f` happens in the new goroutine.
+L'avaluació de `f`, `x`, `y`, i `z` succeeix a la goroutine actual i l'execució de `f` succeeix a la nova goroutine.
 
-Goroutines run in the same address space, so access to shared memory must be synchronized. The [[https://golang.org/pkg/sync/][`sync`]] package provides useful primitives, although you won't need them much in Go as there are other primitives. (See the next slide.)
+Les goroutines s'executen en el mateix espai d'adreces, així que l'accés a la memòria compartida ha d'estar sincronitzat. El paquet [[https://golang.org/pkg/sync/][`sync`]] proporciona primitives útils, tot i que no les necessitaràs gaire en Go ja que hi ha altres primitives. (Mira la següent diapositiva.)
 
 .play concurrency/goroutines.go
 
-* Channels
+* Canals
 
-Channels are a typed conduit through which you can send and receive values with the channel operator, `<-`.
+Els canals són un conducte tipat a través del qual pots enviar i rebre valors amb l'operador de canal, `<-`.
 
-	ch <- v    // Send v to channel ch.
-	v := <-ch  // Receive from ch, and
-	           // assign value to v.
+	ch <- v    // Envia v al canal ch.
+	v := <-ch  // Rep de ch, i
+	           // assigna el valor a v.
 
-(The data flows in the direction of the arrow.)
+(Les dades flueixen en la direcció de la fletxa.)
 
-Like maps and slices, channels must be created before use:
+Com els maps i les llesques, els canals s'han de crear abans d'usar-los:
 
 	ch := make(chan int)
 
-By default, sends and receives block until the other side is ready. This allows goroutines to synchronize without explicit locks or condition variables.
+Per defecte, els enviaments i les recepcions bloquegen fins que l'altra banda està preparada. Això permet que les goroutines es sincronitzin sense bloquejos explícits o variables de condició.
 
-The example code sums the numbers in a slice, distributing the work between two goroutines.
-Once both goroutines have completed their computation, it calculates the final result.
+El codi d'exemple suma els números d'una llista, distribuint el treball entre dues goroutines.
+Un cop ambdues goroutines han completat el seu càlcul, calcula el resultat final.
 
 .play concurrency/channels.go
 
-* Buffered Channels
+* Canals amb Buffer
 
-Channels can be _buffered_.  Provide the buffer length as the second argument to `make` to initialize a buffered channel:
+Els canals poden tenir _buffer_. Proporciona la longitud del buffer com a segon argument a `make` per inicialitzar un canal amb buffer:
 
 	ch := make(chan int, 100)
 
-Sends to a buffered channel block only when the buffer is full. Receives block when the buffer is empty.
+Els enviaments a un canal amb buffer només es bloquegen quan el buffer està ple. Les recepcions es bloquegen quan el buffer està buit.
 
-Modify the example to overfill the buffer and see what happens.
+Modifica l'exemple per omplir en excés el buffer i veure què passa.
 
 .play concurrency/buffered-channels.go
 
-* Range and Close
+* Range i Close
 
-A sender can `close` a channel to indicate that no more values will be sent. Receivers can test whether a channel has been closed by assigning a second parameter to the receive expression: after
+Un emissor pot `close` (tancar) un canal per indicar que no s'enviaran més valors. Els receptors poden provar si un canal s'ha tancat assignant un segon paràmetre a l'expressió de recepció: després de
 
 	v, ok := <-ch
 
-`ok` is `false` if there are no more values to receive and the channel is closed.
+`ok` és `false` si no hi ha més valors per rebre i el canal està tancat.
 
-The loop `for`i`:=`range`c` receives values from the channel repeatedly until it is closed.
+El bucle `for`i`:=`range`c` rep valors del canal repetidament fins que es tanca.
 
-*Note:* Only the sender should close a channel, never the receiver. Sending on a closed channel will cause a panic.
+*Nota:* Només l'emissor hauria de tancar un canal, mai el receptor. Enviar a un canal tancat causarà un pànic.
 
-*Another*note:* Channels aren't like files; you don't usually need to close them. Closing is only necessary when the receiver must be told there are no more values coming, such as to terminate a `range` loop.
+*Una*altra*nota:* Els canals no són com fitxers; normalment no cal tancar-los. El tancament només és necessari quan el receptor ha de saber que no vindran més valors, com per finalitzar un bucle `range`.
 
 .play concurrency/range-and-close.go
 
 * Select
 
-The `select` statement lets a goroutine wait on multiple communication operations.
+La declaració `select` permet a una goroutine esperar múltiples operacions de comunicació.
 
-A `select` blocks until one of its cases can run, then it executes that case.  It chooses one at random if multiple are ready.
+Un `select` es bloqueja fins que un dels seus casos pot executar-se, llavors executa aquest cas. Si múltiples estan preparats, n'escull un a l'atzar.
 
 .play concurrency/select.go
 
-* Default Selection
+* Selecció per Defecte
 
-The `default` case in a `select` is run if no other case is ready.
+El cas `default` en un `select` s'executa si cap altre cas està preparat.
 
-Use a `default` case to try a send or receive without blocking:
+Utilitza un cas `default` per provar un enviament o recepció sense bloquejar:
 
 	select {
 	case i := <-c:
-		// use i
+		// utilitza i
 	default:
-		// receiving from c would block
+		// rebre de c es bloquejaria
 	}
 
 .play concurrency/default-selection.go
 
-* Exercise: Equivalent Binary Trees
+* Exercici: Arbres Binaris Equivalents
 
-There can be many different binary trees with the same sequence of values stored in it. For example, here are two binary trees storing the sequence 1, 1, 2, 3, 5, 8, 13.
+Hi pot haver molts arbres binaris diferents amb la mateixa seqüència de valors emmagatzemats. Per exemple, aquí hi ha dos arbres binaris que emmagatzemen la seqüència 1, 1, 2, 3, 5, 8, 13.
 
 .image /content/img/tree.png
 
-A function to check whether two binary trees store the same sequence is quite complex in most languages. We'll use Go's concurrency and channels to write a simple solution.
+Una funció per comprovar si dos arbres binaris emmagatzemen la mateixa seqüència és bastant complexa en la majoria de llenguatges. Utilitzarem la concurrència i els canals de Go per escriure una solució simple.
 
-This example uses the `tree` package, which defines the type:
+Aquest exemple utilitza el paquet `tree`, que defineix el tipus:
 
 	type Tree struct {
 		Left  *Tree
@@ -108,101 +108,98 @@ This example uses the `tree` package, which defines the type:
 		Right *Tree
 	}
 
+Continua la descripció a la [[javascript:click('.next-page')][següent pàgina]].
 
-Continue description on [[javascript:click('.next-page')][next page]].
+* Exercici: Arbres Binaris Equivalents
 
-* Exercise: Equivalent Binary Trees
+*1.* Implementa la funció `Walk`.
 
-*1.* Implement the `Walk` function.
+*2.* Prova la funció `Walk`.
 
-*2.* Test the `Walk` function.
+La funció `tree.New(k)` construeix un arbre binari estructurat aleatòriament (però sempre ordenat) que conté els valors `k`, `2k`, `3k`, ..., `10k`.
 
-The function `tree.New(k)` constructs a randomly-structured (but always sorted) binary tree holding the values `k`, `2k`, `3k`, ..., `10k`.
-
-Create a new channel `ch` and kick off the walker:
+Crea un nou canal `ch` i inicia el walker:
 
 	go Walk(tree.New(1), ch)
 
-Then read and print 10 values from the channel. It should be the numbers 1, 2, 3, ..., 10.
+Després llegeix i imprimeix 10 valors del canal. Haurien de ser els números 1, 2, 3, ..., 10.
 
-*3.* Implement the `Same` function using `Walk` to determine whether `t1` and `t2` store the same values.
+*3.* Implementa la funció `Same` utilitzant `Walk` per determinar si `t1` i `t2` emmagatzemen els mateixos valors.
 
-*4.* Test the `Same` function.
+*4.* Prova la funció `Same`.
 
-`Same(tree.New(1),`tree.New(1))` should return true, and `Same(tree.New(1),`tree.New(2))` should return false.
+`Same(tree.New(1),`tree.New(1))` hauria de retornar true, i `Same(tree.New(1),`tree.New(2))` hauria de retornar false.
 
-The documentation for `Tree` can be found [[https://godoc.org/golang.org/x/tour/tree#Tree][here]].
+La documentació per `Tree` es pot trobar [[https://godoc.org/golang.org/x/tour/tree#Tree][aquí]].
 
 .play concurrency/exercise-equivalent-binary-trees.go
 
 * sync.Mutex
 
-We've seen how channels are great for communication among goroutines.
+Hem vist com els canals són genials per a la comunicació entre goroutines.
 
-But what if we don't need communication? What if we just want to make sure only
-one goroutine can access a variable at a time to avoid conflicts?
+Però què passa si no necessitem comunicació? Què passa si només volem assegurar-nos que només
+una goroutine pot accedir a una variable alhora per evitar conflictes?
 
-This concept is called _mutual_exclusion_, and the conventional name for the data structure that provides it is _mutex_.
+Aquest concepte s'anomena _exclusió_mútua_, i el nom convencional per a l'estructura de dades que la proporciona és _mutex_.
 
-Go's standard library provides mutual exclusion with
-[[https://golang.org/pkg/sync/#Mutex][`sync.Mutex`]] and its two methods:
+La biblioteca estàndard de Go proporciona exclusió mútua amb
+[[https://golang.org/pkg/sync/#Mutex][`sync.Mutex`]] i els seus dos mètodes:
 
 - `Lock`
 - `Unlock`
 
-We can define a block of code to be executed in mutual exclusion by surrounding it
-with a call to `Lock` and `Unlock` as shown on the `Inc` method.
+Podem definir un bloc de codi per ser executat en exclusió mútua envoltant-lo
+amb una crida a `Lock` i `Unlock` com es mostra al mètode `Inc`.
 
-We can also use `defer` to ensure the mutex will be unlocked as in the `Value` method.
+També podem utilitzar `defer` per assegurar que el mutex es desbloquejarà com al mètode `Value`.
 
 .play concurrency/mutex-counter.go
 
-* Exercise: Web Crawler
+* Exercici: Rastrejador Web
 
-In this exercise you'll use Go's concurrency features to parallelize a web crawler.
+En aquest exercici utilitzaràs les característiques de concurrència de Go per paral·lelitzar un rastrejador web.
 
-Modify the `Crawl` function to fetch URLs in parallel without fetching the same URL twice.
+Modifica la funció `Crawl` per obtenir URLs en paral·lel sense obtenir la mateixa URL dues vegades.
 
-_Hint_: you can keep a cache of the URLs that have been fetched on a map, but maps alone are not
-safe for concurrent use!
+_Pista_: pots mantenir una memòria cau de les URLs que s'han obtingut en un map, però els maps sols no són
+segurs per a ús concurrent!
 
 .play concurrency/exercise-web-crawler.go
 
-* Where to Go from here...
+* On anar des d'aquí...
 
-#appengine: You can get started by
-#appengine: [[https://golang.org/dl/][installing Go]].
+#appengine: Pots començar
+#appengine: [[https://golang.org/dl/][instal·lant Go]].
 
-#appengine: Once you have Go installed, the
-The
-[[https://golang.org/doc/][Go Documentation]] is a great place to
-#appengine: continue.
-start.
-It contains references, tutorials, videos, and more.
+#appengine: Un cop tinguis Go instal·lat, la
+La [[https://golang.org/doc/][Documentació de Go]] és un gran lloc per
+#appengine: continuar.
+començar.
+Conté referències, tutorials, vídeos i més.
 
-To learn how to organize and work with Go code, watch [[https://www.youtube.com/watch?v=XCsL89YtqCs][this screencast]] or read [[https://golang.org/doc/code.html][How to Write Go Code]].
+Per aprendre com organitzar i treballar amb codi Go, mira [[https://www.youtube.com/watch?v=XCsL89YtqCs][aquest screencast]] o llegeix [[https://golang.org/doc/code.html][Com Escriure Codi Go]].
 
-If you need help with the standard library, see the [[https://golang.org/pkg/][package reference]]. For help with the language itself, you might be surprised to find the [[https://golang.org/ref/spec][Language Spec]] is quite readable.
+Si necessites ajuda amb la biblioteca estàndard, consulta la [[https://golang.org/pkg/][referència de paquets]]. Per ajuda amb el llenguatge mateix, et podria sorprendre trobar que l'[[https://golang.org/ref/spec][Especificació del Llenguatge]] és bastant llegible.
 
-To further explore Go's concurrency model, watch
-[[https://www.youtube.com/watch?v=f6kdp27TYZs][Go Concurrency Patterns]]
-([[https://talks.golang.org/2012/concurrency.slide][slides]])
-and
-[[https://www.youtube.com/watch?v=QDDwwePbDtw][Advanced Go Concurrency Patterns]]
-([[https://talks.golang.org/2013/advconc.slide][slides]])
-and read the
-[[https://golang.org/doc/codewalk/sharemem/][Share Memory by Communicating]]
+Per explorar més el model de concurrència de Go, mira
+[[https://www.youtube.com/watch?v=f6kdp27TYZs][Patrons de Concurrència en Go]]
+([[https://talks.golang.org/2012/concurrency.slide][diapositives]])
+i
+[[https://www.youtube.com/watch?v=QDDwwePbDtw][Patrons Avançats de Concurrència en Go]]
+([[https://talks.golang.org/2013/advconc.slide][diapositives]])
+i llegeix el
+[[https://golang.org/doc/codewalk/sharemem/][Compartir Memòria Comunicant]]
 codewalk.
 
-To get started writing web applications, watch
-[[https://vimeo.com/53221558][A simple programming environment]]
-([[https://talks.golang.org/2012/simple.slide][slides]])
-and read the
-[[https://golang.org/doc/articles/wiki/][Writing Web Applications]] tutorial.
+Per començar a escriure aplicacions web, mira
+[[https://vimeo.com/53221558][Un entorn de programació simple]]
+([[https://talks.golang.org/2012/simple.slide][diapositives]])
+i llegeix el tutorial
+[[https://golang.org/doc/articles/wiki/][Escrivint Aplicacions Web]].
 
-The [[https://golang.org/doc/codewalk/functions/][First Class Functions in Go]] codewalk gives an interesting perspective on Go's function types.
+El [[https://blog.golang.org/][Blog de Go]] té un gran arxiu d'articles informatius sobre Go.
 
-The [[https://blog.golang.org/][Go Blog]] has a large archive of informative Go articles.
+Per aprofundir en les funcions de Go, llegeix el codewalk [[https://golang.org/doc/codewalk/functions/][Les Funcions com a Ciutadans de Primera Classe en Go]], que ofereix una perspectiva interessant sobre els tipus de funcions en Go.
 
-Visit [[https://golang.org][golang.org]] for more.
-
+Visita [[https://golang.org][golang.org]] per més informació.
