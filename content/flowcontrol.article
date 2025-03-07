@@ -144,7 +144,7 @@ no crida `f` si `i==0`.)
 
 * Switch sense condició
 
-Un switch sense condició és el mateix que `switch true`.
+Un switch sense condició és el mateix que `switch`true`.
 
 Aquesta construcció pot ser una manera neta d'escriure llargues cadenes if-then-else.
 
