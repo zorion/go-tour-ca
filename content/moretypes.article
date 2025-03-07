@@ -84,7 +84,7 @@ Go proporciona una manera convenient de treballar amb arrays.
 * Slices (llesques)
 
 Un array té una mida fixa.
-Una slice (llesques), en canvi, és una vista dinàmicament dimensionada i flexible dels elements d'un array.
+Una slice (llesca), en canvi, és una vista dinàmicament dimensionada i flexible dels elements d'un array.
 En la pràctica, els talls són molt més comuns que els arrays.
 
 El tipus `[]T` és una slice amb elements del tipus `T`.
@@ -239,126 +239,126 @@ La slice retornada farà referència al nou array reservat.
 
 * Range
 
-The `range` form of the `for` loop iterates over a slice or map.
+La forma `range` del bucle `for` itera sobre una slice o map.
 
-When ranging over a slice, two values are returned for each iteration.
-The first is the index, and the second is a copy of the element at that index.
+Quan s'itera sobre una slice, es retornen dos valors per cada iteració.
+El primer és l'índex, i el segon és una còpia de l'element en aquest índex.
 
 .play moretypes/range.go
 
-* Range continued
+* Range (continuació)
 
-You can skip the index or value by assigning to `_`.
+Pots ometre l'índex o el valor assignant-lo a `_`.
 
     for i, _ := range pow
     for _, value := range pow
 
-If you only want the index, you can omit the second variable.
+Si només vols l'índex, pots ometre la segona variable.
 
     for i := range pow
 
 .play moretypes/range-continued.go
 
-* Exercise: Slices
+* Exercici: Slices
 
-Implement `Pic`. It should return a slice of length `dy`, each element of which is a slice of `dx` 8-bit unsigned integers. When you run the program, it will display your picture, interpreting the integers as grayscale (well, bluescale) values.
+Implementa `Pic`. Ha de retornar una slice de longitud `dy`, cada element de la qual és una slice de `dx` enters sense signe de 8 bits. Quan executis el programa, mostrarà la teva imatge, interpretant els enters com a valors d'escala de grisos (bé, escala de blaus).
 
-The choice of image is up to you. Interesting functions include `(x+y)/2`, `x*y`, and `x^y`.
+L'elecció de la imatge és cosa teva. Algunes funcions interessants són `(x+y)/2`, `x*y`, i `x^y`.
 
-(You need to use a loop to allocate each `[]uint8` inside the `[][]uint8`.)
+(Necessitaràs utilitzar un bucle per assignar cada `[]uint8` dins del `[][]uint8`.)
 
-(Use `uint8(intValue)` to convert between types.)
+(Utilitza `uint8(intValue)` per convertir entre tipus.)
 
 .play moretypes/exercise-slices.go
 
 * Maps
 
-A map maps keys to values.
+Un map associa claus a valors.
 
-The zero value of a map is `nil`.
-A `nil` map has no keys, nor can keys be added.
+El valor zero d'un map és `nil`.
+Un map `nil` no té claus, ni se li'n poden afegir.
 
-The `make` function returns a map of the given type,
-initialized and ready for use.
+La funció `make` retorna un map del tipus donat,
+inicialitzat i llest per utilitzar.
 
 .play moretypes/maps.go
 
-* Map literals
+* Literals de Map
 
-Map literals are like struct literals, but the keys are required.
+Els literals de map són com els literals d'estructura, però les claus són obligatòries.
 
 .play moretypes/map-literals.go
 
-* Map literals continued
+* Literals de Map (continuació)
 
-If the top-level type is just a type name, you can omit it from the elements of the literal.
+Si el tipus de nivell superior és només un nom de tipus, pots ometre'l dels elements del literal.
 
 .play moretypes/map-literals-continued.go
 
-* Mutating Maps
+* Mutant Maps
 
-Insert or update an element in map `m`:
+Inserir o actualitzar un element en un map `m`:
 
 	m[key] = elem
 
-Retrieve an element:
+Recuperar un element:
 
 	elem = m[key]
 
-Delete an element:
+Eliminar un element:
 
 	delete(m, key)
 
-Test that a key is present with a two-value assignment:
+Comprovar si una clau és present amb una assignació de dos valors:
 
 	elem, ok = m[key]
 
-If `key` is in `m`, `ok` is `true`. If not, `ok` is `false`.
+Si `key` és al map `m`, `ok` és `true`. Si no, `ok` és `false`.
 
-If `key` is not in the map, then `elem` is the zero value for the map's element type.
+Si `key` no és al map, llavors `elem` és el valor zero per al tipus d'element del map.
 
-*Note:* If `elem` or `ok` have not yet been declared you could use a short declaration form:
+*Nota:* Si `elem` o `ok` encara no s'han declarat, pots utilitzar la forma de declaració curta:
 
 	elem, ok := m[key]
 
 .play moretypes/mutating-maps.go
 
-* Exercise: Maps
+* Exercici: Maps
 
-Implement `WordCount`.  It should return a map of the counts of each “word” in the string `s`. The `wc.Test` function runs a test suite against the provided function and prints success or failure.
+Implementa `WordCount`. Ha de retornar un map amb el recompte de cada "paraula" a la cadena `s`. La funció `wc.Test` executa un conjunt de proves contra la funció proporcionada i imprimeix èxit o fracàs.
 
-You might find [[https://golang.org/pkg/strings/#Fields][strings.Fields]] helpful.
+Pot ser útil [[https://golang.org/pkg/strings/#Fields][strings.Fields]].
 
 .play moretypes/exercise-maps.go
 
-* Function values
+* Valors de funció
 
-Functions are values too. They can be passed around just like other values.
+Les funcions també són valors. Es poden passar com qualsevol altre valor.
 
-Function values may be used as function arguments and return values.
+Els valors de funció es poden utilitzar com a arguments de funció i valors de retorn.
 
 .play moretypes/function-values.go
 
-* Function closures
+* Tancaments de funció
 
-Go functions may be closures. A closure is a function value that references variables from outside its body. The function may access and assign to the referenced variables; in this sense the function is "bound" to the variables.
+Les funcions de Go poden ser tancaments. Un tancament és un valor de funció que fa referència a variables fora del seu cos. La funció pot accedir i assignar a les variables referenciades; en aquest sentit, la funció està "lligada" a les variables.
 
-For example, the `adder` function returns a closure. Each closure is bound to its own `sum` variable.
+Per exemple, la funció `adder` retorna un tancament. Cada tancament està lligat a la seva pròpia variable `sum`.
 
 .play moretypes/function-closures.go
 
-* Exercise: Fibonacci closure
+* Exercici: Tancament de Fibonacci
 
-Let's have some fun with functions.
+Divertim-nos una mica amb les funcions.
 
-Implement a `fibonacci` function that returns a function (a closure) that
-returns successive [[https://en.wikipedia.org/wiki/Fibonacci_number][fibonacci numbers]]
+Implementa una funció `fibonacci` que retorni una funció (un tancament) que
+retorni successius [[https://en.wikipedia.org/wiki/Fibonacci_number][números de Fibonacci]]
 (0, 1, 1, 2, 3, 5, ...).
 
 .play moretypes/exercise-fibonacci-closure.go
 
-* Congratulations!
+* Enhorabona!
 
-You finished this lesson!
+Has acabat aquesta lliçó!
 
-You can go back to the list of [[/list][modules]] to find what to learn next, or continue with the [[javascript:click('.next-page')][next lesson]].
+Pots tornar a la llista de [[/list][mòduls]] per trobar què aprendre a continuació, o continuar amb la [[javascript:click('.next-page')][següent lliçó]].

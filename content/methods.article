@@ -1,387 +1,392 @@
-Methods and interfaces
-This lesson covers methods and interfaces, the constructs that define objects and their behavior.
+Mètodes i interfícies
+Aquesta lliçó cobreix els mètodes i les interfícies, les construccions que defineixen els objectes i el seu comportament.
 
 The Go Authors
 https://golang.org
 
-* Methods
+* Mètodes
 
-Go does not have classes.
-However, you can define methods on types.
+Go no té classes.
+Tot i això, pots definir mètodes sobre tipus.
 
-A method is a function with a special _receiver_ argument.
+Un mètode és una funció amb un argument especial _receptor_.
 
-The receiver appears in its own argument list between the `func` keyword and
-the method name.
+El receptor apareix a la seva pròpia llista d'arguments entre la paraula clau `func` i
+el nom del mètode.
 
-In this example, the `Abs` method has a receiver of type `Vertex` named `v`.
+En aquest exemple, el mètode `Abs` té un receptor de tipus `Vertex` anomenat `v`.
 
 .play methods/methods.go
 
-* Methods are functions
+* Els mètodes són funcions
 
-Remember: a method is just a function with a receiver argument.
+Recorda: un mètode és només una funció amb un argument receptor.
 
-Here's `Abs` written as a regular function with no change in functionality.
+Aquí tens `Abs` escrit com una funció regular sense canvis en la funcionalitat.
 
 .play methods/methods-funcs.go
 
-* Methods continued
+* Mètodes continuació
 
-You can declare a method on non-struct types, too.
+També pots declarar un mètode sobre tipus que no són estructures.
 
-In this example we see a numeric type `MyFloat` with an `Abs` method.
+En aquest exemple veiem un tipus numèric `MyFloat` amb un mètode `Abs`.
 
-You can only declare a method with a receiver whose type is defined in the same
-package as the method.
-You cannot declare a method with a receiver whose type is defined in another
-package (which includes the built-in types such as `int`).
+Només pots declarar un mètode amb un receptor el tipus del qual estigui definit en el mateix
+paquet que el mètode.
+No pots declarar un mètode amb un receptor el tipus del qual estigui definit en un altre
+paquet (això inclou els tipus integrats com `int`).
 
 .play methods/methods-continued.go
 
-* Pointer receivers
+* Receptors de punter
 
-You can declare methods with pointer receivers.
+Pots declarar mètodes amb receptors de punter.
 
-This means the receiver type has the literal syntax `*T` for some type `T`.
-(Also, `T` cannot itself be a pointer such as `*int`.)
+Això significa que el tipus receptor té la sintaxi literal `*T` per a algun tipus `T`.
+(A més, `T` no pot ser en si mateix un punter com `*int`).
 
-For example, the `Scale` method here is defined on `*Vertex`.
+Per exemple, el mètode `Scale` aquí està definit sobre `*Vertex`.
 
-Methods with pointer receivers can modify the value to which the receiver
-points (as `Scale` does here).
-Since methods often need to modify their receiver, pointer receivers are more
-common than value receivers.
+Els mètodes amb receptors de punter poden modificar el valor al qual apunta el receptor
+(com fa `Scale` aquí).
+Com que els mètodes sovint necessiten modificar el seu receptor, els receptors de punter són més
+comuns que els receptors de valor.
 
-Try removing the `*` from the declaration of the `Scale` function on line 16
-and observe how the program's behavior changes.
+Prova d'eliminar el `*` de la declaració de la funció `Scale` a la línia 16
+i observa com canvia el comportament del programa.
 
-With a value receiver, the `Scale` method operates on a copy of the original
-`Vertex` value.
-(This is the same behavior as for any other function argument.)
-The `Scale` method must have a pointer receiver to change the `Vertex` value
-declared in the `main` function.
+Amb un receptor de valor, el mètode `Scale` opera sobre una còpia del valor original
+`Vertex`.
+(Aquest és el mateix comportament que per a qualsevol altre argument de funció.)
+El mètode `Scale` ha de tenir un receptor de punter per canviar el valor `Vertex`
+declarat a la funció `main`.
 
 .play methods/methods-pointers.go
 
-* Pointers and functions
+* Punters i funcions
 
-Here we see the `Abs` and `Scale` methods rewritten as functions.
+Aquí veiem els mètodes `Abs` i `Scale` reescrits com a funcions.
 
-Again, try removing the `*` from line 16.
-Can you see why the behavior changes?
-What else did you need to change for the example to compile?
+De nou, prova d'eliminar el `*` de la línia 16.
+Pots veure per què canvia el comportament?
+Què més vas haver de canviar perquè l'exemple compilés?
 
-(If you're not sure, continue to the next page.)
+(Si no n'estàs segur, continua a la següent pàgina.)
 
 .play methods/methods-pointers-explained.go
 
-* Methods and pointer indirection
+* Mètodes i indirecte de punter
 
-Comparing the previous two programs, you might notice that
-functions with a pointer argument must take a pointer:
+Comparant els dos programes anteriors, potser notes que
+les funcions amb un argument de punter han de prendre un punter:
 
 	var v Vertex
-	ScaleFunc(v, 5)  // Compile error!
+	ScaleFunc(v, 5)  // Error de compilació!
 	ScaleFunc(&v, 5) // OK
 
-while methods with pointer receivers take either a value or a pointer as the
-receiver when they are called:
+mentre que els mètodes amb receptors de punter prenen tant un valor com un punter com a
+receptor quan són cridats:
 
 	var v Vertex
 	v.Scale(5)  // OK
 	p := &v
 	p.Scale(10) // OK
 
-For the statement `v.Scale(5)`, even though `v` is a value and not a pointer,
-the method with the pointer receiver is called automatically.
-That is, as a convenience, Go interprets the statement `v.Scale(5)` as
-`(&v).Scale(5)` since the `Scale` method has a pointer receiver.
+Per a la declaració `v.Scale(5)`, encara que `v` és un valor i no un punter,
+el mètode amb el receptor de punter es crida automàticament.
+És a dir, per comoditat, Go interpreta la declaració `v.Scale(5)` com
+`(&v).Scale(5)` ja que el mètode `Scale` té un receptor de punter.
 
 .play methods/indirection.go
 
-* Methods and pointer indirection (2)
+* Mètodes i indirecte de punter (2)
 
-The equivalent thing happens in the reverse direction.
+El mateix passa en la direcció inversa.
 
-Functions that take a value argument must take a value of that specific type:
+Les funcions que prenen un argument de valor han de prendre un valor d'aquest tipus específic:
 
 	var v Vertex
 	fmt.Println(AbsFunc(v))  // OK
-	fmt.Println(AbsFunc(&v)) // Compile error!
+	fmt.Println(AbsFunc(&v)) // Error de compilació!
 
-while methods with value receivers take either a value or a pointer as the
-receiver when they are called:
+mentre que els mètodes amb receptors de valor prenen tant un valor com un punter com a
+receptor quan són cridats:
 
 	var v Vertex
 	fmt.Println(v.Abs()) // OK
 	p := &v
 	fmt.Println(p.Abs()) // OK
 
-In this case, the method call `p.Abs()` is interpreted as `(*p).Abs()`.
+En aquest cas, la crida al mètode `p.Abs()` s'interpreta com `(*p).Abs()`.
 
 .play methods/indirection-values.go
 
-* Choosing a value or pointer receiver
+* Triant un receptor de valor o punter
 
-There are two reasons to use a pointer receiver.
+Hi ha dues raons per utilitzar un receptor de punter.
 
-The first is so that the method can modify the value that its receiver points to.
+La primera és perquè el mètode pugui modificar el valor al qual apunta el seu receptor.
 
-The second is to avoid copying the value on each method call.
-This can be more efficient if the receiver is a large struct, for example.
+La segona és per evitar copiar el valor en cada crida al mètode.
+Això pot ser més eficient si el receptor és una estructura gran, per exemple.
 
-In this example, both `Scale` and `Abs` are with receiver type `*Vertex`,
-even though the `Abs` method needn't modify its receiver.
+En aquest exemple, tant `Scale` com `Abs` són amb tipus receptor `*Vertex`,
+encara que el mètode `Abs` no necessita modificar el seu receptor.
 
-In general, all methods on a given type should have either value or pointer
-receivers, but not a mixture of both.
-(We'll see why over the next few pages.)
+En general, tots els mètodes d'un tipus donat haurien de tenir receptors de valor o de punter,
+però no una barreja d'ambdós.
+(Veurem per què en les properes pàgines.)
 
 .play methods/methods-with-pointer-receivers.go
 
-* Interfaces
+* Interfícies
 
-An _interface_type_ is defined as a set of method signatures.
+Un _tipus d'interfície_ es defineix com un conjunt de signatures de mètodes.
 
-A value of interface type can hold any value that implements those methods.
+Un valor de tipus interfície pot contenir qualsevol valor que implementi aquests mètodes.
 
-*Note:* There is an error in the example code on line 22.
-`Vertex` (the value type) doesn't implement `Abser` because
-the `Abs` method is defined only on `*Vertex` (the pointer type).
+*Nota:* Hi ha un error en el codi d'exemple a la línia 22.
+`Vertex` (el tipus valor) no implementa `Abser` perquè
+el mètode `Abs` està definit només sobre `*Vertex` (el tipus punter).
 
 .play methods/interfaces.go
 
-* Interfaces are implemented implicitly
+* Les interfícies s'implementen implícitament
 
-A type implements an interface by implementing its methods.
-There is no explicit declaration of intent, no "implements" keyword.
+Un tipus implementa una interfície implementant els seus mètodes.
+No hi ha cap declaració explícita d'intenció, cap paraula clau "implements".
 
-Implicit interfaces decouple the definition of an interface from its
-implementation, which could then appear in any package without prearrangement.
+Les interfícies implícites desacoblen la definició d'una interfície de la seva
+implementació, que pot aparèixer en qualsevol paquet sense acord previ.
 
 .play methods/interfaces-are-satisfied-implicitly.go
 
-* Interface values
+* Valors d'interfície
 
-Under the hood, interface values can be thought of as a tuple of a value and a
-concrete type:
+Sota el capó, els valors d'interfície es poden pensar com una tupla d'un valor i un
+tipus concret:
 
-	(value, type)
+	(valor, tipus)
 
-An interface value holds a value of a specific underlying concrete type.
+Un valor d'interfície conté un valor d'un tipus concret subjacent específic.
 
-Calling a method on an interface value executes the method of the same name on
-its underlying type.
+Cridar un mètode sobre un valor d'interfície executa el mètode del mateix nom sobre
+el seu tipus subjacent.
 
 .play methods/interface-values.go
 
-* Interface values with nil underlying values
+* Valors d'interfície amb valors subjacents nuls
 
-If the concrete value inside the interface itself is nil,
-the method will be called with a nil receiver.
+Si el valor concret dins de la interfície mateixa és nul,
+el mètode es cridarà amb un receptor nul.
 
-In some languages this would trigger a null pointer exception,
-but in Go it is common to write methods that gracefully handle being called
-with a nil receiver (as with the method `M` in this example.)
+En alguns llenguatges això provocaria una excepció de punter nul,
+però en Go és comú escriure mètodes que manegen elegantment ser cridats
+amb un receptor nul (com amb el mètode `M` en aquest exemple.)
 
-Note that an interface value that holds a nil concrete value is itself non-nil.
+Tingues en compte que un valor d'interfície que conté un valor concret nul no és en si mateix nul.
 
 .play methods/interface-values-with-nil.go
 
-* Nil interface values
+* Valors d'interfície nuls
 
-A nil interface value holds neither value nor concrete type.
+Un valor d'interfície nul no conté ni valor ni tipus concret.
 
-Calling a method on a nil interface is a run-time error because there is no
-type inside the interface tuple to indicate which _concrete_ method to call.
+Cridar un mètode sobre una interfície nul·la és un error en temps d'execució perquè no hi ha
+tipus dins de la tupla d'interfície per indicar quin mètode _concret_ cridar.
 
 .play methods/nil-interface-values.go
 
-* The empty interface
+* La interfície buida
 
-The interface type that specifies zero methods is known as the _empty_interface_:
+El tipus d'interfície que no especifica cap mètode s'anomena interfície _buida_:
 
 	interface{}
 
-An empty interface may hold values of any type.
-(Every type implements at least zero methods.)
+Una interfície buida pot contenir valors de qualsevol tipus.
+(Cada tipus implementa almenys zero mètodes.)
 
-Empty interfaces are used by code that handles values of unknown type.
-For example, `fmt.Print` takes any number of arguments of type `interface{}`.
+Les interfícies buides s'utilitzen per gestionar valors de tipus desconegut.
+Per exemple, `fmt.Print` pren qualsevol nombre d'arguments de tipus `interface{}`.
 
 .play methods/empty-interface.go
 
-* Type assertions
+* Conversió de tipus amb afirmació de tipus
 
-A _type_assertion_ provides access to an interface value's underlying concrete value.
+Una _afirmació de tipus_ proporciona accés al valor concret subjacent d'un valor d'interfície.
 
 	t := i.(T)
 
-This statement asserts that the interface value `i` holds the concrete type `T`
-and assigns the underlying `T` value to the variable `t`.
+Aquesta declaració afirma que el valor d'interfície `i` conté el tipus concret `T`
+i assigna el valor subjacent `T` a la variable `t`.
 
-If `i` does not hold a `T`, the statement will trigger a panic.
+Si `i` no conté un `T`, la declaració provocarà un error en temps d'execució.
 
-To _test_ whether an interface value holds a specific type,
-a type assertion can return two values: the underlying value
-and a boolean value that reports whether the assertion succeeded.
+Per _provar_ si un valor d'interfície conté un tipus específic,
+una afirmació de tipus pot retornar dos valors: el valor subjacent
+i un valor booleà que indica si l'afirmació ha tingut èxit.
 
 	t, ok := i.(T)
 
-If `i` holds a `T`, then `t` will be the underlying value and `ok` will be true.
+Si `i` conté un `T`, llavors `t` serà el valor subjacent i `ok` serà cert.
 
-If not, `ok` will be false and `t` will be the zero value of type `T`,
-and no panic occurs.
+Si no, `ok` serà fals i `t` serà el valor zero del tipus `T`,
+i no es produirà cap error.
 
-Note the similarity between this syntax and that of reading from a map.
+Observa la similitud entre aquesta sintaxi i la de llegir d'un mapa.
 
 .play methods/type-assertions.go
 
-* Type switches
+* Commutadors de tipus (switch)
 
-A _type_switch_ is a construct that permits several type assertions in series.
+Un _commutador de tipus_ és una construcció que permet diverses afirmacions de tipus en sèrie.
 
-A type switch is like a regular switch statement, but the cases in a type
-switch specify types (not values), and those values are compared against
-the type of the value held by the given interface value.
+Un commutador de tipus s'assembla a un commutador regular, però els casos en un commutador de tipus
+especifiquen tipus (no valors), i aquests tipus es comparen amb el tipus
+del valor concret que conté el valor d'interfície.
 
 	switch v := i.(type) {
 	case T:
-		// here v has type T
+		// aquí v és de tipus T
 	case S:
-		// here v has type S
+		// aquí v és de tipus S
 	default:
-		// no match; here v has the same type as i
+		// no és cap tipus T ni S
 	}
 
-The declaration in a type switch has the same syntax as a type assertion `i.(T)`,
-but the specific type `T` is replaced with the keyword `type`.
+La declaració en un commutador de tipus té la mateixa sintaxi que una afirmació de tipus `i.(T)`,
+però el tipus específic `T` es reemplaça per la paraula clau `type`.
 
-This switch statement tests whether the interface value `i`
-holds a value of type `T` or `S`.
-In each of the `T` and `S` cases, the variable `v` will be of type
-`T` or `S` respectively and hold the value held by `i`.
-In the default case (where there is no match), the variable `v` is
-of the same interface type and value as `i`.
+Aquest commutador avalua si el valor d'interfície `i`
+conté un valor de tipus `T` o `S`.
+En cada cas de `T` o `S`, la variable `v` tindrà el tipus
+`T` o `S` respectivament i contindrà el valor que conté `i`.
+En el cas per defecte (quan no hi ha coincidència), la variable `v` és
+del mateix tipus d'interfície i valor que `i`.
 
 .play methods/type-switches.go
 
-* Stringers
+* Stringer
 
-One of the most ubiquitous interfaces is [[//golang.org/pkg/fmt/#Stringer][`Stringer`]] defined by the [[//golang.org/pkg/fmt/][`fmt`]] package.
+Un dels tipus d'interfície més ubics és [[https://golang.org/pkg/fmt/#Stringer][`Stringer`]] definit pel [[https://golang.org/pkg/fmt/][paquet `fmt`]]:
 
 	type Stringer interface {
 		String() string
 	}
 
-A `Stringer` is a type that can describe itself as a string. The `fmt` package
-(and many others) look for this interface to print values.
+Un `Stringer` és un tipus que pot descriure's a si mateix com a cadena de text.
+El paquet `fmt` (i molts altres) busquen aquesta interfície per imprimir valors.
 
 .play methods/stringer.go
 
-* Exercise: Stringers
+* Exercici: Stringer
 
-Make the `IPAddr` type implement `fmt.Stringer` to print the address as
-a dotted quad.
+Fes que el tipus `IPAddr` implementi `fmt.Stringer` per imprimir l'adreça com
+una quad-dotted IP.
 
-For instance, `IPAddr{1,`2,`3,`4}` should print as `"1.2.3.4"`.
+Per exemple, `IPAddr{1,`2,`3,`4}` hauria d'imprimir com `"1.2.3.4"`.
 
 .play methods/exercise-stringer.go
 
 * Errors
 
-Go programs express error state with `error` values.
+Els programes Go expressen l'estat d'error amb valors `error`.
 
-The `error` type is a built-in interface similar to `fmt.Stringer`:
+El tipus `error` és una interfície integrada similar a `fmt.Stringer`:
 
 	type error interface {
 		Error() string
 	}
 
-(As with `fmt.Stringer`, the `fmt` package looks for the `error` interface when
-printing values.)
+(Com amb `fmt.Stringer`, el paquet `fmt` busca la interfície `error` quan
+imprimeix valors.)
 
-Functions often return an `error` value, and calling code should handle errors
-by testing whether the error equals `nil`.
+Les funcions sovint retornen un valor `error` i el codi que crida hauria de gestionar els errors
+comprovant si l'error és igual a `nil`.
 
 	i, err := strconv.Atoi("42")
 	if err != nil {
-		fmt.Printf("couldn't convert number: %v\n", err)
+		fmt.Printf("no s'ha pogut convertir el número: %v\n", err)
 		return
 	}
-	fmt.Println("Converted integer:", i)
+	fmt.Println("Número convertit:", i)
 
-A nil `error` denotes success; a non-nil `error` denotes failure.
+Un `nil` `error` denota èxit; un `error` no nul denota fracàs.
 
 .play methods/errors.go
 
-* Exercise: Errors
+* Exercici: Errors
 
-Copy your `Sqrt` function from the [[/flowcontrol/8][earlier exercise]] and modify it to return an `error` value.
+Copia la teva funció `Sqrt` de l'exercici anterior i modifica-la per retornar un valor `error`.
 
-`Sqrt` should return a non-nil error value when given a negative number, as it doesn't support complex numbers.
+`Sqrt` hauria de retornar un error no nul quan se li dóna un número negatiu, ja que no suporta nombres complexos.
 
-Create a new type
+Crea un nou tipus
 
 	type ErrNegativeSqrt float64
 
-and make it an `error` by giving it a
+i fes que implementi `error` donant-li un mètode
 
 	func (e ErrNegativeSqrt) Error() string
 
-method such that `ErrNegativeSqrt(-2).Error()` returns `"cannot`Sqrt`negative`number:`-2"`.
+de manera que `ErrNegativeSqrt(-2).Error()` retorni `"no`es`pot`calcular`l'arrel`quadrada`d'un`número`negatiu:`-2"`.
 
-*Note:* A call to `fmt.Sprint(e)` inside the `Error` method will send the program into an infinite loop. You can avoid this by converting `e` first: `fmt.Sprint(float64(e))`. Why?
+*Nota:* Una crida a `fmt.Sprint(e)` dins del mètode `Error` provocarà un bucle infinit. Pots evitar-ho convertint primer `e`: `fmt.Sprint(float64(e))`. Per què?
 
-Change your `Sqrt` function to return an `ErrNegativeSqrt` value when given a negative number.
+Canvia la teva funció `Sqrt` per retornar un valor `ErrNegativeSqrt` quan se li dóna un número negatiu.
 
 .play methods/exercise-errors.go
 
-* Readers
+* Lectors
 
-The `io` package specifies the `io.Reader` interface,
-which represents the read end of a stream of data.
+El paquet `io` especifica la interfície `io.Reader`,
+que representa el final de lectura d'un flux de dades.
 
-The Go standard library contains [[https://golang.org/search?q=Read#Global][many implementations]] of this interface, including files, network connections, compressors, ciphers, and others.
+La biblioteca estàndard de Go conté [[https://golang.org/search?q=Read#Global][moltes implementacions]] d'aquesta interfície, incloent fitxers,
+connexions de xarxa, compressors, xifrats, i altres.
 
-The `io.Reader` interface has a `Read` method:
+La interfície `io.Reader` té un mètode `Read`:
 
 	func (T) Read(b []byte) (n int, err error)
 
-`Read` populates the given byte slice with data and returns the number of bytes
-populated and an error value. It returns an `io.EOF` error when the stream
-ends.
+`Read` omple la porció de bytes donada amb dades i retorna el nombre de bytes
+omplerts i un valor d'error. Retorna un error `io.EOF` quan el flux
+s'acaba.
 
-The example code creates a
-[[//golang.org/pkg/strings/#Reader][`strings.Reader`]]
-and consumes its output 8 bytes at a time.
+El codi d'exemple crea un
+[[https://golang.org/pkg/strings/#Reader][`strings.Reader`]]
+i consumeix la seva sortida 8 bytes a la vegada.
 
 .play methods/reader.go
 
-* Exercise: Readers
+* Exercici: Lectors
 
-Implement a `Reader` type that emits an infinite stream of the ASCII character
+Implementa un tipus `Reader` que emeti un flux infinit del caràcter ASCII
 `'A'`.
 
 .play methods/exercise-reader.go
 
-* Exercise: rot13Reader
+* Exercici: rot13Reader
 
-A common pattern is an [[https://golang.org/pkg/io/#Reader][io.Reader]] that wraps another `io.Reader`, modifying the stream in some way.
+Un patró comú és un [[https://golang.org/pkg/io/#Reader][io.Reader]] que embolcalla un altre `io.Reader`, modificant el flux de dades d'alguna manera.
 
-For example, the [[https://golang.org/pkg/compress/gzip/#NewReader][gzip.NewReader]] function takes an `io.Reader` (a stream of compressed data) and returns a `*gzip.Reader` that also implements `io.Reader` (a stream of the decompressed data).
+Per exemple, la funció [[https://golang.org/pkg/compress/gzip/#NewReader][`gzip.NewReader`]]
+pren un `io.Reader` (un flux de dades comprimides) i retorna un `*gzip.Reader`
+que també implementa `io.Reader` (un flux de dades descomprimides).
 
-Implement a `rot13Reader` that implements `io.Reader` and reads from an `io.Reader`, modifying the stream by applying the [[https://en.wikipedia.org/wiki/ROT13][rot13]] substitution cipher to all alphabetical characters.
+Implementa un `rot13Reader` que implementi `io.Reader` i llegeixi
+d'un `io.Reader`, aplicant la transformació [[https://en.wikipedia.org/wiki/ROT13][rot13]]
+a tot el flux.
 
-The `rot13Reader` type is provided for you.
-Make it an `io.Reader` by implementing its `Read` method.
+El tipus `rot13Reader` t'és proporcionat. Fes que sigui un
+`io.Reader` implementant el mètode `Read`.
 
 .play methods/exercise-rot-reader.go
 
-* Images
+* Imatges
 
-[[https://golang.org/pkg/image/#Image][Package image]] defines the `Image` interface:
+El [[https://golang.org/pkg/image/#Image][paquet image]] defineix la interfície `Image`:
 
 	package image
 
@@ -391,32 +396,33 @@ Make it an `io.Reader` by implementing its `Read` method.
 		At(x, y int) color.Color
 	}
 
-*Note*: the `Rectangle` return value of the `Bounds` method is actually an
-[[https://golang.org/pkg/image/#Rectangle][`image.Rectangle`]], as the
-declaration is inside package `image`.
+*Nota:* El valor de retorn `Rectangle` del mètode `Bounds` és en realitat un [[https://golang.org/pkg/image/#Rectangle][`image.Rectangle`]], ja que la declaració és dins del paquet `image`.
 
-(See [[https://golang.org/pkg/image/#Image][the documentation]] for all the details.)
+(Mira la [[https://golang.org/pkg/image/#Image][documentació]] per més detalls.)
 
-The `color.Color` and `color.Model` types are also interfaces, but we'll ignore that by using the predefined implementations `color.RGBA` and `color.RGBAModel`. These interfaces and types are specified by the [[https://golang.org/pkg/image/color/][image/color package]]
+Els tipus `color.Color` i `color.Model` també són interfícies, però usualment
+utilitzarem les implementacions predefinides `color.RGBA` i `color.RGBAModel`.
+Aquestes interfícies i tipus són especificats pel [[https://golang.org/pkg/image/color/][paquet image/color]].
 
 .play methods/images.go
 
-* Exercise: Images
+* Exercici: Imatges
 
-Remember the [[/moretypes/18][picture generator]] you wrote earlier? Let's write another one, but this time it will return an implementation of `image.Image` instead of a slice of data.
+Recordes el [[/moretypes/18][generador d'imatges]] que vas escriure abans? Anem a escriure'n un altre, però
+aquesta vegada retornarà una implementació de `Image` en lloc d'una porció de dades.
 
-Define your own `Image` type, implement [[https://golang.org/pkg/image/#Image][the necessary methods]], and call `pic.ShowImage`.
+Defineix el teu propi tipus `Image`, implementa [[https://golang.org/pkg/image/#Image][els mètodes necessaris]], i crida `pic.ShowImage`.
 
-`Bounds` should return a `image.Rectangle`, like `image.Rect(0,`0,`w,`h)`.
+La funció `Bounds` hauria de retornar un `image.Rectangle`, com `image.Rect(0,`0,`w,`h)`.
 
-`ColorModel` should return `color.RGBAModel`.
+`ColorModel` hauria de retornar `color.RGBAModel`.
 
-`At` should return a color; the value `v` in the last picture generator corresponds to `color.RGBA{v,`v,`255,`255}` in this one.
+`At` hauria de retornar un color; el valor `v` de l'últim generador d'imatges correspon a `color.RGBA{v,`v,`255,`255}` en aquest.
 
 .play methods/exercise-images.go
 
-* Congratulations!
+* Felicitats!
 
-You finished this lesson!
+Has acabat aquesta lliçó!
 
-You can go back to the list of [[/list][modules]] to find what to learn next, or continue with the [[javascript:click('.next-page')][next lesson]].
+Pots tornar a la llista de [[/list][mòduls]] per trobar què aprendre a continuació, o continuar amb la [[javascript:click('.next-page')][següent lliçó]].

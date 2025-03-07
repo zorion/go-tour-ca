@@ -1,5 +1,5 @@
-Paquets, variables i funcions.
-Aprèn els components bàsics de qualsevol program de Go.
+Paquets, variables i funcions
+Aprèn els components bàsics de qualsevol programa de Go.
 
 The Go Authors
 https://golang.org
@@ -12,28 +12,27 @@ Els programes comencen executant un paquet anomenat `main`.
 
 Aquest programa fa servir els paquets amb ruta d'importació `"fmt"` i `"math/rand"`.
 
+Per convenció, el nom del paquet és el mateix que l'últim element de la ruta d'importació. Per exemple, el paquet `"math/rand"` comprèn els fitxers que comencen amb la instrucció `package rand`.
 
-Per convenció, el nom del paquet és el mateix que l'últim element de la ruta d'importació. Per exemple, el paquet `"math/rand"` comprenen els fitxers que comencen amb la instrucció `package`rand`.
-
-#appengine: *Noteu:* L'entorn en que aquests programes són executats és
-#appengine: determinístic, així que, cada cop que executeu el programa d'exemple,
+#appengine: *Nota:* L'entorn en què aquests programes són executats és
+#appengine: determinista, així que cada cop que executeu el programa d'exemple,
 #appengine: `rand.Intn` tornarà el mateix nombre.
 #appengine:
-#appengine: (Si voleu rebre un nombre diferent, haureu de canviar la llavor del generador de nombres; vegeu [[https://golang.org/pkg/math/rand/#Seed][`rand.Seed`]].
+#appengine: (Si voleu rebre un nombre diferent, haureu de canviar la llavor del generador de nombres; vegeu [[https://golang.org/pkg/math/rand/#Seed][`rand.Seed`]]. 
 #appengine: El temps (Time) és constant al playground, així que haureu de fer servir alguna altra cosa com a llavor.)
 
 .play basics/packages.go
 
-* Important paquets
+* Importació de paquets
 
 Aquest codi agrupa la importació de paquets en una instrucció entre parèntesis, "factoritzada".
 
-També pots escriure múltiples instruccions important paquets, com:
+També pots escriure múltiples instruccions d'importació de paquets, com:
 
 	import "fmt"
 	import "math"
 
-Però fer servir la versió factoritzada de la instrucció `import` és un estil bo.
+Però fer servir la versió factoritzada de la instrucció `import` és un bon estil.
 
 .play basics/imports.go
 
@@ -45,9 +44,8 @@ del paquet `math`.
 
 `pizza` i `pi` no comencen per majúscula, així que no s'exporten.
 
-
 Quan has importat un paquet pots referir-te als noms que aquest exporta.
-Qualsevol nom que no s'exporti no són accessibles des de fora del paquet.
+Qualsevol nom que no s'exporti no és accessible des de fora del paquet.
 
 Executa el codi. Fixa't en el missatge d'error.
 
@@ -63,7 +61,7 @@ En aquest exemple, `add` pren dos paràmetres del tipus `int`.
 
 Nota que el tipus s'escriu _després_ del nom de la variable.
 
-(Per saber més sobre el motiu de pel qual els tipus es fan servir com ho fan, llegiu l'article [[https://blog.golang.org/gos-declaration-syntax]["Go's declaration syntax"]].)	
+(Per saber més sobre el motiu pel qual els tipus es fan servir com ho fan, llegiu l'article [[https://blog.golang.org/gos-declaration-syntax]["Go's declaration syntax"]].)	
 
 
 .play basics/functions.go
@@ -84,7 +82,7 @@ deixant-ho
 
 * Múltiples resultats
 
-Una funció por tornar més d'un resultat.
+Una funció pot tornar més d'un resultat.
 
 La funció `swap` torna dues `string` (cadenes de caràcters).
 
@@ -92,13 +90,13 @@ La funció `swap` torna dues `string` (cadenes de caràcters).
 
 * Resultats amb nom
 
-Els valor retornats per una funció de Go poden tenir nom. Si en tenen, els noms es tracten com a variables definides al principi de la funció.
+Els valors retornats per una funció de Go poden tenir nom. Si en tenen, els noms es tracten com a variables definides al principi de la funció.
 
 Aquests noms s'haurien d'utilitzar per documentar el significat dels valors retornats.
 
 La instrucció `return` sense arguments retorna els valors continguts a les variables dels noms específicats. Això es coneix en anglès com a "naked" return.
 
-Les instruccions naked return s'haurien de fer servir només en funcions que siguin prou curtes, com a l'exemple següent. Fer-los servir en funcions més llargues pot dificultat la seva llegibilitat.
+Les instruccions naked return s'haurien de fer servir només en funcions que siguin prou curtes, com a l'exemple següent. Fer-los servir en funcions més llargues pot dificultar la seva llegibilitat.
 
 .play basics/named-results.go
 
@@ -150,7 +148,7 @@ L'exemple mostra variables de diversos tipus
 i també que la declaració de variables que es pot "factoritzar" en blocs,
 com amb les instruccions d'importar paquets.
 
-Els tipus `int`, `uint` i `uintptr` normalment són de 32 bits als sistemes de 32-bit i de 64 bits  als sistemes de 64-bit.
+Els tipus `int`, `uint` i `uintptr` normalment són de 32 bits als sistemes de 32-bit i de 64 bits als sistemes de 64-bit.
 Quan necessitis un valor enter hauries de fer servir `int` a no ser que tinguis un motiu específic per a fer servir un tipus d'enter amb tipus o mida.
 
 .play basics/basic-types.go
@@ -158,7 +156,7 @@ Quan necessitis un valor enter hauries de fer servir `int` a no ser que tinguis 
 * Valors zero
 
 Les variables declarades sense un valor inicial explícit reben
-el seu _valor_zero_.
+el seu _valor zero_.
 
 El valor zero és:
 
@@ -192,7 +190,7 @@ Prova de treure les conversions `float64` o `uint` de l'exemple i mira què pass
 
 * Inferència de tipus
 
-En declarar una variable sense especificar un tipus explícit (ja sigui utilitzant la sintaxi `:=` o la sintaxi d'expressió `var`=`),
+En declarar una variable sense especificar un tipus explícit (ja sigui utilitzant la sintaxi `:=` o la sintaxi `var = `),
 el tipus de la variable s'infereix del valor del costat dret.
 
 Quan el costat dret de la declaració té un tipus, la nova variable té el mateix tipus:
@@ -207,7 +205,7 @@ Però quan el costat dret conté una constant numèrica no tipada, la nova varia
 	f := 3.142        // float64
 	g := 0.867 + 0.5i // complex128
 
-Prova de canviar el valor inicial de `v` en el codi d'exemple i observa com afecta el seu tipus.
+Prova de canviar el valor inicial de `v` al codi d'exemple i observa com afecta el seu tipus.
 
 .play basics/type-inference.go
 
@@ -215,26 +213,26 @@ Prova de canviar el valor inicial de `v` en el codi d'exemple i observa com afec
 
 Les constants es declaren com les variables però amb la paraula clau `const`.
 
-Una constant pot ser un caràcter, una string, un booleà o un valor numèric.
+Una constant pot ser un caràcter, una cadena de text, un booleà o un valor numèric.
 
-No es poden declarar les contstant fent servir expressions `:=`.
+Les constants no es poden declarar fent servir l'expressió `:=`.
 
 .play basics/constants.go
 
 * Constants Numèriques
 
-Les constants numèriques són _valors_ d'alta precissió.
+Les constants numèriques són _valors_ d'alta precisió.
 
 Una constant sense tipus definit pren el tipus del seu context.
 
 Prova d'imprimir `needInt(Big)` també.
 
-(Un `int` pot emmagatzemar com a màxim un enter de 64-bits, en ocasions menys.)
+(Un `int` pot emmagatzemar com a màxim un enter de 64 bits, en ocasions menys.)
 
 .play basics/numeric-constants.go
 
 * Enhorabona!
 
-Has acabat aquesta lliçò!
+Has acabat aquesta lliçó!
 
-Pots tornar al llistat de [[/list][mòduls]] per veure què més aprendre, o continuar amb la [[javascript:click('.next-page')][següent lliçò]].
+Pots tornar al llistat de [[/list][mòduls]] per veure què més pots aprendre, o continuar amb la [[javascript:click('.next-page')][següent lliçó]].
