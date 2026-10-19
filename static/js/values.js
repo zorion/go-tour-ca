@@ -15,12 +15,12 @@ value('tableOfContents', [{
 }, {
     'id': 'basics',
     'title': 'Bàsics',
-    'description': '<p>El punt d\'inici, aprèn all the basics of the language.</p><p>Declarar variables, cridar funcions, i tot allò que has de saber abans d\'avançar vers altres lliçons.</p>',
+    'description': '<p>El punt d\'inici, aprèn tots els conceptes bàsics del llenguatge.</p><p>Declarar variables, cridar funcions i tot allò que has de saber abans d\'avançar vers altres lliçons.</p>',
     'lessons': ['basics', 'flowcontrol', 'moretypes']
 }, {
     'id': 'methods',
     'title': 'Mètodes i interfícies',
-    'description': '<p>Aprèn a definir mètodes per als tipus, com declarar interfícies i com fer-ho servit tot plegat.</p>',
+    'description': '<p>Aprèn a definir mètodes per als tipus, com declarar interfícies i com fer-ho servir tot plegat.</p>',
     'lessons': ['methods']
 }, {
     'id': 'generics',
@@ -30,7 +30,7 @@ value('tableOfContents', [{
 }, {
     'id': 'concurrency',
     'title': 'Concurrència',
-    'description': '<p>El nucli del llenguatge Go ja ofereix característiques de concurrència.</p><p>Aquest mòdul tracta de goroutines i canals, i com es poden implementar en diversos patrons de concurrència.</p>',
+    'description': '<p>El nucli del llenguatge Go ja ofereix característiques de concurrència.</p><p>Aquest mòdul tracta de goroutines i canals, i de com es fan servir per implementar diversos patrons de concurrència.</p>',
     'lessons': ['concurrency']
 }]).
 
@@ -39,24 +39,24 @@ value('translation', {
     'off': 'no',
     'on': 'sí',
     'syntax': 'Ressaltar sintaxi',
-    'lineno': 'Nombre de línia',
+    'lineno': 'Números de línia',
     'reset': 'Restaurar',
     'format': 'Donar format al codi',
     'kill': 'Abortar programa',
     'run': 'Executar',
-    'compile': 'Compilar i Executar',
+    'compile': 'Compilar i executar',
     'more': 'Opcions',
-    'toc': 'Taula de Continguts',
+    'toc': 'Taula de continguts',
     'prev': 'Anterior',
     'next': 'Següent',
     'waiting': 'Esperant el servidor remot...',
-    'errcomm': 'Error connectant amb el servidor remot.',
+    'errcomm': 'Error en connectar amb el servidor remot.',
     'submit-feedback': "Informa d'errors, peticions o comentaris.",
 
     // GitHub issue template: update repo and messaging when translating.
     'github-repo': 'github.com/zorion/go-tour-ca',
-    'issue-title': 'tour: [MODIFICAR AMB UNA BREU DESCRIPCIÓ]',
-    'issue-message': 'Canvia el títol superior amb una descripció i afegeix els detalls aquí, amb codi si és necessari.',
+    'issue-title': 'tour: [SUBSTITUEIX PER UNA DESCRIPCIÓ BREU]',
+    'issue-message': 'Canvia el títol de dalt per una descripció i afegeix els detalls aquí, amb codi si és necessari.',
     'context': 'Context',
 }).
 

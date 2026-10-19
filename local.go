@@ -173,10 +173,10 @@ PERILL!  PERILL!  PERILL!
 El servidor del tour sembla estar servint el contingut des
 d'una adreça que no és localhost i està configurat per
 executar localment els fragments de codi.
-Qualsevol amb accès a aquesta adreça i port podria guanyar
-accès a aquest màquina com a l'usuari que executa go-tour-ca.
+Qualsevol amb accés a aquesta adreça i port podria guanyar
+accés a aquesta màquina com a l'usuari que executa go-tour-ca.
 
-Si no enteneu aquest missatge, premeu Contro-C per abortar el procès.
+Si no enteneu aquest missatge, premeu Control-C per abortar el procés.
 
 PERILL!  PERILL!  PERILL!
 `

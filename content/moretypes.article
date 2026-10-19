@@ -1,5 +1,5 @@
 Més tipus: estructures, slices i maps.
-Aprèn com definir tipus basats en altres que ja existeixen: aquesta lliçò explica structs, arrays, slices i maps.
+Aprèn com definir tipus basats en altres que ja existeixen: aquesta lliçó explica structs, arrays, slices i maps.
 
 The Go Authors
 https://golang.org
@@ -18,7 +18,7 @@ L'operador `&` genera un punter al seu operand.
 	i := 42
 	p = &i
 
-L'operador `*` denota el valor contingut del punter.
+L'operador `*` denota el valor al qual apunta el punter.
 
 	fmt.Println(*p) // llegeix i a través del punter p
 	*p = 21         // estableix i a través del punter p
@@ -37,7 +37,7 @@ Una `struct` és una estructura d'un conjunt de camps de dades.
 
 * Camps d'una estructura
 
-Els camps d'una `struct` s'accedeixen mitjançant un punt.
+S'accedeix als camps d'una `struct` mitjançant un punt.
 
 .play moretypes/struct-fields.go
 
@@ -56,9 +56,9 @@ escriure simplement `p.X`, sense cap indirecció explícita.
 
 Un literal d'estructura denota una nova instància d'una estructura creada llistant els valors dels seus camps.
 
-Pots llistar només els valors d'un subconjunt de camps utilitzant la sintaxis `Nom:` (l'ordre dels camps és irrellevant).
+Pots llistar només els valors d'un subconjunt de camps utilitzant la sintaxi `Nom:` (l'ordre dels camps amb nom és irrellevant).
 
-El prefix especial `&` crea un punter a l'espai reservat per la nova estructura.
+El prefix especial `&` crea un punter a l'espai reservat per a la nova estructura.
 
 _(NdT:_ _Un_literal_és_un_valor_fixat_al_codi_font_d'un_programa)_
 
@@ -75,28 +75,28 @@ L'expressió
 declara una variable `a` com un array de deu enters.
 
 La longitud d'un array és part del seu tipus, de manera que els arrays no es poden redimensionar.
-Això sembla limitant, però no us preocupeu;
+Això sembla limitant, però no et preocupis;
 Go proporciona una manera convenient de treballar amb arrays.
 
 .play moretypes/array.go
 
 
-* Slices (llesques)
+* Slices
 
 Un array té una mida fixa.
-Una slice (llesca), en canvi, és una vista dinàmicament dimensionada i flexible dels elements d'un array.
-En la pràctica, els talls són molt més comuns que els arrays.
+Una slice, en canvi, és una vista dinàmicament dimensionada i flexible dels elements d'un array.
+En la pràctica, les slices són molt més comunes que els arrays.
 
 El tipus `[]T` és una slice amb elements del tipus `T`.
 
-Un tall es forma especificant dos índexs, una límit inferior i una límit superior, separats per dos punts:
+Una slice es forma especificant dos índexs, un límit inferior i un límit superior, separats per dos punts:
 
 	a[low : high]
 
-Això selecciona un rang semi-obert que inclou el primer element, però n'exclou l'últim.
+Això selecciona un interval semiobert que inclou el primer element, però n'exclou l'últim.
 
 L'expressió següent crea una slice que inclou els
-elements 1 a 3 d' `a`:
+elements 1 a 3 d'`a`:
 
 	a[1:4]
 
@@ -105,7 +105,7 @@ elements 1 a 3 d' `a`:
 
 * Les slices són com referències a arrays
 
-Les llesques no emmagatzemen dades,
+Les slices no emmagatzemen dades,
 només descriuen una secció d'un array subjacent.
 
 El canvi dels elements d'una slice modifica els
@@ -117,29 +117,27 @@ subjacent veuran aquests canvis.
 .play moretypes/slices-pointers.go
 
 
-* Literals de Slice
+* Literals de slice
 
 Els literals de slices són com els literals d'arrays, però sense la longitud.
-
-Per especificar una capacitat, passi un tercer argument a make.
 
 Això és un literal d'array:
 
 	[3]bool{true, true, false}
 
 I això crea el mateix array que abans,
-i després construeix una "slice" que el referència:
+i després construeix una slice que el referencia:
 
 	[]bool{true, true, false}
 
 .play moretypes/slice-literals.go
 
 
-* Valors per defecte en Slices
+* Valors per defecte en slices
 
-Quan es talla una "slice", es poden ometre els límits alt o baix per utilitzar els seus valors per defecte
+Quan es talla una slice, es poden ometre els límits inferior o superior per utilitzar els seus valors per defecte.
 
-El valor per defecte és zero per al límit inferior i la longitud de la "slice" o de l'array subjacent per al límit superior.
+El valor per defecte és zero per al límit inferior i la longitud de la slice o de l'array subjacent per al límit superior.
 
 Per a l'array
 
@@ -155,32 +153,32 @@ aquestes slices són equivalents:
 .play moretypes/slice-bounds.go
 
 
-* Longitud i capacitat d'una Slice
+* Longitud i capacitat d'una slice
 
 Una slice té tant una _longitud_ com una _capacitat_.
 
 La longitud és el nombre d'elements que conté.
 
 La capacitat és el nombre d'elements de l'array subjacent,
-comptant des del primer element de la "slice".
+comptant des del primer element de la slice.
 
 
 La longitud i la capacitat d'una slice `s` s'obtenen utilitzant les expressions
-`len(s)` and `cap(s)`.
+`len(s)` i `cap(s)`.
 
-Pots augmentar la longitud d'una slice (llesca) tornant-la a tallar,
+Pots augmentar la longitud d'una slice tornant-la a tallar,
 sempre que tingui capacitat suficient.
 Prova de canviar una de les operacions de tall de l'exemple del programa
-per allargar-lo més enllà de la seva capacitat i mira què passa.
+per allargar-la més enllà de la seva capacitat i mira què passa.
 
 .play moretypes/slice-len-cap.go
 
 
-* Slices nil (llesques nul·les)
+* Slices nil
 
-El valor zero d'una llesca és `nil`.
+El valor zero d'una slice és `nil`.
 
-Una llesca nul·la té una longitud i capacitat de 0
+Una slice nul·la té una longitud i capacitat de 0
 i no té cap array subjacent.
 
 .play moretypes/nil-slices.go
@@ -192,7 +190,7 @@ Les slices es poden crear amb la funció integrada `make`,
 així és com es creen arrays de mida dinàmica.
 
 La funció `make` reserva un array amb valors inicials a zero
-i retorna un slice que fa referència a aquest array:
+i retorna una slice que fa referència a aquest array:
 
 	a := make([]int, 5)  // len(a)=5
 
@@ -221,10 +219,10 @@ del paquet integrat descriu `append`.
 
 	func append(s []T, vs ...T) []T
 
-El primer paràmetre `s` d' `append` és una slice del tipus `T`, i la resta són valors
-tipus `T` que s'han d'afegir a la slice.
+El primer paràmetre `s` d'`append` és una slice del tipus `T`, i la resta són valors
+de tipus `T` que s'han d'afegir a la slice.
 
-El valor resultant d' `append` és una slice que conté tots els elements
+El valor resultant d'`append` és una slice que conté tots els elements
 de la slice original més els valors proporcionats.
 
 Si l'array de suport de `s` és massa petit per contenir tots els valors donats,
@@ -239,7 +237,7 @@ La slice retornada farà referència al nou array reservat.
 
 * Range
 
-La forma `range` del bucle `for` itera sobre una slice o map.
+La forma `range` del bucle `for` itera sobre una slice o un map.
 
 Quan s'itera sobre una slice, es retornen dos valors per cada iteració.
 El primer és l'índex, i el segon és una còpia de l'element en aquest índex.
@@ -263,9 +261,9 @@ Si només vols l'índex, pots ometre la segona variable.
 
 Implementa `Pic`. Ha de retornar una slice de longitud `dy`, cada element de la qual és una slice de `dx` enters sense signe de 8 bits. Quan executis el programa, mostrarà la teva imatge, interpretant els enters com a valors d'escala de grisos (bé, escala de blaus).
 
-L'elecció de la imatge és cosa teva. Algunes funcions interessants són `(x+y)/2`, `x*y`, i `x^y`.
+L'elecció de la imatge és cosa teva. Algunes funcions interessants són `(x+y)/2`, `x*y` i `x^y`.
 
-(Necessitaràs utilitzar un bucle per assignar cada `[]uint8` dins del `[][]uint8`.)
+(Necessitaràs utilitzar un bucle per reservar cada `[]uint8` dins del `[][]uint8`.)
 
 (Utilitza `uint8(intValue)` per convertir entre tipus.)
 
@@ -283,19 +281,19 @@ inicialitzat i llest per utilitzar.
 
 .play moretypes/maps.go
 
-* Literals de Map
+* Literals de map
 
 Els literals de map són com els literals d'estructura, però les claus són obligatòries.
 
 .play moretypes/map-literals.go
 
-* Literals de Map (continuació)
+* Literals de map (continuació)
 
 Si el tipus de nivell superior és només un nom de tipus, pots ometre'l dels elements del literal.
 
 .play moretypes/map-literals-continued.go
 
-* Mutant Maps
+* Modificació de maps
 
 Inserir o actualitzar un element en un map `m`:
 
@@ -339,20 +337,20 @@ Els valors de funció es poden utilitzar com a arguments de funció i valors de 
 
 .play moretypes/function-values.go
 
-* Tancaments de funció
+* Clausures de funció
 
-Les funcions de Go poden ser tancaments. Un tancament és un valor de funció que fa referència a variables fora del seu cos. La funció pot accedir i assignar a les variables referenciades; en aquest sentit, la funció està "lligada" a les variables.
+Les funcions de Go poden ser clausures. Una clausura és un valor de funció que fa referència a variables fora del seu cos. La funció pot accedir a les variables referenciades i assignar-los valors; en aquest sentit, la funció està "lligada" a les variables.
 
-Per exemple, la funció `adder` retorna un tancament. Cada tancament està lligat a la seva pròpia variable `sum`.
+Per exemple, la funció `adder` retorna una clausura. Cada clausura està lligada a la seva pròpia variable `sum`.
 
 .play moretypes/function-closures.go
 
-* Exercici: Tancament de Fibonacci
+* Exercici: Clausura de Fibonacci
 
 Divertim-nos una mica amb les funcions.
 
-Implementa una funció `fibonacci` que retorni una funció (un tancament) que
-retorni successius [[https://en.wikipedia.org/wiki/Fibonacci_number][números de Fibonacci]]
+Implementa una funció `fibonacci` que retorni una funció (una clausura) que
+retorni successius [[https://en.wikipedia.org/wiki/Fibonacci_number][nombres de Fibonacci]]
 (0, 1, 1, 2, 3, 5, ...).
 
 .play moretypes/exercise-fibonacci-closure.go
