@@ -7,14 +7,15 @@ package main // import "github.com/zorion/go-tour-ca"
 import (
 	"bytes"
 	"crypto/sha1"
+	"embed"
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"html/template"
 	"io"
-	"io/ioutil"
+	"io/fs"
 	"net/http"
-	"os"
+	"path"
 	"path/filepath"
 	"strings"
 	"time"
@@ -23,34 +24,37 @@ import (
 	"golang.org/x/tools/present"
 )
 
+// tourFiles holds the lessons, templates and static files, so the tour
+// binary works from any directory.
+//
+//go:embed content/*.article content/*/*.go content/img template/*.tmpl static
+var tourFiles embed.FS
+
 var (
 	uiContent      []byte
 	lessons        = make(map[string][]byte)
 	lessonNotFound = fmt.Errorf("lesson not found")
 )
 
-// initTour loads tour.article and the relevant HTML templates from the given
-// tour root, and renders the template to the tourContent global variable.
-func initTour(root, transport string) error {
+// initTour loads the lessons and the relevant HTML templates from fsys,
+// and renders the template to the uiContent global variable.
+func initTour(fsys fs.FS, transport string) error {
 	// Make sure playground is enabled before rendering.
 	present.PlayEnabled = true
 
 	// Set up templates.
-	action := filepath.Join(root, "template", "action.tmpl")
-	tmpl, err := present.Template().ParseFiles(action)
+	tmpl, err := present.Template().ParseFS(fsys, "template/action.tmpl")
 	if err != nil {
 		return fmt.Errorf("parse templates: %v", err)
 	}
 
 	// Init lessons.
-	contentPath := filepath.Join(root, "content")
-	if err := initLessons(tmpl, contentPath); err != nil {
+	if err := initLessons(fsys, tmpl, "content"); err != nil {
 		return fmt.Errorf("init lessons: %v", err)
 	}
 
 	// Init UI
-	index := filepath.Join(root, "template", "index.tmpl")
-	ui, err := template.ParseFiles(index)
+	ui, err := template.ParseFS(fsys, "template/index.tmpl")
 	if err != nil {
 		return fmt.Errorf("parse index.tmpl: %v", err)
 	}
@@ -67,29 +71,25 @@ func initTour(root, transport string) error {
 	}
 	uiContent = buf.Bytes()
 
-	return initScript(root)
+	return initScript(fsys)
 }
 
-// initLessonss finds all the lessons in the passed directory, renders them,
-// using the given template and saves the content in the lessons map.
-func initLessons(tmpl *template.Template, content string) error {
-	dir, err := os.Open(content)
-	if err != nil {
-		return err
-	}
-	files, err := dir.Readdirnames(0)
+// initLessons finds all the lessons in the passed directory of fsys, renders
+// them using the given template and saves the content in the lessons map.
+func initLessons(fsys fs.FS, tmpl *template.Template, content string) error {
+	files, err := fs.ReadDir(fsys, content)
 	if err != nil {
 		return err
 	}
 	for _, f := range files {
-		if filepath.Ext(f) != ".article" {
+		if path.Ext(f.Name()) != ".article" {
 			continue
 		}
-		content, err := parseLesson(tmpl, filepath.Join(content, f))
+		content, err := parseLesson(fsys, tmpl, path.Join(content, f.Name()))
 		if err != nil {
-			return fmt.Errorf("parsing %v: %v", f, err)
+			return fmt.Errorf("parsing %v: %v", f.Name(), err)
 		}
-		name := strings.TrimSuffix(f, ".article")
+		name := strings.TrimSuffix(f.Name(), ".article")
 		lessons[name] = content
 	}
 	return nil
@@ -116,15 +116,20 @@ type Lesson struct {
 	Pages       []Page
 }
 
-// parseLesson parses and returns a lesson content given its name and
-// the template to render it.
-func parseLesson(tmpl *template.Template, path string) ([]byte, error) {
-	f, err := os.Open(path)
+// parseLesson parses and returns a lesson content given its path in fsys
+// and the template to render it.
+func parseLesson(fsys fs.FS, tmpl *template.Template, path string) ([]byte, error) {
+	f, err := fsys.Open(path)
 	if err != nil {
 		return nil, err
 	}
 	defer f.Close()
-	doc, err := present.Parse(prepContent(f), path, 0)
+	// present builds the paths of .play files with filepath.Join,
+	// but fs.FS paths always use forward slashes.
+	ctx := &present.Context{ReadFile: func(name string) ([]byte, error) {
+		return fs.ReadFile(fsys, filepath.ToSlash(name))
+	}}
+	doc, err := ctx.Parse(prepContent(f), path, 0)
 	if err != nil {
 		return nil, err
 	}
@@ -236,7 +241,7 @@ func nocode(s present.Section) bool {
 
 // initScript concatenates all the javascript files needed to render
 // the tour UI and serves the result on /script.js.
-func initScript(root string) error {
+func initScript(fsys fs.FS) error {
 	modTime := time.Now()
 	b := new(bytes.Buffer)
 
@@ -262,7 +267,7 @@ func initScript(root string) error {
 	}
 
 	for _, file := range files {
-		f, err := ioutil.ReadFile(filepath.Join(root, file))
+		f, err := fs.ReadFile(fsys, file)
 		if err != nil {
 			return fmt.Errorf("couldn't open %v: %v", file, err)
 		}
