@@ -12,7 +12,7 @@ Els programes comencen executant un paquet anomenat `main`.
 
 Aquest programa fa servir els paquets amb ruta d'importació `"fmt"` i `"math/rand"`.
 
-Per convenció, el nom del paquet és el mateix que l'últim element de la ruta d'importació. Per exemple, el paquet `"math/rand"` comprèn els fitxers que comencen amb la instrucció `package rand`.
+Per convenció, el nom del paquet és el mateix que l'últim element de la ruta d'importació. Per exemple, el paquet `"math/rand"` comprèn els fitxers que comencen amb la instrucció `package`rand`.
 
 .play basics/packages.go
 
@@ -149,7 +149,7 @@ Quan necessitis un valor enter hauries de fer servir `int` a no ser que tinguis 
 * Valors zero
 
 Les variables declarades sense un valor inicial explícit reben
-el seu _valor zero_.
+el seu _valor_zero_.
 
 El valor zero és:
 
@@ -183,7 +183,7 @@ Prova de treure les conversions `float64` o `uint` de l'exemple i mira què pass
 
 * Inferència de tipus
 
-En declarar una variable sense especificar un tipus explícit (ja sigui utilitzant la sintaxi `:=` o la sintaxi `var = `),
+En declarar una variable sense especificar un tipus explícit (ja sigui utilitzant la sintaxi `:=` o la sintaxi `var`=`),
 el tipus de la variable s'infereix del valor del costat dret.
 
 Quan el costat dret de la declaració té un tipus, la nova variable té el mateix tipus:

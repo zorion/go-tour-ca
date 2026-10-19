@@ -173,7 +173,8 @@ segurs per a ús concurrent!
 #appengine: [[https://go.dev/doc/install/][instal·lant Go]].
 
 #appengine: Un cop tinguis Go instal·lat, la
-La [[https://golang.org/doc/][Documentació de Go]] és un gran lloc per
+La
+[[https://golang.org/doc/][Documentació de Go]] és un gran lloc per
 #appengine: continuar.
 començar.
 Conté referències, tutorials, vídeos i més.

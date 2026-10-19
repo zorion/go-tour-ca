@@ -142,7 +142,7 @@ però no una barreja d'ambdós.
 
 * Interfícies
 
-Un _tipus d'interfície_ es defineix com un conjunt de signatures de mètodes.
+Un _tipus_d'interfície_ es defineix com un conjunt de signatures de mètodes.
 
 Un valor de tipus interfície pot contenir qualsevol valor que implementi aquests mètodes.
 
@@ -217,7 +217,7 @@ Per exemple, `fmt.Print` pren qualsevol nombre d'arguments de tipus `any`.
 
 * Conversió de tipus amb afirmació de tipus
 
-Una _afirmació de tipus_ proporciona accés al valor concret subjacent d'un valor d'interfície.
+Una _afirmació_de_tipus_ proporciona accés al valor concret subjacent d'un valor d'interfície.
 
 	t := i.(T)
 
@@ -243,7 +243,7 @@ Observa la similitud entre aquesta sintaxi i la de llegir d'un mapa.
 
 * Commutadors de tipus (switch)
 
-Un _commutador de tipus_ és una construcció que permet diverses afirmacions de tipus en sèrie.
+Un _commutador_de_tipus_ és una construcció que permet diverses afirmacions de tipus en sèrie.
 
 Un commutador de tipus s'assembla a un commutador regular, però els casos en un commutador de tipus
 especifiquen tipus (no valors), i aquests tipus es comparen amb el tipus
