@@ -131,7 +131,7 @@ La primera és perquè el mètode pugui modificar el valor al qual apunta el seu
 La segona és per evitar copiar el valor en cada crida al mètode.
 Això pot ser més eficient si el receptor és una estructura gran, per exemple.
 
-En aquest exemple, tant `Scale` com `Abs` són amb tipus receptor `*Vertex`,
+En aquest exemple, tant `Scale` com `Abs` són mètodes amb receptor de tipus `*Vertex`,
 encara que el mètode `Abs` no necessita modificar el seu receptor.
 
 En general, tots els mètodes d'un tipus donat haurien de tenir receptors de valor o de punter,
@@ -207,8 +207,11 @@ El tipus d'interfície que no especifica cap mètode s'anomena interfície _buid
 Una interfície buida pot contenir valors de qualsevol tipus.
 (Cada tipus implementa almenys zero mètodes.)
 
+`any` és un àlies d'`interface{}`, i tots dos són completament
+equivalents.
+
 Les interfícies buides s'utilitzen per gestionar valors de tipus desconegut.
-Per exemple, `fmt.Print` pren qualsevol nombre d'arguments de tipus `interface{}`.
+Per exemple, `fmt.Print` pren qualsevol nombre d'arguments de tipus `any`.
 
 .play methods/empty-interface.go
 
@@ -343,7 +346,7 @@ Canvia la teva funció `Sqrt` per retornar un valor `ErrNegativeSqrt` quan se li
 El paquet `io` especifica la interfície `io.Reader`,
 que representa el final de lectura d'un flux de dades.
 
-La biblioteca estàndard de Go conté [[https://golang.org/search?q=Read#Global][moltes implementacions]] d'aquesta interfície, incloent fitxers,
+La biblioteca estàndard de Go conté [[https://cs.opensource.google/search?q=Read%5C(%5Cw%2B%5Cs%5C%5B%5C%5Dbyte%5C)&ss=go%2Fgo][moltes implementacions]] d'aquesta interfície, incloent fitxers,
 connexions de xarxa, compressors, xifrats, i altres.
 
 La interfície `io.Reader` té un mètode `Read`:

@@ -170,7 +170,7 @@ segurs per a ús concurrent!
 * On anar des d'aquí...
 
 #appengine: Pots començar
-#appengine: [[https://golang.org/dl/][instal·lant Go]].
+#appengine: [[https://go.dev/doc/install/][instal·lant Go]].
 
 #appengine: Un cop tinguis Go instal·lat, la
 La [[https://golang.org/doc/][Documentació de Go]] és un gran lloc per
@@ -178,7 +178,7 @@ La [[https://golang.org/doc/][Documentació de Go]] és un gran lloc per
 començar.
 Conté referències, tutorials, vídeos i més.
 
-Per aprendre com organitzar i treballar amb codi Go, mira [[https://www.youtube.com/watch?v=XCsL89YtqCs][aquest screencast]] o llegeix [[https://golang.org/doc/code.html][Com Escriure Codi Go]].
+Per aprendre com organitzar i treballar amb codi Go, llegeix [[https://go.dev/doc/code][Com Escriure Codi Go]].
 
 Si necessites ajuda amb la biblioteca estàndard, consulta la [[https://golang.org/pkg/][referència de paquets]]. Per ajuda amb el llenguatge mateix, et podria sorprendre trobar que l'[[https://golang.org/ref/spec][Especificació del Llenguatge]] és bastant llegible.
 

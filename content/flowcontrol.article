@@ -14,7 +14,7 @@ El `for` bàsic té tres components separades per punt i coma:
 - l'expressió de condició: s'avalua abans de cada iteració
 - la instrucció posterior: s'executa al final de cada iteració
 
-La instrucció d'inicialització sovint serà una declaració curta de variable, i les
+La instrucció d'inicialització sovint serà una declaració de variable, i les
 variables declarades allà només són visibles dins l'àmbit de la instrucció `for`.
 
 El bucle deixarà d'iterar quan la condició booleana s'avaluï com a `false`.

@@ -139,7 +139,7 @@ i després construeix una "slice" que el referència:
 
 Quan es talla una "slice", es poden ometre els límits alt o baix per utilitzar els seus valors per defecte
 
-El valor per defecte és zero per al límit inferior i la longitud de la "slice" per al límit superior.
+El valor per defecte és zero per al límit inferior i la longitud de la "slice" o de l'array subjacent per al límit superior.
 
 Per a l'array
 

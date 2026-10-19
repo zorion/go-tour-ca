@@ -14,13 +14,6 @@ Aquest programa fa servir els paquets amb ruta d'importació `"fmt"` i `"math/ra
 
 Per convenció, el nom del paquet és el mateix que l'últim element de la ruta d'importació. Per exemple, el paquet `"math/rand"` comprèn els fitxers que comencen amb la instrucció `package rand`.
 
-#appengine: *Nota:* L'entorn en què aquests programes són executats és
-#appengine: determinista, així que cada cop que executeu el programa d'exemple,
-#appengine: `rand.Intn` tornarà el mateix nombre.
-#appengine:
-#appengine: (Si voleu rebre un nombre diferent, haureu de canviar la llavor del generador de nombres; vegeu [[https://golang.org/pkg/math/rand/#Seed][`rand.Seed`]]. 
-#appengine: El temps (Time) és constant al playground, així que haureu de fer servir alguna altra cosa com a llavor.)
-
 .play basics/packages.go
 
 * Importació de paquets

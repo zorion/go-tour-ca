@@ -23,6 +23,11 @@ value('tableOfContents', [{
     'description': '<p>Aprèn a definir mètodes per als tipus, com declarar interfícies i com fer-ho servit tot plegat.</p>',
     'lessons': ['methods']
 }, {
+    'id': 'generics',
+    'title': 'Genèrics',
+    'description': '<p>Aprèn a fer servir paràmetres de tipus a les funcions i les structs de Go.</p>',
+    'lessons': ['generics']
+}, {
     'id': 'concurrency',
     'title': 'Concurrència',
     'description': '<p>El nucli del llenguatge Go ja ofereix característiques de concurrència.</p><p>Aquest mòdul tracta de goroutines i canals, i com es poden implementar en diversos patrons de concurrència.</p>',

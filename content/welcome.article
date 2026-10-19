@@ -46,26 +46,19 @@ Quan estiguis preparat/da per continuar clica [[javascript:highlightAndClick(".n
 
 El tour està disponible en altres llengües:
 
-- [[https://tour.golang.org/][Anglès — English]] (versió original)
-- [[https://go-tour-ar.appspot.com/][Àrab — العربية]]
+- [[https://go.dev/tour/][Anglès — English]] (versió original)
 - [[https://go-tour-br.appspot.com/][Portuguès del Brasil — Português do Brasil]]
-- [[https://tour.go-zh.org/][Xinès Simplificat — 中文（简体）]]
-- [[https://go-tour-zh-tw.appspot.com/][Xinès Tradicional — 中文（繁體）]]
 - [[https://go-tour-cz.appspot.com/][Txec — Česky]]
-- [[https://go-tour-fr.appspot.com/][Francès — Français]]
-- [[https://go-tour-de.appspot.com/][Alemany — Deutsch]]
-- [[https://go-tour-he.appspot.com/][Hebreu — עִבְרִית]]
+- [[https://fr-go-dev.shuijingwanwq.com/tour][Francès — Français]]
+- [[https://de-go-dev.shuijingwanwq.com/tour][Alemany — Deutsch]]
 - [[https://go-tour-id2.appspot.com/][Indonesi — Bahasa Indonesia]]
-- [[https://go-tour-ita.appspot.com/][Italià — Italiano]]
 - [[https://go-tour-jp.appspot.com/][Japonès — 日本語]]
-- [[https://go-tour-ko.appspot.com/][Coreà — 한국어]]
-- [[https://go-tour-ro.appspot.com/][Romanès — Română]]
-- [[https://go-tour-ru-ru.appspot.com/][Rus — Русский]]
-- [[https://gotour-es.appspot.com/][Espanyol — Español]]
+- [[https://ko-go-dev.shuijingwanwq.com/tour][Coreà — 한국어]]
+- [[https://go-tour-pl1.appspot.com/][Polonès — Polski]]
+- [[https://go-dev.shuijingwanwq.com/tour][Xinès simplificat — 简体中文]]
+- [[https://go-tour-lat.appspot.com/][Espanyol — Español]]
 - [[https://go-tour-th.appspot.com/][Tailandès — ภาษาไทย]]
-- [[https://go-tour-turkish.appspot.com/][Turc — Türkçe]]
-- [[https://go-tour-ua.appspot.com/][Ucrainès — Українська]]
-- [[https://go-tour-uz.appspot.com/][Uzbek — Ўзбекча]]
+- [[https://go-tour-ua-translation.lm.r.appspot.com/][Ucraïnès — Українською]]
 
 Quan estiguis preparat/da per continuar clica [[javascript:highlightAndClick(".next-page")][la fletxa dreta]] o prem la tecla `PageDown` (avançar pàgina) per continuar.
 
@@ -78,10 +71,10 @@ Quan estiguis preparat/da per continuar clica [[javascript:highlightAndClick(".n
 #appengine: Per tal d'executar el tour localment, primer hauràs
 #appengine: d'[[https://golang.org/doc/install][instal·lar Go (en anglès)]] i aleshores executar 
 #appengine:
-#appengine:   go get github.com/zorion/go-tour-ca
+#appengine:   go install github.com/zorion/go-tour-ca@latest
 #appengine:
-#appengine: Amb això afegirem un programa `go-tour-ca` executable al directori `bin' del teu
-#appengine: [[https://golang.org/doc/code.html#Workspaces][entorn (en anglès)]].
+#appengine: Amb això afegirem un programa `go-tour-ca` executable al directori `bin` del teu
+#appengine: [[https://go.dev/cmd/go/#hdr-GOPATH_and_Modules][GOPATH (en anglès)]].
 #appengine: Quan executis localment el tour, obrirà un navegador mostrant
 #appengine: la teva versió local del tour.
 #appengine:
