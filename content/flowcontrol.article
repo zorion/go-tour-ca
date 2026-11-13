@@ -1,39 +1,39 @@
 Instruccions d'estructura de control: for, if, else, switch i defer
-Aprèn com controlar el flux d'execució del teu codi amb condicionals, iteracions, seleccions i endarreriments.
+Aprèn com controlar el flux d'execució del teu codi amb condicionals, iteracions, switches i ajornaments.
 
-Els autors de Go
+The Go Authors
 https://golang.org
 
 * For
 
 Go només té una instrucció per iterar, el bucle `for`.
 
-El `for` bàsic té tres components separades per punt i coma:
+El `for` bàsic té tres components separats per punt i coma:
 
 - la instrucció d'inicialització: s'executa abans de la primera iteració
 - l'expressió de condició: s'avalua abans de cada iteració
 - la instrucció posterior: s'executa al final de cada iteració
 
-La instrucció d'inicialització sovint serà una declaració curta de variable, i les
+La instrucció d'inicialització sovint serà una declaració de variable, i les
 variables declarades allà només són visibles dins l'àmbit de la instrucció `for`.
 
 El bucle deixarà d'iterar quan la condició booleana s'avaluï com a `false`.
 
 *Nota:* A diferència d'altres llenguatges com C, Java o JavaScript no hi ha parèntesis
-envoltant les tres components de la instrucció `for` i les claus `{`}` són
+al voltant dels tres components de la instrucció `for` i les claus `{`}` són
 obligatòries.
 
 .play flowcontrol/for.go
 
 * For (continuació)
 
-Pots deixar les instruccions inicial i d'increment buides (són opcionals).
+Pots deixar les instruccions d'inicialització i posterior buides (són opcionals).
 
 .play flowcontrol/for-continued.go
 
 * For és el "while" de Go
 
-Fent-ho així pots eliminar els punt i coma: El `while` de C s'escriu `for` a Go.
+Fent-ho així pots eliminar els punts i comes: el `while` de C s'escriu `for` a Go.
 
 .play flowcontrol/for-is-gos-while.go
 
@@ -46,7 +46,7 @@ Si no inclous la condició de bucle esdevé un bucle infinit, de manera que un b
 * If
 
 La instrucció `if` de Go és similar al seu `for`;
-els parèntesis `(`)` desapareixen i les claus `{`}` són obligatòries.
+no cal envoltar l'expressió amb parèntesis `(`)`, però les claus `{`}` són obligatòries.
 
 .play flowcontrol/if.go
 
@@ -70,13 +70,13 @@ que hi ha al `main`.)
 
 .play flowcontrol/if-and-else.go
 
-* Exercici: Bucles i Funcions
+* Exercici: Bucles i funcions
 
-Com a manera de practicar amb funcions i bucles, implementarem una funció d'arrel quadrada: donat un número x, volem trobar el número z pel qual z² s'aproxima més a x.
+Com a manera de practicar amb funcions i bucles, implementarem una funció d'arrel quadrada: donat un nombre x, volem trobar el nombre z pel qual z² s'aproxima més a x.
 
 Els ordinadors típicament calculen l'arrel quadrada de x utilitzant un bucle.
 Començant amb una suposició z, podem ajustar z basant-nos en com de proper és z² a x,
-produint una millor suposició:
+per obtenir una suposició millor:
 
 	z -= (z*z - x) / (2*z)
 
@@ -84,7 +84,7 @@ Repetir aquest ajustament fa que la suposició sigui cada vegada millor
 fins que arribem a una resposta que és tan propera a l'arrel quadrada real com sigui possible.
 
 Implementa això a la funció `Sqrt` proporcionada.
-Una bona suposició inicial per z és 1, independentment de l'entrada.
+Una bona suposició inicial per a z és 1, independentment de l'entrada.
 Per començar, repeteix el càlcul 10 vegades i imprimeix cada z pel camí.
 Observa com t'aproximes a la resposta per a diversos valors de x (1, 2, 3, ...)
 i com de ràpidament millora la suposició.
@@ -95,10 +95,10 @@ dona-li sintaxi de coma flotant o utilitza una conversió:
 	z := 1.0
 	z := float64(1)
 
-A continuació, canvia la condició del bucle per aturar-se un cop el valor hagi deixat
+A continuació, canvia la condició del bucle perquè s'aturi un cop el valor hagi deixat
 de canviar (o només canviï per una quantitat molt petita).
 Comprova si això requereix més o menys de 10 iteracions.
-Prova altres suposicions inicials per z, com x, o x/2.
+Prova altres suposicions inicials per a z, com x, o x/2.
 Com de propers són els resultats de la teva funció als de [[https://golang.org/pkg/math/#Sqrt][math.Sqrt]] de la biblioteca estàndard?
 
 (*Nota:* Si t'interessen els detalls de l'algorisme, el z² − x anterior
@@ -123,7 +123,7 @@ ser constants, i els valors involucrats no necessiten ser enters.
 
 .play flowcontrol/switch.go
 
-* Ordre d'avaluació del Switch
+* Ordre d'avaluació del switch
 
 Els casos del switch s'avaluen de dalt a baix, aturant-se quan un cas té èxit.
 
@@ -163,7 +163,7 @@ no s'executa fins que la funció que l'envolta retorni.
 * Apilant defers
 
 Les crides a funcions ajornades es posen en una pila. Quan una funció retorna, les seves
-crides ajornades s'executen en ordre últim en entrar, primer en sortir.
+crides ajornades s'executen de manera que l'última a entrar és la primera a sortir.
 
 Per aprendre més sobre les instruccions defer, llegeix aquesta
 [[https://blog.golang.org/defer-panic-and-recover][entrada de blog]].

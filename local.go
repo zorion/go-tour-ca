@@ -5,11 +5,11 @@
 package main
 
 import (
+	"embed"
 	"flag"
-	"fmt"
-	"go/build"
 	"html/template"
 	"io"
+	"io/fs"
 	"log"
 	"net"
 	"net/http"
@@ -30,9 +30,21 @@ import (
 )
 
 const (
-	basePkg    = "github.com/zorion/go-tour-ca"
 	socketPath = "/socket"
+
+	// tourImportPath is the import path the exercises use for the
+	// packages in the pic, reader, tree and wc directories.
+	tourImportPath = "golang.org/x/tour"
+
+	dirPerm  = 0o755
+	filePerm = 0o644
 )
+
+// tourPackages holds the source of the packages that the exercises
+// import from tourImportPath.
+//
+//go:embed pic/pic.go reader/validate.go tree/tree.go wc/wc.go
+var tourPackages embed.FS
 
 var (
 	httpListen  = flag.String("http", "127.0.0.1:3999", "host:port que obrirem")
@@ -41,35 +53,36 @@ var (
 
 var (
 	// GOPATH containing the tour packages
-	gopath = os.Getenv("GOPATH")
+	gopath string
 
 	httpAddr string
 )
 
-// isRoot reports whether path is the root directory of the tour tree.
-// To be the root, it must have content and template subdirectories.
-func isRoot(path string) bool {
-	_, err := os.Stat(filepath.Join(path, "content", "welcome.article"))
-	if err == nil {
-		_, err = os.Stat(filepath.Join(path, "template", "index.tmpl"))
+// installTourPackages writes tourPackages into a GOPATH under the user's
+// cache directory and returns that GOPATH. The local tour builds snippets in
+// GOPATH mode against it, because they run in a temporary directory with no
+// go.mod, where module mode can't resolve golang.org/x/tour imports.
+func installTourPackages() (string, error) {
+	cache, err := os.UserCacheDir()
+	if err != nil {
+		return "", err
 	}
-	return err == nil
-}
-
-func findRoot() (string, error) {
-	ctx := build.Default
-	p, err := ctx.Import(basePkg, "", build.FindOnly)
-	if err == nil && isRoot(p.Dir) {
-		return p.Dir, nil
-	}
-	tourRoot := filepath.Join(runtime.GOROOT(), "misc", "tour")
-	ctx.GOPATH = tourRoot
-	p, err = ctx.Import(basePkg, "", build.FindOnly)
-	if err == nil && isRoot(tourRoot) {
-		gopath = tourRoot
-		return tourRoot, nil
-	}
-	return "", fmt.Errorf("No s'ha trobat contingut de go-tour-ca; mireu $GOROOT i $GOPATH")
+	dir := filepath.Join(cache, "go-tour-ca", "gopath")
+	err = fs.WalkDir(tourPackages, ".", func(name string, d fs.DirEntry, err error) error {
+		if err != nil || d.IsDir() {
+			return err
+		}
+		src, err := tourPackages.ReadFile(name)
+		if err != nil {
+			return err
+		}
+		dst := filepath.Join(dir, "src", filepath.FromSlash(tourImportPath), filepath.FromSlash(name))
+		if err := os.MkdirAll(filepath.Dir(dst), dirPerm); err != nil {
+			return err
+		}
+		return os.WriteFile(dst, src, filePerm)
+	})
+	return dir, err
 }
 
 func main() {
@@ -81,13 +94,11 @@ func main() {
 		return
 	}
 
-	// find and serve the go tour files
-	root, err := findRoot()
+	var err error
+	gopath, err = installTourPackages()
 	if err != nil {
-		log.Fatalf("No s'ha trobat el contingut del tour: %v", err)
+		log.Fatalf("No s'han pogut instal·lar els paquets del tour: %v", err)
 	}
-
-	log.Println("Servint contingut des de", root)
 
 	host, port, err := net.SplitHostPort(*httpListen)
 	if err != nil {
@@ -101,7 +112,7 @@ func main() {
 	}
 	httpAddr = host + ":" + port
 
-	if err := initTour(root, "SocketTransport"); err != nil {
+	if err := initTour(tourFiles, "SocketTransport"); err != nil {
 		log.Fatal(err)
 	}
 
@@ -111,7 +122,7 @@ func main() {
 	origin := &url.URL{Scheme: "http", Host: host + ":" + port}
 	http.Handle(socketPath, socket.NewHandler(origin))
 
-	registerStatic(root)
+	registerStatic(tourFiles)
 
 	go func() {
 		url := "http://" + httpAddr
@@ -124,12 +135,15 @@ func main() {
 	log.Fatal(http.ListenAndServe(httpAddr, nil))
 }
 
-// registerStatic registers handlers to serve static content
-// from the directory root.
-func registerStatic(root string) {
+// registerStatic registers handlers to serve static content from fsys.
+func registerStatic(fsys fs.FS) {
 	// Keep these static file handlers in sync with app.yaml.
-	http.Handle("/favicon.ico", http.FileServer(http.Dir(filepath.Join(root, "static", "img"))))
-	static := http.FileServer(http.Dir(root))
+	img, err := fs.Sub(fsys, "static/img")
+	if err != nil {
+		log.Fatal(err)
+	}
+	http.Handle("/favicon.ico", http.FileServer(http.FS(img)))
+	static := http.FileServer(http.FS(fsys))
 	http.Handle("/content/img/", static)
 	http.Handle("/static/", static)
 }
@@ -159,10 +173,10 @@ PERILL!  PERILL!  PERILL!
 El servidor del tour sembla estar servint el contingut des
 d'una adreça que no és localhost i està configurat per
 executar localment els fragments de codi.
-Qualsevol amb accès a aquesta adreça i port podria guanyar
-accès a aquest màquina com a l'usuari que executa go-tour-ca.
+Qualsevol amb accés a aquesta adreça i port podria guanyar
+accés a aquesta màquina com a l'usuari que executa go-tour-ca.
 
-Si no enteneu aquest missatge, premeu Contro-C per abortar el procès.
+Si no enteneu aquest missatge, premeu Control-C per abortar el procés.
 
 PERILL!  PERILL!  PERILL!
 `
@@ -177,14 +191,15 @@ func init() {
 }
 
 // environ returns the original execution environment with GOPATH
-// replaced (or added) with the value of the global var gopath.
+// replaced (or added) with the value of the global var gopath,
+// and GOPATH mode turned on.
 func environ() (env []string) {
 	for _, v := range os.Environ() {
-		if !strings.HasPrefix(v, "GOPATH=") {
+		if !strings.HasPrefix(v, "GOPATH=") && !strings.HasPrefix(v, "GO111MODULE=") {
 			env = append(env, v)
 		}
 	}
-	env = append(env, "GOPATH="+gopath)
+	env = append(env, "GOPATH="+gopath, "GO111MODULE=off")
 	return
 }
 

@@ -12,14 +12,7 @@ Els programes comencen executant un paquet anomenat `main`.
 
 Aquest programa fa servir els paquets amb ruta d'importació `"fmt"` i `"math/rand"`.
 
-Per convenció, el nom del paquet és el mateix que l'últim element de la ruta d'importació. Per exemple, el paquet `"math/rand"` comprèn els fitxers que comencen amb la instrucció `package rand`.
-
-#appengine: *Nota:* L'entorn en què aquests programes són executats és
-#appengine: determinista, així que cada cop que executeu el programa d'exemple,
-#appengine: `rand.Intn` tornarà el mateix nombre.
-#appengine:
-#appengine: (Si voleu rebre un nombre diferent, haureu de canviar la llavor del generador de nombres; vegeu [[https://golang.org/pkg/math/rand/#Seed][`rand.Seed`]]. 
-#appengine: El temps (Time) és constant al playground, així que haureu de fer servir alguna altra cosa com a llavor.)
+Per convenció, el nom del paquet és el mateix que l'últim element de la ruta d'importació. Per exemple, el paquet `"math/rand"` comprèn els fitxers que comencen amb la instrucció `package`rand`.
 
 .play basics/packages.go
 
@@ -38,13 +31,13 @@ Però fer servir la versió factoritzada de la instrucció `import` és un bon e
 
 * Noms exportats
 
-A Go, un nom s'exporta si comença per majúscula.
-Per exemple, `Pizza` és un nom exportat, com ho és `Pi`, que es pot exportar
+En Go, un nom s'exporta si comença per majúscula.
+Per exemple, `Pizza` és un nom exportat, com ho és `Pi`, que s'exporta
 del paquet `math`.
 
 `pizza` i `pi` no comencen per majúscula, així que no s'exporten.
 
-Quan has importat un paquet pots referir-te als noms que aquest exporta.
+Quan has importat un paquet només pots referir-te als noms que aquest exporta.
 Qualsevol nom que no s'exporti no és accessible des de fora del paquet.
 
 Executa el codi. Fixa't en el missatge d'error.
@@ -61,7 +54,7 @@ En aquest exemple, `add` pren dos paràmetres del tipus `int`.
 
 Nota que el tipus s'escriu _després_ del nom de la variable.
 
-(Per saber més sobre el motiu pel qual els tipus es fan servir com ho fan, llegiu l'article [[https://blog.golang.org/gos-declaration-syntax]["Go's declaration syntax"]].)	
+(Per saber més sobre per què els tipus s'escriuen d'aquesta manera, llegeix l'article [[https://blog.golang.org/gos-declaration-syntax]["Go's declaration syntax"]].)	
 
 
 .play basics/functions.go
@@ -82,9 +75,9 @@ deixant-ho
 
 * Múltiples resultats
 
-Una funció pot tornar més d'un resultat.
+Una funció pot retornar qualsevol nombre de resultats.
 
-La funció `swap` torna dues `string` (cadenes de caràcters).
+La funció `swap` retorna dues `string` (cadenes de caràcters).
 
 .play basics/multiple-results.go
 
@@ -94,9 +87,9 @@ Els valors retornats per una funció de Go poden tenir nom. Si en tenen, els nom
 
 Aquests noms s'haurien d'utilitzar per documentar el significat dels valors retornats.
 
-La instrucció `return` sense arguments retorna els valors continguts a les variables dels noms específicats. Això es coneix en anglès com a "naked" return.
+La instrucció `return` sense arguments retorna els valors continguts a les variables dels noms especificats. Això es coneix en anglès com a "naked" return.
 
-Les instruccions naked return s'haurien de fer servir només en funcions que siguin prou curtes, com a l'exemple següent. Fer-los servir en funcions més llargues pot dificultar la seva llegibilitat.
+Les instruccions naked return s'haurien de fer servir només en funcions que siguin prou curtes, com a l'exemple següent. Fer-les servir en funcions més llargues pot dificultar la seva llegibilitat.
 
 .play basics/named-results.go
 
@@ -118,9 +111,9 @@ Si un valor inicial és present el tipus es pot ometre, la variable prendrà el 
 
 * Declaració curta de variables
 
-En una funció, l'operand `:=` (instrucció d'assignació curta) es pot fer servir enlloc de la declaració `var`. El tipus de la variable va implícit.
+En una funció, l'operador `:=` (instrucció d'assignació curta) es pot fer servir en lloc de la declaració `var`. El tipus de la variable va implícit.
 
-Fora d'una funció cada instrucció comença amb una paraula clau i l'operand `:=` no està disponible.
+Fora d'una funció cada instrucció comença amb una paraula clau (`var`, `func`, etc.) i, per tant, l'operador `:=` no està disponible.
 
 .play basics/short-variable-declarations.go
 
@@ -135,9 +128,9 @@ Els tipus bàsics de Go són
 	int  int8  int16  int32  int64
 	uint uint8 uint16 uint32 uint64 uintptr
 
-	byte // àlies per uint8
+	byte // àlies de uint8
 
-	rune // àlies per int32
+	rune // àlies d'int32
 	     // representa un punt de codi Unicode
 
 	float32 float64
@@ -145,18 +138,18 @@ Els tipus bàsics de Go són
 	complex64 complex128
 
 L'exemple mostra variables de diversos tipus
-i també que la declaració de variables que es pot "factoritzar" en blocs,
+i també que la declaració de variables es pot "factoritzar" en blocs,
 com amb les instruccions d'importar paquets.
 
-Els tipus `int`, `uint` i `uintptr` normalment són de 32 bits als sistemes de 32-bit i de 64 bits als sistemes de 64-bit.
-Quan necessitis un valor enter hauries de fer servir `int` a no ser que tinguis un motiu específic per a fer servir un tipus d'enter amb tipus o mida.
+Els tipus `int`, `uint` i `uintptr` normalment són de 32 bits als sistemes de 32 bits i de 64 bits als sistemes de 64 bits.
+Quan necessitis un valor enter hauries de fer servir `int` a no ser que tinguis un motiu específic per a fer servir un tipus d'enter amb mida específica o sense signe.
 
 .play basics/basic-types.go
 
 * Valors zero
 
 Les variables declarades sense un valor inicial explícit reben
-el seu _valor zero_.
+el seu _valor_zero_.
 
 El valor zero és:
 
@@ -190,7 +183,7 @@ Prova de treure les conversions `float64` o `uint` de l'exemple i mira què pass
 
 * Inferència de tipus
 
-En declarar una variable sense especificar un tipus explícit (ja sigui utilitzant la sintaxi `:=` o la sintaxi `var = `),
+En declarar una variable sense especificar un tipus explícit (ja sigui utilitzant la sintaxi `:=` o la sintaxi `var`=`),
 el tipus de la variable s'infereix del valor del costat dret.
 
 Quan el costat dret de la declaració té un tipus, la nova variable té el mateix tipus:
@@ -199,7 +192,7 @@ Quan el costat dret de la declaració té un tipus, la nova variable té el mate
 	j := i // j és un int
 
 Però quan el costat dret conté una constant numèrica no tipada, la nova variable pot ser `int`,
-`float64`, o `complex128` depenent de la precisió de la constant:
+`float64` o `complex128` depenent de la precisió de la constant:
 
 	i := 42           // int
 	f := 3.142        // float64
@@ -219,11 +212,11 @@ Les constants no es poden declarar fent servir l'expressió `:=`.
 
 .play basics/constants.go
 
-* Constants Numèriques
+* Constants numèriques
 
 Les constants numèriques són _valors_ d'alta precisió.
 
-Una constant sense tipus definit pren el tipus del seu context.
+Una constant sense tipus definit pren el tipus que requereix el context.
 
 Prova d'imprimir `needInt(Big)` també.
 

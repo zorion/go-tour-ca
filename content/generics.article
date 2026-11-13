@@ -1,0 +1,43 @@
+Genèrics
+Go permet la programació genèrica fent servir paràmetres de tipus. Aquesta lliçó mostra alguns exemples de com fer servir els genèrics al teu codi.
+
+The Go Authors
+https://golang.org
+
+* Paràmetres de tipus
+
+Les funcions de Go es poden escriure perquè funcionin amb diversos tipus fent
+servir paràmetres de tipus. Els paràmetres de tipus d'una funció apareixen entre
+claudàtors, abans dels arguments de la funció.
+
+  func Index[T comparable](s []T, x T) int
+
+Aquesta declaració vol dir que `s` és una slice de qualsevol tipus `T` que
+compleix la restricció predefinida `comparable`. `x` també és un valor del
+mateix tipus.
+
+`comparable` és una restricció útil que permet fer servir els operadors `==` i
+`!=` amb valors del tipus. En aquest exemple, la fem servir per comparar un
+valor amb tots els elements de la slice fins que en trobem un d'igual. Aquesta
+funció `Index` funciona amb qualsevol tipus que admeti comparacions.
+
+.play generics/index.go
+
+* Tipus genèrics
+
+A més de les funcions genèriques, Go també admet tipus genèrics. Un tipus es pot
+parametritzar amb un paràmetre de tipus, cosa que pot ser útil per implementar
+estructures de dades genèriques.
+
+Aquest exemple mostra una declaració de tipus senzilla per a una llista
+enllaçada simple que pot contenir valors de qualsevol tipus.
+
+Com a exercici, afegeix alguna funcionalitat a aquesta implementació de llista.
+
+.play generics/list.go
+
+* Enhorabona!
+
+Has acabat aquesta lliçó!
+
+Pots tornar a la llista de [[/list][mòduls]] per trobar què aprendre a continuació, o continuar amb la [[javascript:click('.next-page')][següent lliçó]].

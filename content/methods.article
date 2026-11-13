@@ -26,7 +26,7 @@ Aquí tens `Abs` escrit com una funció regular sense canvis en la funcionalitat
 
 .play methods/methods-funcs.go
 
-* Mètodes continuació
+* Mètodes (continuació)
 
 També pots declarar un mètode sobre tipus que no són estructures.
 
@@ -76,7 +76,7 @@ Què més vas haver de canviar perquè l'exemple compilés?
 
 .play methods/methods-pointers-explained.go
 
-* Mètodes i indirecte de punter
+* Mètodes i indirecció de punters
 
 Comparant els dos programes anteriors, potser notes que
 les funcions amb un argument de punter han de prendre un punter:
@@ -93,14 +93,14 @@ receptor quan són cridats:
 	p := &v
 	p.Scale(10) // OK
 
-Per a la declaració `v.Scale(5)`, encara que `v` és un valor i no un punter,
+Per a la instrucció `v.Scale(5)`, encara que `v` és un valor i no un punter,
 el mètode amb el receptor de punter es crida automàticament.
-És a dir, per comoditat, Go interpreta la declaració `v.Scale(5)` com
+És a dir, per comoditat, Go interpreta la instrucció `v.Scale(5)` com
 `(&v).Scale(5)` ja que el mètode `Scale` té un receptor de punter.
 
 .play methods/indirection.go
 
-* Mètodes i indirecte de punter (2)
+* Mètodes i indirecció de punters (2)
 
 El mateix passa en la direcció inversa.
 
@@ -131,7 +131,7 @@ La primera és perquè el mètode pugui modificar el valor al qual apunta el seu
 La segona és per evitar copiar el valor en cada crida al mètode.
 Això pot ser més eficient si el receptor és una estructura gran, per exemple.
 
-En aquest exemple, tant `Scale` com `Abs` són amb tipus receptor `*Vertex`,
+En aquest exemple, tant `Scale` com `Abs` són mètodes amb receptor de tipus `*Vertex`,
 encara que el mètode `Abs` no necessita modificar el seu receptor.
 
 En general, tots els mètodes d'un tipus donat haurien de tenir receptors de valor o de punter,
@@ -142,7 +142,7 @@ però no una barreja d'ambdós.
 
 * Interfícies
 
-Un _tipus d'interfície_ es defineix com un conjunt de signatures de mètodes.
+Un _tipus_d'interfície_ es defineix com un conjunt de signatures de mètodes.
 
 Un valor de tipus interfície pot contenir qualsevol valor que implementi aquests mètodes.
 
@@ -207,21 +207,24 @@ El tipus d'interfície que no especifica cap mètode s'anomena interfície _buid
 Una interfície buida pot contenir valors de qualsevol tipus.
 (Cada tipus implementa almenys zero mètodes.)
 
+`any` és un àlies d'`interface{}`, i tots dos són completament
+equivalents.
+
 Les interfícies buides s'utilitzen per gestionar valors de tipus desconegut.
-Per exemple, `fmt.Print` pren qualsevol nombre d'arguments de tipus `interface{}`.
+Per exemple, `fmt.Print` pren qualsevol nombre d'arguments de tipus `any`.
 
 .play methods/empty-interface.go
 
-* Conversió de tipus amb afirmació de tipus
+* Afirmacions de tipus
 
-Una _afirmació de tipus_ proporciona accés al valor concret subjacent d'un valor d'interfície.
+Una _afirmació_de_tipus_ proporciona accés al valor concret subjacent d'un valor d'interfície.
 
 	t := i.(T)
 
-Aquesta declaració afirma que el valor d'interfície `i` conté el tipus concret `T`
+Aquesta instrucció afirma que el valor d'interfície `i` conté el tipus concret `T`
 i assigna el valor subjacent `T` a la variable `t`.
 
-Si `i` no conté un `T`, la declaració provocarà un error en temps d'execució.
+Si `i` no conté un `T`, la instrucció provocarà un pànic.
 
 Per _provar_ si un valor d'interfície conté un tipus específic,
 una afirmació de tipus pot retornar dos valors: el valor subjacent
@@ -232,17 +235,17 @@ i un valor booleà que indica si l'afirmació ha tingut èxit.
 Si `i` conté un `T`, llavors `t` serà el valor subjacent i `ok` serà cert.
 
 Si no, `ok` serà fals i `t` serà el valor zero del tipus `T`,
-i no es produirà cap error.
+i no es produirà cap pànic.
 
-Observa la similitud entre aquesta sintaxi i la de llegir d'un mapa.
+Observa la similitud entre aquesta sintaxi i la de llegir d'un map.
 
 .play methods/type-assertions.go
 
-* Commutadors de tipus (switch)
+* Switches de tipus
 
-Un _commutador de tipus_ és una construcció que permet diverses afirmacions de tipus en sèrie.
+Un _switch_de_tipus_ és una construcció que permet diverses afirmacions de tipus en sèrie.
 
-Un commutador de tipus s'assembla a un commutador regular, però els casos en un commutador de tipus
+Un switch de tipus s'assembla a una instrucció `switch` regular, però els casos en un switch de tipus
 especifiquen tipus (no valors), i aquests tipus es comparen amb el tipus
 del valor concret que conté el valor d'interfície.
 
@@ -252,13 +255,13 @@ del valor concret que conté el valor d'interfície.
 	case S:
 		// aquí v és de tipus S
 	default:
-		// no és cap tipus T ni S
+		// cap coincidència; aquí v té el mateix tipus que i
 	}
 
-La declaració en un commutador de tipus té la mateixa sintaxi que una afirmació de tipus `i.(T)`,
+La declaració en un switch de tipus té la mateixa sintaxi que una afirmació de tipus `i.(T)`,
 però el tipus específic `T` es reemplaça per la paraula clau `type`.
 
-Aquest commutador avalua si el valor d'interfície `i`
+Aquesta instrucció `switch` avalua si el valor d'interfície `i`
 conté un valor de tipus `T` o `S`.
 En cada cas de `T` o `S`, la variable `v` tindrà el tipus
 `T` o `S` respectivament i contindrà el valor que conté `i`.
@@ -276,16 +279,16 @@ Un dels tipus d'interfície més ubics és [[https://golang.org/pkg/fmt/#Stringe
 	}
 
 Un `Stringer` és un tipus que pot descriure's a si mateix com a cadena de text.
-El paquet `fmt` (i molts altres) busquen aquesta interfície per imprimir valors.
+El paquet `fmt` (i molts altres) busca aquesta interfície per imprimir valors.
 
 .play methods/stringer.go
 
 * Exercici: Stringer
 
-Fes que el tipus `IPAddr` implementi `fmt.Stringer` per imprimir l'adreça com
-una quad-dotted IP.
+Fes que el tipus `IPAddr` implementi `fmt.Stringer` per imprimir l'adreça com a
+quatre nombres separats per punts.
 
-Per exemple, `IPAddr{1,`2,`3,`4}` hauria d'imprimir com `"1.2.3.4"`.
+Per exemple, `IPAddr{1,`2,`3,`4}` s'hauria d'imprimir com a `"1.2.3.4"`.
 
 .play methods/exercise-stringer.go
 
@@ -307,20 +310,20 @@ comprovant si l'error és igual a `nil`.
 
 	i, err := strconv.Atoi("42")
 	if err != nil {
-		fmt.Printf("no s'ha pogut convertir el número: %v\n", err)
+		fmt.Printf("no s'ha pogut convertir el nombre: %v\n", err)
 		return
 	}
-	fmt.Println("Número convertit:", i)
+	fmt.Println("Enter convertit:", i)
 
-Un `nil` `error` denota èxit; un `error` no nul denota fracàs.
+Un `error` `nil` denota èxit; un `error` no nul denota fracàs.
 
 .play methods/errors.go
 
 * Exercici: Errors
 
-Copia la teva funció `Sqrt` de l'exercici anterior i modifica-la per retornar un valor `error`.
+Copia la teva funció `Sqrt` de l'[[/flowcontrol/8][exercici anterior]] i modifica-la per retornar un valor `error`.
 
-`Sqrt` hauria de retornar un error no nul quan se li dóna un número negatiu, ja que no suporta nombres complexos.
+`Sqrt` hauria de retornar un error no nul quan se li dona un nombre negatiu, ja que no suporta nombres complexos.
 
 Crea un nou tipus
 
@@ -330,27 +333,27 @@ i fes que implementi `error` donant-li un mètode
 
 	func (e ErrNegativeSqrt) Error() string
 
-de manera que `ErrNegativeSqrt(-2).Error()` retorni `"no`es`pot`calcular`l'arrel`quadrada`d'un`número`negatiu:`-2"`.
+de manera que `ErrNegativeSqrt(-2).Error()` retorni `"no`es`pot`calcular`l'arrel`quadrada`d'un`nombre`negatiu:`-2"`.
 
 *Nota:* Una crida a `fmt.Sprint(e)` dins del mètode `Error` provocarà un bucle infinit. Pots evitar-ho convertint primer `e`: `fmt.Sprint(float64(e))`. Per què?
 
-Canvia la teva funció `Sqrt` per retornar un valor `ErrNegativeSqrt` quan se li dóna un número negatiu.
+Canvia la teva funció `Sqrt` per retornar un valor `ErrNegativeSqrt` quan se li dona un nombre negatiu.
 
 .play methods/exercise-errors.go
 
 * Lectors
 
 El paquet `io` especifica la interfície `io.Reader`,
-que representa el final de lectura d'un flux de dades.
+que representa l'extrem de lectura d'un flux de dades.
 
-La biblioteca estàndard de Go conté [[https://golang.org/search?q=Read#Global][moltes implementacions]] d'aquesta interfície, incloent fitxers,
-connexions de xarxa, compressors, xifrats, i altres.
+La biblioteca estàndard de Go conté [[https://cs.opensource.google/search?q=Read%5C(%5Cw%2B%5Cs%5C%5B%5C%5Dbyte%5C)&ss=go%2Fgo][moltes implementacions]] d'aquesta interfície, incloent fitxers,
+connexions de xarxa, compressors, xifradors i altres.
 
 La interfície `io.Reader` té un mètode `Read`:
 
 	func (T) Read(b []byte) (n int, err error)
 
-`Read` omple la porció de bytes donada amb dades i retorna el nombre de bytes
+`Read` omple la slice de bytes donada amb dades i retorna el nombre de bytes
 omplerts i un valor d'error. Retorna un error `io.EOF` quan el flux
 s'acaba.
 
@@ -377,7 +380,7 @@ que també implementa `io.Reader` (un flux de dades descomprimides).
 
 Implementa un `rot13Reader` que implementi `io.Reader` i llegeixi
 d'un `io.Reader`, aplicant la transformació [[https://en.wikipedia.org/wiki/ROT13][rot13]]
-a tot el flux.
+a tots els caràcters alfabètics del flux.
 
 El tipus `rot13Reader` t'és proporcionat. Fes que sigui un
 `io.Reader` implementant el mètode `Read`.
@@ -400,8 +403,8 @@ El [[https://golang.org/pkg/image/#Image][paquet image]] defineix la interfície
 
 (Mira la [[https://golang.org/pkg/image/#Image][documentació]] per més detalls.)
 
-Els tipus `color.Color` i `color.Model` també són interfícies, però usualment
-utilitzarem les implementacions predefinides `color.RGBA` i `color.RGBAModel`.
+Els tipus `color.Color` i `color.Model` també són interfícies, però ho ignorarem
+utilitzant les implementacions predefinides `color.RGBA` i `color.RGBAModel`.
 Aquestes interfícies i tipus són especificats pel [[https://golang.org/pkg/image/color/][paquet image/color]].
 
 .play methods/images.go
@@ -409,7 +412,7 @@ Aquestes interfícies i tipus són especificats pel [[https://golang.org/pkg/ima
 * Exercici: Imatges
 
 Recordes el [[/moretypes/18][generador d'imatges]] que vas escriure abans? Anem a escriure'n un altre, però
-aquesta vegada retornarà una implementació de `Image` en lloc d'una porció de dades.
+aquesta vegada retornarà una implementació de `Image` en lloc d'una slice de dades.
 
 Defineix el teu propi tipus `Image`, implementa [[https://golang.org/pkg/image/#Image][els mètodes necessaris]], i crida `pic.ShowImage`.
 
@@ -421,7 +424,7 @@ La funció `Bounds` hauria de retornar un `image.Rectangle`, com `image.Rect(0,`
 
 .play methods/exercise-images.go
 
-* Felicitats!
+* Enhorabona!
 
 Has acabat aquesta lliçó!
 

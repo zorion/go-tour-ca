@@ -1,7 +1,7 @@
 Concurrència
 Go proporciona construccions de concurrència com a part del llenguatge base. Aquesta lliçó les presenta i dona alguns exemples de com es poden utilitzar.
 
-Els Autors de Go
+The Go Authors
 https://golang.org
 
 * Goroutines
@@ -10,11 +10,11 @@ Una _goroutine_ és un fil lleuger gestionat pel runtime de Go.
 
 	go f(x, y, z)
 
-inicia una nova goroutine executant
+inicia una nova goroutine que executa
 
 	f(x, y, z)
 
-L'avaluació de `f`, `x`, `y`, i `z` succeeix a la goroutine actual i l'execució de `f` succeeix a la nova goroutine.
+L'avaluació de `f`, `x`, `y` i `z` succeeix a la goroutine actual i l'execució de `f` succeeix a la nova goroutine.
 
 Les goroutines s'executen en el mateix espai d'adreces, així que l'accés a la memòria compartida ha d'estar sincronitzat. El paquet [[https://golang.org/pkg/sync/][`sync`]] proporciona primitives útils, tot i que no les necessitaràs gaire en Go ja que hi ha altres primitives. (Mira la següent diapositiva.)
 
@@ -30,18 +30,18 @@ Els canals són un conducte tipat a través del qual pots enviar i rebre valors 
 
 (Les dades flueixen en la direcció de la fletxa.)
 
-Com els maps i les llesques, els canals s'han de crear abans d'usar-los:
+Com els maps i les slices, els canals s'han de crear abans d'usar-los:
 
 	ch := make(chan int)
 
-Per defecte, els enviaments i les recepcions bloquegen fins que l'altra banda està preparada. Això permet que les goroutines es sincronitzin sense bloquejos explícits o variables de condició.
+Per defecte, els enviaments i les recepcions es bloquegen fins que l'altra banda està preparada. Això permet que les goroutines es sincronitzin sense bloquejos explícits o variables de condició.
 
-El codi d'exemple suma els números d'una llista, distribuint el treball entre dues goroutines.
+El codi d'exemple suma els nombres d'una slice, distribuint el treball entre dues goroutines.
 Un cop ambdues goroutines han completat el seu càlcul, calcula el resultat final.
 
 .play concurrency/channels.go
 
-* Canals amb Buffer
+* Canals amb buffer
 
 Els canals poden tenir _buffer_. Proporciona la longitud del buffer com a segon argument a `make` per inicialitzar un canal amb buffer:
 
@@ -53,7 +53,7 @@ Modifica l'exemple per omplir en excés el buffer i veure què passa.
 
 .play concurrency/buffered-channels.go
 
-* Range i Close
+* Range i close
 
 Un emissor pot `close` (tancar) un canal per indicar que no s'enviaran més valors. Els receptors poden provar si un canal s'ha tancat assignant un segon paràmetre a l'expressió de recepció: després de
 
@@ -71,15 +71,15 @@ El bucle `for`i`:=`range`c` rep valors del canal repetidament fins que es tanca.
 
 * Select
 
-La declaració `select` permet a una goroutine esperar múltiples operacions de comunicació.
+La instrucció `select` permet a una goroutine esperar múltiples operacions de comunicació.
 
-Un `select` es bloqueja fins que un dels seus casos pot executar-se, llavors executa aquest cas. Si múltiples estan preparats, n'escull un a l'atzar.
+Un `select` es bloqueja fins que un dels seus casos pot executar-se, llavors executa aquest cas. Si n'hi ha diversos de preparats, n'escull un a l'atzar.
 
 .play concurrency/select.go
 
-* Selecció per Defecte
+* Selecció per defecte
 
-El cas `default` en un `select` s'executa si cap altre cas està preparat.
+El cas `default` en un `select` s'executa si no hi ha cap altre cas preparat.
 
 Utilitza un cas `default` per provar un enviament o recepció sense bloquejar:
 
@@ -92,7 +92,7 @@ Utilitza un cas `default` per provar un enviament o recepció sense bloquejar:
 
 .play concurrency/default-selection.go
 
-* Exercici: Arbres Binaris Equivalents
+* Exercici: Arbres binaris equivalents
 
 Hi pot haver molts arbres binaris diferents amb la mateixa seqüència de valors emmagatzemats. Per exemple, aquí hi ha dos arbres binaris que emmagatzemen la seqüència 1, 1, 2, 3, 5, 8, 13.
 
@@ -110,7 +110,7 @@ Aquest exemple utilitza el paquet `tree`, que defineix el tipus:
 
 Continua la descripció a la [[javascript:click('.next-page')][següent pàgina]].
 
-* Exercici: Arbres Binaris Equivalents
+* Exercici: Arbres binaris equivalents
 
 *1.* Implementa la funció `Walk`.
 
@@ -118,11 +118,11 @@ Continua la descripció a la [[javascript:click('.next-page')][següent pàgina]
 
 La funció `tree.New(k)` construeix un arbre binari estructurat aleatòriament (però sempre ordenat) que conté els valors `k`, `2k`, `3k`, ..., `10k`.
 
-Crea un nou canal `ch` i inicia el walker:
+Crea un nou canal `ch` i inicia el recorregut:
 
 	go Walk(tree.New(1), ch)
 
-Després llegeix i imprimeix 10 valors del canal. Haurien de ser els números 1, 2, 3, ..., 10.
+Després llegeix i imprimeix 10 valors del canal. Haurien de ser els nombres 1, 2, 3, ..., 10.
 
 *3.* Implementa la funció `Same` utilitzant `Walk` per determinar si `t1` i `t2` emmagatzemen els mateixos valors.
 
@@ -130,7 +130,7 @@ Després llegeix i imprimeix 10 valors del canal. Haurien de ser els números 1,
 
 `Same(tree.New(1),`tree.New(1))` hauria de retornar true, i `Same(tree.New(1),`tree.New(2))` hauria de retornar false.
 
-La documentació per `Tree` es pot trobar [[https://godoc.org/golang.org/x/tour/tree#Tree][aquí]].
+La documentació de `Tree` es pot trobar [[https://godoc.org/golang.org/x/tour/tree#Tree][aquí]].
 
 .play concurrency/exercise-equivalent-binary-trees.go
 
@@ -156,13 +156,13 @@ També podem utilitzar `defer` per assegurar que el mutex es desbloquejarà com 
 
 .play concurrency/mutex-counter.go
 
-* Exercici: Rastrejador Web
+* Exercici: Rastrejador web
 
 En aquest exercici utilitzaràs les característiques de concurrència de Go per paral·lelitzar un rastrejador web.
 
-Modifica la funció `Crawl` per obtenir URLs en paral·lel sense obtenir la mateixa URL dues vegades.
+Modifica la funció `Crawl` per obtenir URL en paral·lel sense obtenir la mateixa URL dues vegades.
 
-_Pista_: pots mantenir una memòria cau de les URLs que s'han obtingut en un map, però els maps sols no són
+_Pista_: pots mantenir una memòria cau de les URL que s'han obtingut en un map, però els maps sols no són
 segurs per a ús concurrent!
 
 .play concurrency/exercise-web-crawler.go
@@ -170,36 +170,36 @@ segurs per a ús concurrent!
 * On anar des d'aquí...
 
 #appengine: Pots començar
-#appengine: [[https://golang.org/dl/][instal·lant Go]].
+#appengine: [[https://go.dev/doc/install/][instal·lant Go]].
 
 #appengine: Un cop tinguis Go instal·lat, la
-La [[https://golang.org/doc/][Documentació de Go]] és un gran lloc per
+La
+[[https://golang.org/doc/][Documentació de Go]] és un gran lloc per
 #appengine: continuar.
 començar.
 Conté referències, tutorials, vídeos i més.
 
-Per aprendre com organitzar i treballar amb codi Go, mira [[https://www.youtube.com/watch?v=XCsL89YtqCs][aquest screencast]] o llegeix [[https://golang.org/doc/code.html][Com Escriure Codi Go]].
+Per aprendre com organitzar i treballar amb codi Go, llegeix [[https://go.dev/doc/code][Com escriure codi Go]].
 
-Si necessites ajuda amb la biblioteca estàndard, consulta la [[https://golang.org/pkg/][referència de paquets]]. Per ajuda amb el llenguatge mateix, et podria sorprendre trobar que l'[[https://golang.org/ref/spec][Especificació del Llenguatge]] és bastant llegible.
+Si necessites ajuda amb la biblioteca estàndard, consulta la [[https://golang.org/pkg/][referència de paquets]]. Per ajuda amb el llenguatge mateix, et podria sorprendre trobar que l'[[https://golang.org/ref/spec][Especificació del llenguatge]] és bastant llegible.
 
 Per explorar més el model de concurrència de Go, mira
-[[https://www.youtube.com/watch?v=f6kdp27TYZs][Patrons de Concurrència en Go]]
+[[https://www.youtube.com/watch?v=f6kdp27TYZs][Patrons de concurrència en Go]]
 ([[https://talks.golang.org/2012/concurrency.slide][diapositives]])
 i
-[[https://www.youtube.com/watch?v=QDDwwePbDtw][Patrons Avançats de Concurrència en Go]]
+[[https://www.youtube.com/watch?v=QDDwwePbDtw][Patrons avançats de concurrència en Go]]
 ([[https://talks.golang.org/2013/advconc.slide][diapositives]])
-i llegeix el
-[[https://golang.org/doc/codewalk/sharemem/][Compartir Memòria Comunicant]]
-codewalk.
+i llegeix el codewalk
+[[https://golang.org/doc/codewalk/sharemem/][Compartir memòria comunicant]].
 
 Per començar a escriure aplicacions web, mira
 [[https://vimeo.com/53221558][Un entorn de programació simple]]
 ([[https://talks.golang.org/2012/simple.slide][diapositives]])
 i llegeix el tutorial
-[[https://golang.org/doc/articles/wiki/][Escrivint Aplicacions Web]].
+[[https://golang.org/doc/articles/wiki/][Escriure aplicacions web]].
 
 El [[https://blog.golang.org/][Blog de Go]] té un gran arxiu d'articles informatius sobre Go.
 
-Per aprofundir en les funcions de Go, llegeix el codewalk [[https://golang.org/doc/codewalk/functions/][Les Funcions com a Ciutadans de Primera Classe en Go]], que ofereix una perspectiva interessant sobre els tipus de funcions en Go.
+Per aprofundir en les funcions de Go, llegeix el codewalk [[https://golang.org/doc/codewalk/functions/][Les funcions com a ciutadans de primera classe en Go]], que ofereix una perspectiva interessant sobre els tipus de funcions en Go.
 
 Visita [[https://golang.org][golang.org]] per més informació.
